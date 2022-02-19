@@ -1,0 +1,9 @@
+@import "./global.scss";
+
+.profile {
+  width: $width;
+  max-width: $max-width;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+}
