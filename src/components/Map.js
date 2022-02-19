@@ -8,8 +8,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: -33.862477,
-  lng: 150.951833
+  lat: -33.8724235,
+  lng: 151.2591179
 };
 
 class Map extends Component {
@@ -26,16 +26,16 @@ class Map extends Component {
   
   async loadWalkers() {
     try{
-      let res = await axios.get('http://localhost:3000/users/find/-33.8724235/151.2591179');
+      let res = await axios.get(`http://localhost:3000/users/find/-33.8724235/151.2591179`);
       this.setState({nearby_walkers: res.data})
-
-      console.log(this.state.nearby_walkers[0])
+      console.log('The near by walkers are:', this.state.nearby_walkers)
+      console.log('example geocode:',this.state.nearby_walkers[0].geocode_lat)
     }catch (err){
       console.log('Nearby walkers AJAX ERROR:', err)
     }
   }
   
-  render() { //TODO: figure out what the markers are like today. 
+  render() { //TODO: get some locations that are around fairfield
     return (
       <LoadScript
         googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko"
@@ -43,27 +43,20 @@ class Map extends Component {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={15}
+          zoom={13}
         >
           { /* Child components, such as markers, info windows, etc. */ }
           
           {
-            this.state.nearby_walkers.map( el => {
-              <Marker
+            this.state.nearby_walkers.map( (el, i) => <Marker
+              key={el.id}
               icon="https://i.imgur.com/kEXCUkc.png?1"
               // onLoad={onLoad}
-              
-              position={el.geocode_lat, el.geocode_lng}
+              // position={el.geocode_lat, el.geocode_lng}
+              position={center}
               />
-            })
+            )
           }
-          {/* <Marker
-            icon="https://i.imgur.com/kEXCUkc.png?1"
-            // onLoad={onLoad}
-            position={center}
-          /> */}
-
-            
           <></>
         </GoogleMap>
       </LoadScript>
