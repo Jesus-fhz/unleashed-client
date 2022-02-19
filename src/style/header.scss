@@ -1,0 +1,19 @@
+@import "./global.scss";
+
+.header {
+  width: $width;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid red;
+
+  nav {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    width: fit-content;
+  }
+}

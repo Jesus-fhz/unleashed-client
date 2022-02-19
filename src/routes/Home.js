@@ -1,18 +1,13 @@
 import React from 'react';
+import UserPetList from '../components/UserPetList';
+import Map from '../components/Map';
+import '../style/home.scss'
 
 const Home  = () => {
   return (
-    <div class="navbar">
-      <div class="container flex">
-          <h1 class="logo">Unleashed</h1>
-          <nav>
-              <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Pets</a></li>
-                  <li><a href="#">User</a></li>
-              </ul>
-          </nav>
-      </div>
+    <div className="home">
+      <UserPetList />
+      <Map />
     </div>
   )
 }
