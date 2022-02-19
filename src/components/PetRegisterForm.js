@@ -3,20 +3,20 @@ import '../style/petRegisterForm.scss'
 
 const PetRegisterFormFirst = ({changePage, submitForm}) => {
   const [name, setName] = useState('');
-  const [BOD, setBOD] = useState('');
+  const [age, setAge] = useState('');
   const [size, setSize] = useState('');
   const [breed, setBreed] = useState('');
   const [gender, setGender] = useState('');
 
   const changeName = (e) => setName(e.target.value);
-  const changeBOD = (e) => setBOD(e.target.value);
-  const changeSize = (e) => setSize(e.target.value);
+  const changeAge = (e) => setAge(e.target.value);
+  const changeSize = (e) =>  setSize(e.target.value);
   const changeBreed = (e) => setBreed(e.target.value);
 
   const onSubmit = (e) => {
     e.preventDefault();
     submitForm({
-      name, BOD, size, breed, gender
+      name, age, size, breed, gender
     });
     changePage(2)
   }
@@ -40,19 +40,20 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
           />
         </div>
         <div>
-          <label>BOD</label>
+          <label>Age</label>
           <input
-            type="date"
-            onChange={(e) => changeBOD(e)}
+            type="text"
+            onChange={(e) => changeAge(e)}
           />
         </div>
         <div>
           <label>Size</label>
-          <select onChange={(e) => changeSize(e)}>
-            <option>Tiny (1kg - 4kg)</option>
-            <option>Small (4kg - 9kg)</option>
-            <option>Medium (9kg - 20kg)</option>
-            <option>Big (9kg - 20kg)</option>
+          <select required onChange={(e) => changeSize(e)}>
+            <option value="">Select size</option>
+            <option value="tiny">Tiny (1kg - 4kg)</option>
+            <option value="small"> Small (4kg - 9kg)</option>
+            <option value="medium">Medium (9kg - 20kg)</option>
+            <option value="big">Big (9kg - 20kg)</option>
           </select>
         </div>
         <div>
@@ -71,7 +72,7 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
                 type="radio"
                 name="gender"
                 id="female"
-                onClick={() => setGender("female")}
+                onClick={() => setGender(false)}
               />
             </div>
             <div>
@@ -80,7 +81,7 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
                 type="radio"
                 name="gender"
                 id="male"
-                onClick={() => setGender("male")}
+                onClick={() => setGender(true)}
               />
             </div>
           </div>
