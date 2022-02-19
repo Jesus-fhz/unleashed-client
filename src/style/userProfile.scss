@@ -1,0 +1,36 @@
+.userProfile {
+  .userProfile-innerbox {
+    width: fit-content;
+    border: 1px solid blue;
+    margin: 100px auto 0;
+
+    .img-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: gray;
+      margin-bottom: 20px;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    h2,
+    p {
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1.6rem;
+      line-height: 1.4;
+    }
+  }
+}
