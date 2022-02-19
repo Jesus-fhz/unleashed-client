@@ -1,6 +1,5 @@
 import React, {useState } from 'react';
 import { PetRegisterFormFirst, PetRegisterFormSecond } from '../../components/PetRegisterForm';
-import axios from 'axios';
 import '../../style/registerPet.scss'
 
 import axios from 'axios';
