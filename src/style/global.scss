@@ -1,144 +1,152 @@
-@import '/node_modules/reset-css/sass/reset';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import "/node_modules/reset-css/sass/reset";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 body {
   // font-family: ;
   // we can use a "rem" with this
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1rem;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 $width: 90vw;
 $max-width: 1280px;
-$background-color: #555B6E;
-$primary-color: #89B0AE;
-$secondary-color: #BEE3DB;
-$ttertiary-color: #FFD6BA;
-$light-color: #FAF9F9;
-
+$background-color: #555b6e;
+$primary-color: #89b0ae;
+$secondary-color: #bee3db;
+$ttertiary-color: #ffd6ba;
+$light-color: #faf9f9;
 
 .container {
   max-width: $max-width;
   margin: 0 auto;
-  padding: 0 20px
+  padding: 0 20px;
 }
 
-.flex{
-  display:  flex;
+.flex {
+  display: flex;
   height: 100%;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 /*NAV-BAR*/
-.navbar{
-  height: 70px;
-  width: 100%;
-  background-color: #555B6E;
-}
-.navbar ul{
-  display: flex;
-}
-.navbar .flex{
-  justify-content: space-between;
-}
+// .navbar{
+//   height: 70px;
+//   width: 100%;
+//   background-color: #555B6E;
+// }
+// .navbar ul{
+//   display: flex;
+// }
+// .navbar .flex{
+//   justify-content: space-between;
+// }
 
-.navbar .logo{
-  font-size: 2rem;
-  color: #FAF9F9;
-}
+// .navbar .logo{
+//   font-size: 2rem;
+//   color: #FAF9F9;
+// }
 
-.navbar a{
-  color: #FAF9F9;
-  text-decoration:none;
-  padding: 10px;
-  margin: 0 5px;
-  font-weight: 300;
-  transition: 1s ease-in-out;
-}
+// .navbar a{
+//   color: #FAF9F9;
+//   text-decoration:none;
+//   padding: 10px;
+//   margin: 0 5px;
+//   font-weight: 300;
+//   transition: 1s ease-in-out;
+// }
 
-.navbar a:hover{
-  border-bottom: 2px #FFFFFF solid;
-  
-}
+// .navbar a:hover{
+//   border-bottom: 2px #FFFFFF solid;
+
+// }
 
 /*** TEXT SIZES ***/
-.sm-text{
+.sm-text {
   font-size: 1rem;
 }
-.md-text{
+.md-text {
   font-size: 2rem;
 }
-.lg-text{
+.lg-text {
   font-size: 3rem;
 }
-.xl-txt{
+.xl-txt {
   font-size: 4rem;
 }
 
 /*** Margins Y ***/
-.my-1{
+.my-1 {
   margin: 1rem 0;
 }
 .my-2 {
-  margin:1.5rem 0;
+  margin: 1.5rem 0;
 }
 .my-3 {
-  margin:2rem 0;
+  margin: 2rem 0;
 }
 .my-4 {
-  margin:3rem 0;
+  margin: 3rem 0;
 }
 .my-5 {
-  margin:4rem 0;
+  margin: 4rem 0;
 }
 
 /*** Margins ***/
 
 .m-1 {
-  margin:1.5rem;
+  margin: 1.5rem;
 }
 .m-2 {
-  margin:1.5rem;
+  margin: 1.5rem;
 }
 .m-3 {
-  margin:2rem;
+  margin: 2rem;
 }
 .m-4 {
-  margin:3rem;
+  margin: 3rem;
 }
 .m-5 {
-  margin:4rem;
+  margin: 4rem;
 }
 
 /* Paddings  Y */
 .py-1 {
-  padding:1rem 0;
+  padding: 1rem 0;
 }
 .py-2 {
-  padding:1.5rem 0;
+  padding: 1.5rem 0;
 }
 .py-3 {
-  padding:2rem 0;
+  padding: 2rem 0;
 }
 .py-4 {
-  padding:3rem 0;
+  padding: 3rem 0;
 }
 .py-5 {
-  padding:4rem 0;
+  padding: 4rem 0;
 }
 
 /*** Paddings ***/
 .p-1 {
-  padding:1rem;
+  padding: 1rem;
 }
 .p-2 {
-  padding:1.5rem;
+  padding: 1.5rem;
 }
 .p-3 {
-  padding:2rem;
+  padding: 2rem;
 }
 .p-4 {
-  padding:3rem;
+  padding: 3rem;
 }
 .p-5 {
-  padding:4rem;
+  padding: 4rem;
 }
