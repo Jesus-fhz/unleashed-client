@@ -1,44 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchUserPets } from '../services/pets';
 import '../style/userPetList.scss'
 
 const UserPetList = () => {
   const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     // fetch data here : user's all pets
 
-    // data = 
-    // setPets([...data])
+    // put example user id
+    fetchUserPets(59)
+      .then((data) => {
+        setPets(data);
+        setLoading(false);
+      })
+      .catch(() => setError(true));
   }, []);
+
 
   return (
     <div className="userPetList">
       <ul>
-        {/* example data */}
-        <li>
-          <div className="img-container">
-            <img src="" alt="" />
-          </div>
-          <div>
-            <h3>Pet name</h3>
-            <p>Breed here</p>
-            <p>2 Years old</p>
-            <Link to="/">Change profile</Link>
-          </div>
-        </li>
-
-        {/* {pets.data.map((pet) => (
+        {pets.map((pet) => (
           <li key={pet.id}>
-            <img src={pet.image} alt={pet.name} />
+            <div className="img-container">
+              <img src={pet.image} alt={pet.name} />
+            </div>
             <div>
               <h3>{pet.name}</h3>
               <p>{pet.breed}</p>
               <p>{pet.BOD}</p>
             </div>
           </li>
-        ))} */}
-
+        ))}
       </ul>
     </div>
   )
