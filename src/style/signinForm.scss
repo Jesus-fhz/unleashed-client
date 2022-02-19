@@ -1,0 +1,48 @@
+.signinForm {
+  form {
+    margin-bottom: 30px;
+
+    > input {
+      all: unset;
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border: 1px solid black;
+      border-radius: 20px;
+      font-size: 1.6rem;
+
+      &.error {
+        border: 1px solid red;
+      }
+    }
+
+    > div {
+      width: fit-content;
+      margin: 0 auto 10px;
+
+      label {
+        font-size: 1.6rem;
+      }
+    }
+
+    button {
+      @extend input;
+      margin-top: 30px;
+      background: black;
+      text-align: center;
+      color: white;
+    }
+  }
+
+  .signinBtn {
+    all: unset;
+    display: block;
+    width: 100%;
+    font-size: 1.6rem;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

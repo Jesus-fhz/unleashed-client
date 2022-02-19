@@ -1,0 +1,25 @@
+.signin {
+  width: 100vw;
+  height: 100vh;
+
+  .signin-innerbox {
+    width: 380px;
+    padding: 100px 50px;
+    border-radius: 20px;
+    margin: 5vh auto 0;
+
+    border: 1px solid red;
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 6rem;
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 50px;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+  }
+}
