@@ -1,0 +1,69 @@
+.petRegisterForm {
+  > p {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  &.--first form > div {
+    margin-bottom: 20px;
+    label,
+    input {
+      display: block;
+    }
+
+    label {
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    &.gender {
+      p {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+      }
+
+      > div {
+        display: flex;
+        gap: 20px;
+
+        label,
+        input {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  &.--second form > div {
+    margin-bottom: 20px;
+
+    label {
+      font-size: 1.6rem;
+    }
+
+    &.btn-container {
+      width: fit-content;
+      display: flex;
+      gap: 10px;
+      margin: 40px auto 0;
+    }
+  }
+
+  form button {
+    all: unset;
+    display: block;
+    padding: 10px 30px;
+    margin: 0 auto;
+    border-radius: 20px;
+    border: 1px solid black;
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+}
