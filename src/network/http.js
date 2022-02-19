@@ -24,11 +24,11 @@ const get = async (url, params) => {
   return res;
 }
 
-const push = async (url, params) => {
+const post = async (url, params) => {
   let res;
 
   try {
-    res = await axios.push(`${BASE_URL}${url}`, {
+    res = await axios.post(`${BASE_URL}${url}`, {
       ...params
     });
   }catch(err) {
@@ -43,4 +43,4 @@ const push = async (url, params) => {
   return res;
 }
 
-export {get, push};
+export {get, post};
