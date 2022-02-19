@@ -1,0 +1,16 @@
+.registerPet {
+  width: 100vw;
+
+  .registerPet-innerbox {
+    width: 500px;
+    margin: 5vw auto;
+    padding: 30px;
+    border: 1px solid red;
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 3.6rem;
+      text-align: center;
+    }
+  }
+}
