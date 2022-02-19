@@ -3,7 +3,7 @@ import SignupForm from '../components/SignupForm';
 import SigninForm from '../components/SigninForm';
 import '../style/signin.scss';
 
-const Signin = () => {
+const Signin = ({ onSignUp, onSignIn }) => {
   const [isSignin, setIsSignin] = useState(true);
 
   const swapForm = () => {

@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import '../style/signinForm.scss'
 
 const SignupForm = ({swapForm}) => {
+  const authContext = useContext(AuthContext);
+
+  const [error, setError] = useState(false);
   const [isWalker, setIsWalker] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -28,13 +32,16 @@ const SignupForm = ({swapForm}) => {
 
     console.log(email, username, password, isWalker);
 
-    // signup axios post here
+    authContext.onSignUp({
+      email, username, password, isWalker
+    })
   }
 
 
   return (
     // named this "signinForm" since styling is same
     <div className="signinForm">
+      {error || <p>Fail to signup</p>}
       <form onSubmit={(e) => submitForm(e)}>
         <div>
           <label>Are you a dog walker?</label>
@@ -42,7 +49,7 @@ const SignupForm = ({swapForm}) => {
             type="checkbox"
             checked={isWalker}
             onChange={(e) => changeUserType(e)}
-           />
+          />
         </div>
         <input 
           required 
