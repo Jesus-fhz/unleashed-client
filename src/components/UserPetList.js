@@ -8,36 +8,51 @@ const UserPetList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // fetch user's all pets when the component is rendered
   useEffect(() => {
-    // fetch data here : user's all pets
-
     // put example user id
-    fetchUserPets(59)
-      .then((data) => {
-        setPets(data);
-        setLoading(false);
-      })
-      .catch(() => setError(true));
+    fetchUserPets(75)
+      .then((data) => setPets(data))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   }, []);
 
 
   return (
-    <div className="userPetList">
-      <ul>
-        {pets.map((pet) => (
-          <li key={pet.id}>
-            <div className="img-container">
-              <img src={pet.image} alt={pet.name} />
-            </div>
-            <div>
-              <h3>{pet.name}</h3>
-              <p>{pet.breed}</p>
-              <p>{pet.BOD}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      {
+        loading === true && error === false
+        ?
+        <p>loading...</p>
+        :
+        loading === false && error === true
+        ?
+        <p>error...</p>
+        :
+        <div className="userPetList">
+          <ul>
+            {pets.map((pet) => (
+              <li key={pet.id}>
+                <div className="item-innerbox">
+                  <div className="img-container">
+                    <img src={pet.image} alt={pet.name} />
+                  </div>
+                  <div>
+                    <h3>{pet.name}</h3>
+                    <p>{pet.breed}</p>
+                    <p>{pet.age}</p>
+                  </div>
+                </div>
+                <div className="item-btnBox">
+                  <Link to="/">Edit info</Link>
+                  <Link to="/">Delete</Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      }
+    </>
   )
 }
 
