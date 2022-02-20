@@ -8,7 +8,7 @@ const Signin = ({ onSignUp, onSignIn }) => {
 
   const swapForm = () => {
     isSignin ? setIsSignin(false) : setIsSignin(true);
-  }
+  } 
 
   return (
     <div className="signin">
