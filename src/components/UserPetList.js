@@ -24,14 +24,14 @@ const UserPetList = () => {
   return (
     <>
       {
-        // loading === true && error === false
-        // ?
-        // <p>loading...</p>
-        // :
-        // loading === false && error === true
-        // ?
-        // <p>error...</p>
-        // :
+        loading === true && error === false
+        ?
+        <p>loading...</p>
+        :
+        loading === false && error === true
+        ?
+        <p>error...</p>
+        :
         <div className="userPetList">
           <ul>
             {pets.map((pet) => (
@@ -40,7 +40,7 @@ const UserPetList = () => {
                   <div className="img-container">
                     <img src={pet.image} alt={pet.name} />
                   </div>
-                  <div>
+                  <div className="text-container">
                     <h3>{pet.name}</h3>
                     <p>{pet.breed}</p>
                     <p>{pet.age}</p>
