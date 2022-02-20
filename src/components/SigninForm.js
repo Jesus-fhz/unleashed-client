@@ -27,20 +27,26 @@ const SigninForm = ({swapForm}) => {
 
   return (
     <div className="signinForm">
-      {error || <p>Fail to login</p>}
+      {/* {error || <p className="error-msg">Fail to login</p>} */}
       <form onSubmit={(e) => submitForm(e)}>
-        <input 
-          required 
-          type="text" 
-          placeholder='Email'
-          onChange={(e) => changeEmail(e)}
-        />
-        <input 
-          required 
-          type="password" 
-          placeholder='Password'
-          onChange={(e) => changePassword(e)}
-        />
+        <div>
+          {/* <label>Email address</label> */}
+          <input 
+            required 
+            type="text" 
+            placeholder='Email'
+            onChange={(e) => changeEmail(e)}
+          />
+        </div>
+        <div>
+          {/* <label>Password</label> */}
+          <input 
+            required 
+            type="password" 
+            placeholder='Password'
+            onChange={(e) => changePassword(e)}
+          />
+        </div>
         <button type="submit">
           SignIn
         </button>

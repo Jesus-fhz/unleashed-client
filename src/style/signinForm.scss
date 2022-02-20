@@ -1,46 +1,74 @@
 .signinForm {
+  .error-msg {
+    position: absolute;
+  }
+
   form {
-    margin-bottom: 30px;
-
-    > input {
-      all: unset;
-      box-sizing: border-box;
-      display: block;
-      width: 100%;
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      border: 1px solid black;
-      border-radius: 20px;
-      font-size: 1.6rem;
-
-      &.error {
-        border: 1px solid red;
-      }
-    }
+    margin: 50px 0;
 
     > div {
-      width: fit-content;
-      margin: 0 auto 10px;
+      width: 320px;
 
       label {
+        display: block;
+        margin-top: 20px;
+        font-size: 1.4rem;
+        color: gray;
+        line-height: 1.6;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        all: unset;
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12px 10px;
+        border: 1px solid rgb(223, 223, 223);
+        border-radius: 10px;
         font-size: 1.6rem;
+      }
+
+      input[type="password"]:last-child {
+        margin-top: 5px;
+        &.error {
+          border: 1px solid rgb(218, 0, 0);
+        }
+      }
+
+      &.checkbox {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        label {
+          all: unset;
+          font-size: 1.6rem;
+          color: black;
+        }
       }
     }
 
-    button {
-      @extend input;
-      margin-top: 30px;
+    button[type="submit"] {
+      all: unset;
+      display: block;
+      width: 100%;
+      margin-top: 40px;
+      padding: 15px 0;
       background: black;
-      text-align: center;
+      border-radius: 10px;
+      font-size: 1.6rem;
       color: white;
+      text-align: center;
+      cursor: pointer;
     }
   }
 
-  .signinBtn {
+  button {
     all: unset;
     display: block;
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     text-align: center;
     text-decoration: underline;
     cursor: pointer;
