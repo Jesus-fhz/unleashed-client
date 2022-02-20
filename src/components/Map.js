@@ -7,31 +7,59 @@ const containerStyle = {
   height: '400px'
 };
 
-const center = {
-  lat: -33.8724235,
-  lng: 151.2591179
-};
 
+// TODO: change this to be a hook
 class Map extends Component {
 
   state = {
-    nearby_walkers: [] //TODO: thisn needs to be an array of pins on the map that show up. 
+    nearby_walkers: [],
+    current_position: {lat: -33.8724235, lng: 151.2591179}, //TODO: make this updating whenever. 
   }
   
   componentDidMount() {
-    // TODO: make the axios call to the backend to get the array of current nearby users. 
-
+    this.getCurrentLocation();
     this.loadWalkers();
   }
+
+  componentDidUpdate() {
+    // this.loadWalkers()
+  }
   
+  getCurrentLocation() {
+    
+    
+    let startPos; 
+    
+    let lat, lng;
+    let promise =  new Promise(function(resolve, reject) {
+      navigator.geolocation.getCurrentPosition( function(position){
+        lat = position.coords.latitude
+        lng = position.coords.longitude
+        resolve({lat, lng})
+      })
+    })
+    
+    promise.then(function(value){
+      console.log('promise resolved coords', value.lat, value.lng);
+      this.setState({lat: value.lat, lng: value.lng})
+    })
+    
+    // this.setState({current_position: coords});
+
+    // console.log({lat: -33.8724235, lng: 151.2591179});
+    // console.log(this.state.current_position);
+  }
+  
+
+  // Gets the walkers values
   async loadWalkers() {
     try{
-      let res = await axios.get(`http://localhost:3000/users/find/-33.8724235/151.2591179`);
-      this.setState({nearby_walkers: res.data})
-      console.log('The near by walkers are:', this.state.nearby_walkers)
-      console.log('example geocode:',this.state.nearby_walkers[0].geocode_lat)
+      let res = await axios.get(`http://localhost:3000/users/find/${this.state.current_position.lat}/${this.state.current_position.lng}`);
+      this.setState({nearby_walkers: res.data}); 
+      
+      console.log('The near by walkers are:', this.state.nearby_walkers);
     }catch (err){
-      console.log('Nearby walkers AJAX ERROR:', err)
+      console.log('Nearby walkers AJAX ERROR:', err);
     }
   }
   
@@ -42,18 +70,20 @@ class Map extends Component {
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
+          center={this.state.current_position}
           zoom={13}
         >
           { /* Child components, such as markers, info windows, etc. */ }
-          
+          <Marker
+          position={this.state.current_position}
+          ></Marker>
           {
             this.state.nearby_walkers.map( (el, i) => <Marker
-              key={el.id}
+              key={i}
               icon="https://i.imgur.com/kEXCUkc.png?1"
               // onLoad={onLoad}
               // position={el.geocode_lat, el.geocode_lng}
-              position={center}
+              position={{lat: el.latitude, lng: el.longitude}}
               />
             )
           }
@@ -64,13 +94,9 @@ class Map extends Component {
   }
 }
 
-// const Map = () => { //TODO: Plug in the actual to and from directions for the walker when they accept a job.
+// const Map = () => { //TODO: Plug in the actual to and from directions for the walker when they accept a job. NOTE: this just for showing the route to and from. 
 //   return (
 //     <div className="map">
-      
-      
-      
-      
 //       <iframe
 //           width="450"
 //           height="250"
