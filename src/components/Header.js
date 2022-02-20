@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../style/header.scss'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const authContext = useContext(AuthContext);
   const handleOpen = () => { 
     isOpen ? setIsOpen(false) : setIsOpen(true);
   }
@@ -23,6 +24,8 @@ const Header = () => {
           {/* <Link to="/">Home</Link> */}
           <Link to="/">My Pet</Link>
           <Link to="/owner/profile">User</Link>
+          {console.log('context',authContext)}
+          <button onClick={()=>{authContext.onLogout()}} >Log Out</button>
         </nav>
       </aside>
     </div>

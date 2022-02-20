@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
-import axios from 'axios';
+import { get, post } from "../network/http";
+
 
 const containerStyle = {
   // FIXME: how to change this responsively in css?
