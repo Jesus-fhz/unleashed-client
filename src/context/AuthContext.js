@@ -12,6 +12,7 @@ export const AuthProvider = ({children}) => {
   //   id: "",
   //   name: ""
   // }
+
   const [user, setUser] = useState(undefined);
 
   // TODO: we need a endpoint for this.
@@ -20,6 +21,7 @@ export const AuthProvider = ({children}) => {
 
   // when the app is rendered, check if they have jwt in localStorage, and use it
     useEffect(() => {
+      // if there is no token in the local storage
       if (getToken() !== null ){
         return getPayload(getToken())
         .then(data =>{
