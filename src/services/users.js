@@ -14,7 +14,6 @@ const signUp  = async ({userInfo}) => {
 
 const fetchUserInfo = async (user_id) => {
   let res = await get(`/users/${user_id}.json`);
-
   return res.data;
 }
 
