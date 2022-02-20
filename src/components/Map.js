@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-<<<<<<< HEAD
-const Map = () => {
-  const [data, setData] = useState();
-  
-  useEffect(() => {
-    // data fetching here
-  },[]);
-
-=======
 const Map = () => { //TODO: Plug in the actual to and from directions for the walker when they accept a job.
->>>>>>> e281411f015a1d0c9caf788ef48e666047c78b7c
   return (
     <div className="map">
       <iframe
