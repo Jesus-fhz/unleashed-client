@@ -27,7 +27,6 @@ const SigninForm = ({swapForm}) => {
 
   return (
     <div className="signinForm">
-      {/* {error || <p className="error-msg">Fail to login</p>} */}
       <form onSubmit={(e) => submitForm(e)}>
         <div>
           {/* <label>Email address</label> */}
@@ -51,6 +50,10 @@ const SigninForm = ({swapForm}) => {
           SignIn
         </button>
       </form>
+
+      <p className={error ? "error-msg active" : "error-msg"}>
+          Invalid email or password.
+      </p>
 
       <button 
         className="signinBtn"

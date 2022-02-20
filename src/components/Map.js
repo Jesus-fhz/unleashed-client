@@ -3,8 +3,9 @@ import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
 import axios from 'axios';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  // FIXME: how to change this responsively in css?
+  width: window.innerWidth - 340,
+  height: window.innerHeight
 };
 
 

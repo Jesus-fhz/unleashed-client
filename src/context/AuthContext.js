@@ -58,8 +58,8 @@ export const AuthProvider = ({children}) => {
   };
 
   const onLogout = () => {
-    return logout
-      .then(() => setUser(undefined));
+    logout();
+    setUser(undefined);
   };
 
   console.log('user states', user);

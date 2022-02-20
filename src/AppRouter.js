@@ -12,10 +12,8 @@ import './style/global.scss';
 const AppRouter = () => {
   return (
     <Router>
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/signin" element={<Signin />} /> */}
         {/* <Route path="/owner" element={<Home />} /> */}
         <Route path="/owner/profile" element={<OwnerProfile />} />
         <Route path="/owner/register" element={<RegisterPet />} />
