@@ -12,15 +12,26 @@ const Signin = ({ onSignUp, onSignIn }) => {
 
   return (
     <div className="signin">
-      <div className="signin-innerbox">
-        <h1>Unleashed</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec blandit purus.</p>
+      <div className="signin-infoBox">
+        <div className='signin-contents'>
+          <h1>Unleashed</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec blandit purus.</p>
+          <img src="" alt="" />
+        </div>
+      </div>
+      <div className="signin-formBox">
         {
           isSignin
           ?
-          <SigninForm swapForm={swapForm} />
+          <div className="signin-contents">
+            <h1>Log in</h1>
+            <SigninForm swapForm={swapForm} />
+          </div>
           :
-          <SignupForm swapForm={swapForm} />
+          <div className="signin-contents --signup">
+            <h1>Sign up</h1>
+            <SignupForm swapForm={swapForm} />
+          </div>
         }
       </div>
     </div>
