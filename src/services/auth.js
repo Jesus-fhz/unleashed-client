@@ -2,15 +2,16 @@ import { get, post, setHeaders,clearHeaders } from "../network/http";
 import { clearToken, getToken, setToken } from "../localStorage/token";
 
 
-const getPayload = async (token)=>{
-  const getPayload = await get(`/users/current`,{
+// helper function that fetches the JWT token through the API connection to our Rails server
+const getPayload = async (token) => {
+  const getPayload = await get(`/users/current`, {
     headers: {
       'Authorization': "Bearer " + token
     }
   })
   setHeaders(token)
   return getPayload
-}
+};
 
 const signIn = async (email, password) => {
   const res = await post(`/user_token`, {
@@ -24,8 +25,6 @@ const signIn = async (email, password) => {
   setToken(token);
   return payload;
 }
-
-
 
 const checkSignIn = async () => {
   // get token from localStorage
