@@ -41,9 +41,9 @@ const SignupForm = ({swapForm}) => {
   return (
     // named this "signinForm" since styling is same
     <div className="signinForm">
-      {error || <p>Fail to signup</p>}
+      {/* {error || <p>Fail to signup</p>} */}
       <form onSubmit={(e) => submitForm(e)}>
-        <div>
+        <div className='checkbox'>
           <label>Are you a dog walker?</label>
           <input 
             type="checkbox"
@@ -51,34 +51,41 @@ const SignupForm = ({swapForm}) => {
             onChange={(e) => changeUserType(e)}
           />
         </div>
-        <input 
-          required 
-          type="text" 
-          placeholder='Email'
-          onChange={(e) => changeEmail(e)}
-        />
-        <input 
-          required 
-          type="text" 
-          placeholder='Username' 
-          onChange={(e) => changeUsername(e)}
-        />
-        <input 
-          required 
-          type="password" 
-          placeholder='Password'
-          onChange={(e) => changePassword(e)}
-        />
-        <input
-          required 
-          type="password" 
-          placeholder='Confirm password'
-          className={isPasswordConfirmed ? "" : "error"}
-          onChange={(e) => changePasswordConfirm(e)}
-        />
-        <button type="submit">
-          SignUp
-        </button>
+        <div>
+          <label>Email address</label>
+          <input 
+            required 
+            type="text" 
+            placeholder='Email'
+            onChange={(e) => changeEmail(e)}
+          />
+        </div>
+        <div>
+          <label>Username</label>
+          <input 
+            required 
+            type="text" 
+            placeholder='Username' 
+            onChange={(e) => changeUsername(e)}
+          />
+        </div>
+        <div>
+          <label>Password</label>
+          <input 
+            required 
+            type="password" 
+            placeholder='Password'
+            onChange={(e) => changePassword(e)}
+          />
+          <input
+            required 
+            type="password" 
+            placeholder='Confirm password'
+            className={isPasswordConfirmed ? "" : "error"}
+            onChange={(e) => changePasswordConfirm(e)}
+          />
+        </div>
+        <button type="submit">SignUp</button>
       </form>
       <button 
         className="signinBtn"

@@ -1,6 +1,7 @@
-import { get, post } from "../network/http";
+import { get, post, setHeaders } from "../network/http";
 import { clearToken, getToken, setToken } from "../localStorage/token";
 import { AuthContext } from '../context/AuthContext';
+import axios from "axios";
 
 // helper function that fetches the JWT token through the API connection to our Rails server
 const getPayload = async (token) => {
@@ -9,6 +10,7 @@ const getPayload = async (token) => {
       'Authorization': "Bearer " + token
     }
   })
+  setHeaders(token);
   return getPayload
 };
 

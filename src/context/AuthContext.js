@@ -73,6 +73,7 @@ export const AuthProvider = ({children}) => {
         ?
         children
         :
+        // children
         <Signin onSignIn={onSignIn} onSignUp={onSignUp} />
       }
     </AuthContext.Provider>
