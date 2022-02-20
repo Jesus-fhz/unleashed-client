@@ -1,14 +1,13 @@
 .userProfile {
   .userProfile-innerbox {
     width: fit-content;
-    border: 1px solid blue;
     margin: 100px auto 0;
 
     .img-container {
-      width: 200px;
-      height: 200px;
+      width: 240px;
+      height: 240px;
       margin: 0 auto;
-      border-radius: 50%;
+      border-radius: 10px;
       overflow: hidden;
       background: gray;
       margin-bottom: 20px;
@@ -26,12 +25,45 @@
 
     h2 {
       margin-bottom: 20px;
-      font-size: 1.8rem;
+      font-size: 2.4rem;
+      font-weight: 600;
     }
 
-    p {
-      font-size: 1.6rem;
-      line-height: 1.4;
+    div {
+      margin-bottom: 10px;
+
+      p {
+        font-size: 1.6rem;
+        line-height: 1.4;
+
+        &:first-child {
+          font-size: 1.4rem;
+          color: gray;
+        }
+      }
+    }
+
+    .btn-container {
+      width: fit-content;
+      margin: 30px auto 0;
+      display: flex;
+      gap: 10px;
+
+      > * {
+        all: unset;
+        display: block;
+        width: fit-content;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: #3d5a80;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+
+        &.logoutBtn {
+          background-color: #ee6c4d;
+        }
+      }
     }
   }
 }

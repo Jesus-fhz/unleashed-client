@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SignupForm from '../components/SignupForm';
 import SigninForm from '../components/SigninForm';
+import dog_image from '../assets/images/login_dog2.png'
 import '../style/signin.scss';
 
 const Signin = ({ onSignUp, onSignIn }) => {
@@ -15,8 +16,8 @@ const Signin = ({ onSignUp, onSignIn }) => {
       <div className="signin-infoBox">
         <div className='signin-contents'>
           <h1>Unleashed</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec blandit purus.</p>
-          <img src="" alt="" />
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br />Curabitur nec blandit purus.</p>
+          <img src={dog_image} alt="dog" />
         </div>
       </div>
       <div className="signin-formBox">
