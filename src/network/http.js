@@ -1,6 +1,11 @@
 import axios from "axios";
 
+
 const BASE_URL = 'http://localhost:3000'
+
+const setHeaders = (token) =>{
+  axios.defaults.headers.common['Authorization'] = 'Bearer '+ token ;
+}
 
 const get = async (url, params) => {
   let res;
@@ -43,4 +48,4 @@ const post = async (url, params) => {
   return res;
 }
 
-export {get, post};
+export {get, post, setHeaders};
