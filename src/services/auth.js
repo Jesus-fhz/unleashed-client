@@ -1,35 +1,44 @@
 import { get, post } from "../network/http";
 import { clearToken, getToken, setToken } from "../localStorage/token";
+import { AuthContext } from '../context/AuthContext';
+
+const getPayload = async (token)=>{
+  const getPayload = await get(`/users/current`,{
+    headers: {
+      'Authorization': "Bearer " + token
+    }
+  })
+  return getPayload
+}
 
 const signIn = async (email, password) => {
-  console.log(email, password)
   const res = await post(`/user_token`, {
     auth: {
       email, password
     }
   });
   const token = await res.data.jwt;
-
+  const payload = getPayload(token);
   // set token in localStorage
   setToken(token);
-
-  return token;
+  return payload;
 }
+
+
 
 const checkSignIn = async () => {
   // get token from localStorage
   let token = getToken();
-
-  if(!token) return;
-
+  if(!token) return false;
+  return token
   // TODO: api endpoint for this
-  let res = await get(`what is this?`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
+  // let res = await get(`what is this?`, {
+  //   headers: {
+  //     'Authorization': `Bearer ${token}`
+  //   }
+  // })
 
-  return res;
+  // return res;
 }
 
 const signUp  = async ({userInfo}) => {
@@ -50,4 +59,5 @@ export {
   checkSignIn,
   signUp,
   logout,
+  getPayload
 };

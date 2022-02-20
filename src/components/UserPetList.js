@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchUserPets } from '../services/pets';
 import '../style/userPetList.scss'
+import { AuthContext } from '../context/AuthContext';
 
 const UserPetList = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const authContext = useContext(AuthContext);
 
   // fetch user's all pets when the component is rendered
   useEffect(() => {
     // put example user id
-    fetchUserPets(75)
+    fetchUserPets(authContext.user.id)
       .then((data) => setPets(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));
