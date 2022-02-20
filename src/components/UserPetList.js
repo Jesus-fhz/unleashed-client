@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchUserPets } from '../services/pets';
+import profile_icon from '../assets/images/profile_icon.png';
 import '../style/userPetList.scss'
 import { AuthContext } from '../context/AuthContext';
 
@@ -23,38 +24,60 @@ const UserPetList = () => {
   return (
     <>
       {
-        // loading === true && error === false
-        // ?
-        // <p>loading...</p>
-        // :
-        // loading === false && error === true
-        // ?
-        // <p>error...</p>
-        // :
+        loading === true && error === false
+        ?
+        <p>loading...</p>
+        :
+        loading === false && error === true
+        ?
+        <p>error...</p>
+        :
         <div className="userPetList">
-          <ul>
-            {pets.map((pet) => (
-              <li key={pet.id}>
-                <div className="item-innerbox">
-                  <div className="img-container">
-                    <img src={pet.image} alt={pet.name} />
+          <h1>
+            <Link to="/">Unleashed</Link>
+          </h1>
+          <div className="main-options">
+            <Link to="/owner/profile">
+              <img src={profile_icon} alt="my page"/>
+              <p>My page</p>
+            </Link>
+            <div>
+              <img src={profile_icon} alt="my page"/>
+              <p>???</p>
+            </div>
+            <div>
+              <img src={profile_icon} alt="my page"/>
+              <p>???</p>
+            </div>
+            <div>
+              <img src={profile_icon} alt="my page"/>
+              <p>???</p>
+            </div>
+          </div>
+          <div className="scroll-container">
+            <ul>
+              {pets.map((pet) => (
+                <li key={pet.id}>
+                  <div className="item-innerbox">
+                    <Link to="/" className="editBtn">Edit</Link>
+                    <div className="img-container">
+                      <img src={pet.image} alt={pet.name} />
+                    </div>
+                    <div className="text-container">
+                      <h3>{pet.name}</h3>
+                      <p className="breed">{pet.breed}, {pet.age} Years old</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3>{pet.name}</h3>
-                    <p>{pet.breed}</p>
-                    <p>{pet.age}</p>
-                  </div>
-                </div>
-                <div className="item-btnBox">
-                  <Link to="/">Edit info</Link>
-                  <Link to="/">Delete</Link>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <Link to="/owner/register">
-            Add a new pet
-          </Link>
+                  <button className="findBtn">
+                    Find a walker
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <Link to="/owner/register" className="addBtn">
+              +
+            </Link>
+          </div>
         </div>
       }
     </>
