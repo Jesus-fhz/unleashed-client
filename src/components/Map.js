@@ -4,8 +4,8 @@ const Map = () => { //TODO: Plug in the actual to and from directions for the wa
   return (
     <div className="map">
       <iframe
-          width="450"
-          height="250"
+          width="1000"
+          height="800"
           frameBorder="0"
           style={{border:0}}
           loading="lazy"
