@@ -13,11 +13,8 @@ const UserPetList = () => {
   // fetch user's all pets when the component is rendered
   useEffect(() => {
     // put example user id
-    fetchUserPets(18)
-      .then((data) => {
-        console.log(data)
-        setPets(data)
-      })
+    fetchUserPets(authContext.user.id) 
+      .then((data) => setPets(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
