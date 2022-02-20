@@ -1,7 +1,6 @@
-import { get, post, setHeaders } from "../network/http";
+import { get, post, setHeaders,clearHeaders } from "../network/http";
 import { clearToken, getToken, setToken } from "../localStorage/token";
-import { AuthContext } from '../context/AuthContext';
-import axios from "axios";
+
 
 const getPayload = async (token)=>{
   const getPayload = await get(`/users/current`,{
@@ -9,7 +8,7 @@ const getPayload = async (token)=>{
       'Authorization': "Bearer " + token
     }
   })
-  setHeaders(token);
+  setHeaders(token)
   return getPayload
 }
 
@@ -51,8 +50,9 @@ const signUp  = async ({userInfo}) => {
   return res.data;
 }
 
-const logout = async () => {
+const logout =  () => {
   // clear the localStorage
+  clearHeaders()
   clearToken();
 }
 
