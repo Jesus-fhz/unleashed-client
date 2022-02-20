@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { checkSignIn, signIn, signUp, logout, getPayload } from '../services/auth';
+import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
 
