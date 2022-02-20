@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { checkSignIn, signIn, signUp, logout } from '../services/auth';
+import { checkSignIn, signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
+import { getToken } from '../localStorage/token';
 
 export const AuthContext = createContext({});
 
@@ -18,10 +19,14 @@ export const AuthProvider = ({children}) => {
   // it'll send our token in LocalStorage, and need to et response with the user's information. 
 
   // when the app is rendered, check if they have jwt in localStorage, and use it
-  // useEffect(() => {
-  //   checkSignIn()
-  //     .then((data) => setUser(data));
-  // },[])
+    useEffect(() => {
+      if (getToken() !== null ){
+        return getPayload(getToken())
+        .then(data =>{
+          setUser(data.data)
+        })
+      }
+    },[])
 
 
   // It'll use "signIn" function from "service/auth" to fetch data.
@@ -30,9 +35,9 @@ export const AuthProvider = ({children}) => {
 
   // TODO: we need to get user information (name?) along with token.
   const onSignIn = (email, password) => {
-    return signIn(email, password)
+      return signIn(email, password)
       .then(data => {
-        setUser(data);
+        setUser(data.data);
         return data;
       });
   };
@@ -56,7 +61,8 @@ export const AuthProvider = ({children}) => {
     return logout
       .then(() => setUser(undefined));
   };
-  
+
+  console.log('user states', user);
 
   return (
     <AuthContext.Provider value={{user, onSignIn, onLogout, onSignUp}}>
