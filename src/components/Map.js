@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
-import axios from 'axios';
+import { get, post } from "../network/http";
+
 
 const containerStyle = {
   width: '400px',
@@ -19,7 +20,7 @@ function Map() {
     
   async function loadWalkers() {
     try{
-      let res = await axios.get(`http://localhost:3000/users/find/${currentPostion.lat}/${currentPostion.lng}`);
+      let res = await get(`/users/find/${currentPostion.lat}/${currentPostion.lng}`);
       setNearbyWalkers(res.data); 
       getCurrentLocation()
       console.log('The near by walkers are:', res.data);

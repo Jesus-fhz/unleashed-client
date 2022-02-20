@@ -7,8 +7,6 @@ import Header from "./components/Header";
 
 import './style/global.scss';
 
-
-
 const AppRouter = () => {
   return (
     <Router>
