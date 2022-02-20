@@ -48,7 +48,7 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
         </div>
         <div>
           <label>Size</label>
-          <select required onChange={(e) => changeSize(e)}>
+          <select required='true' onChange={(e) => changeSize(e)}>
             <option value="">Select size</option>
             <option value="tiny">Tiny (1kg - 4kg)</option>
             <option value="small"> Small (4kg - 9kg)</option>

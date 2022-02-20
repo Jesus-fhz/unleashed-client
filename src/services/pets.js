@@ -1,4 +1,4 @@
-import { get } from "../network/http";
+import { get, post } from "../network/http";
 
 
 const fetchUserPets = async (user_id) => {
@@ -7,4 +7,10 @@ const fetchUserPets = async (user_id) => {
   return res.data;
 }
 
-export {fetchUserPets};
+const saveUserPet = async ({infoPet}) => {
+  let res = await post('/pets.json',{...infoPet});
+  console.log(res);
+  return res.data;
+}
+
+export {fetchUserPets, saveUserPet};
