@@ -10,7 +10,7 @@ const UserProfile = () => {
 
   // fetch user info when the component is rendered
   useEffect(() => {
-    fetchUserInfo(75)
+    fetchUserInfo(18)
       .then((data) => setData(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));

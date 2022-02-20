@@ -11,8 +11,11 @@ const UserPetList = () => {
   // fetch user's all pets when the component is rendered
   useEffect(() => {
     // put example user id
-    fetchUserPets(75)
-      .then((data) => setPets(data))
+    fetchUserPets(18)
+      .then((data) => {
+        console.log(data)
+        setPets(data)
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
@@ -21,14 +24,14 @@ const UserPetList = () => {
   return (
     <>
       {
-        loading === true && error === false
-        ?
-        <p>loading...</p>
-        :
-        loading === false && error === true
-        ?
-        <p>error...</p>
-        :
+        // loading === true && error === false
+        // ?
+        // <p>loading...</p>
+        // :
+        // loading === false && error === true
+        // ?
+        // <p>error...</p>
+        // :
         <div className="userPetList">
           <ul>
             {pets.map((pet) => (
@@ -50,6 +53,9 @@ const UserPetList = () => {
               </li>
             ))}
           </ul>
+          <Link to="/owner/register">
+            Add a new pet
+          </Link>
         </div>
       }
     </>
