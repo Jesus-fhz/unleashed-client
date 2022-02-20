@@ -1,25 +1,54 @@
+@import "./global.scss";
+
 .signin {
   width: 100vw;
   height: 100vh;
 
-  .signin-innerbox {
-    width: 380px;
-    padding: 100px 50px;
-    border-radius: 20px;
-    margin: 5vh auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
-    border: 1px solid red;
+  > div {
+    .signin-contents {
+      width: fit-content;
+      max-width: 80%;
+      height: fit-content;
+      margin: 100px auto 0;
+      padding: 30px;
+
+      &.--signup {
+        margin-top: 70px;
+      }
+    }
+  }
+
+  .signin-infoBox {
+    background: black;
+    // border-bottom-right-radius: 50%;
+    // border-top-right-radius: 50%;
 
     h1 {
       margin-bottom: 10px;
-      font-size: 6rem;
-      text-align: center;
+      font-size: 4.8rem;
+      color: white;
     }
 
     p {
       margin-bottom: 50px;
       font-size: 1.6rem;
-      text-align: center;
+      color: white;
+    }
+
+    img {
+      width: 400px;
+      height: 300px;
+      border: 1px solid red;
+    }
+  }
+
+  .signin-formBox {
+    h1 {
+      margin-bottom: 10px;
+      font-size: 4.8rem;
     }
   }
 }
