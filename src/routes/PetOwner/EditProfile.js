@@ -5,7 +5,6 @@ const EditProfile = () => {
   return (
     <div className="edit_profile">
       <EditOwner />
-      hellooooooooo
     </div>
   )
 };
