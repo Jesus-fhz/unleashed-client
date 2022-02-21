@@ -4,6 +4,7 @@ import '../style/organiseWalkModal.scss';
 const OrganiseWalkModal = ({
   isOpen,
   handleModal,
+  handleFind,
   selectedPet
 }) => {
   const [duration, setDuration] = useState(0);
@@ -19,6 +20,8 @@ const OrganiseWalkModal = ({
 
     // close modal
     handleModal();
+    // show loading effect
+    handleFind();
   }
 
   return (
