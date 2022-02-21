@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
 import axios from 'axios';
+import '../style/map.scss';
 
 const containerStyle = {
   // FIXME: how to change this responsively in css?
@@ -67,6 +68,11 @@ class Map extends Component {
   render() { //TODO: get some locations that are around fairfield
     return (
       <div className="map">
+        {/* TODO: need to find current user's position in map for radar animation */}
+        <div 
+          className={`loading-effect`} 
+          style={{ left: this.state.current_position.lng, top: this.state.current_position.lat}} 
+        />
         <LoadScript
           googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko"
         >
