@@ -16,33 +16,44 @@ const EditOwner = ({handleSubmitter}) => {
     const userId = authContext.user.id;
     console.log('authContext.user:', authContext.user)
     
-    // const changeName = (e) => setName(e.target.value);
-    
     fetchUserInfo(userId)
       .then((data) => setData(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, [authContext.user]);
   
+  // These cannot be in the ComponentDidMount / useEffect
+  const [profileImage, setProfileImage] = useState('');
   const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
+  
+  const handleProfileImageChange = (e) => {
+    console.log(e.target.value);
+    setProfileImage(e.target.value)
+  } 
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault()
-    console.log(ev)
-    handleSubmitter({name, email})
-  }
-
-  const handleNameChange = (ev) => {
-    console.log(ev.target.value);
-    setName(ev.target.value)
+  const handleNameChange = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value)
   }  
   
-  const handleEmailChange = (ev) => {
-    console.log(ev.target.value);
-    setEmail(ev.target.value)
+  const handleAddressChange = (e) => {
+    console.log(e.target.value);
+    setAddress(e.target.value)
   }
 
+  const handleEmailChange = (e) => {
+    console.log(e.target.value);
+    setEmail(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(e)
+    console.log('name:', name)
+    // handleSubmitter({profileImage, name, address, email})
+  }
   // a function that manages what happens on submit
   // TODO: an axios post request to the DB
 
@@ -60,18 +71,18 @@ const EditOwner = ({handleSubmitter}) => {
         <section className="ownerProfile">
           <div className="ownerProfile-innerbox">
           <h1>Edit Profile</h1>
-            <form onSubmit={ (ev) => handleSubmit(ev) } >
+            <form onSubmit={ (e) => handleSubmit(e) } >
               <label> Profile Image </label>
-              {/* <input onChange={ (ev) => handleChange(ev) } type="text" defaultValue={data.profile_image} /> */}
+              <input onChange={ (e) => handleProfileImageChange(e) } type="text" defaultValue={data.profile_image} />
               <br />
               <label> Name </label>
-              <input onChange={ (ev) => handleNameChange(ev) } type="text" defaultValue={data.name} />
+              <input onChange={ (e) => handleNameChange(e) } type="text" defaultValue={data.name} />
               <br />
-              {/* <label> Address </label>
-              <input onChange={ (ev) => handleChange(ev) } type="text" defaultValue={data.address} />
-              <br /> */}
+              <label> Address </label>
+              <input onChange={ (e) => handleAddressChange(e) } type="text" defaultValue={data.address} />
+              <br />
               <label> Email </label>
-              <input onChange={ (ev) => handleEmailChange(ev) } key={'name'} type="text" defaultValue={data.email} />
+              <input onChange={ (e) => handleEmailChange(e) } key={'name'} type="text" defaultValue={data.email} />
               <br />
               <button type='submit'>I AM A BUTTON</button>
             </form>
