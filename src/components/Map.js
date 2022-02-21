@@ -1,60 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
-import { get, post } from "../network/http";
+// import { get, post } from "../network/http";
 import '../style/map.scss';
+import { getNearbyWalkers } from '../services/walkers';
 
 const containerStyle = {
   width: '400px',
   height: '400px'
 };
 
-// TODO: convert all of the logic into hook form.
+
 function Map() {
-  const [currentPostion, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //TODO: consider removing this.
+  //TODO: consider removing this.
+  const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   
-    useEffect( async () => {
+    useEffect(() => {
       // Update the document title using the browser API
-      await loadWalkers();
-    }, [] );
+      // getCurrentLocation();
+      getCurrentLocation();
+      loadWalkers();
+    }, []);
     
-  async function loadWalkers() {
-    try{
-      let res = await get(`/users/find/${currentPostion.lat}/${currentPostion.lng}`);
-      setNearbyWalkers(res.data); 
-      getCurrentLocation()
-      console.log('The near by walkers are:', res.data);
-    }catch (err){
-      console.log('Nearby walkers AJAX ERROR:', err);
-    }
-  }  
+  // async function loadWalkers() {
+  //   try{
+  //     let res = await get(`/users/find/${currentPosition.lat}/${currentPosition.lng}`);
+  //     setNearbyWalkers(res.data); 
+  //     getCurrentLocation()
+  //     console.log('The near by walkers are:', res.data);
+  //   }catch (err){
+  //     console.log('Nearby walkers AJAX ERROR:', err);
+  //   }
+  // }
 
-  function getCurrentLocation() {
-    let lat, lng;
-    let promise =  new Promise(function(resolve, reject) {
-      navigator.geolocation.getCurrentPosition( function(position){
-        lat = position.coords.latitude
-        lng = position.coords.longitude
-        resolve({lat, lng})
-      })
-    })
+  const loadWalkers = async () => {
+    getNearbyWalkers(currentPosition.lat, currentPosition.lng)
+      .then((data) => setNearbyWalkers(data))
+      .catch(() => console.log("loadWalker ERROR"));
+  }
+
+  // function getCurrentLocation() {
+  //   let lat, lng;
+  //   let promise =  new Promise(function(resolve, reject) {
+  //     navigator.geolocation.getCurrentPosition( function(position){
+  //       lat = position.coords.latitude
+  //       lng = position.coords.longitude
+  //       resolve({lat, lng})
+  //     })
+  //   })
     
-    promise.then(function(value){
-      // console.log('promise resolved coords', value.lat, value.lng);
-      setCurrentPosition({lat: value.lat, lng: value.lng});
-      console.log('current location:', {lat: value.lat, lng: value.lng});
-    })
+  //   promise.then(function(value){
+  //     // console.log('promise resolved coords', value.lat, value.lng);
+  //     setCurrentPosition({lat: value.lat, lng: value.lng});
+  //     // console.log('current location:', {lat: value.lat, lng: value.lng});
+  //   })
+  // }
+
+  const getCurrentLocation = () => {
+    const success = (position) => {
+      setCurrentPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+    }
+
+    const error = (err) => {
+      console.log("geolocation error: ", err);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error);
   }
 
   return (
     <div className="map">
       <div 
         className={`loading-effect`} 
-        style={{ left: this.state.current_position.lng, top: this.state.current_position.lat}} 
+        style={{ left: currentPosition.lng, top: currentPosition.lat}} 
       />
       <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
-        <GoogleMap mapContainerStyle={containerStyle} center={currentPostion} zoom={12}> 
-          <Marker position={currentPostion}></Marker>
+        <GoogleMap 
+          mapContainerStyle={containerStyle} 
+          center={currentPosition} 
+          zoom={12}
+        > 
+          <Marker position={currentPosition}/>
           
           { // get all the markers for close by walkers
             nearbyWalkers.map( (el, i) => <Marker
