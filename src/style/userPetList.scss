@@ -94,7 +94,8 @@
         width: fit-content;
         margin: 0 auto;
         padding: 10px 20px;
-        background: #ee6c4d;
+        // background: #ee6c4d;
+        background: #3d5a80;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         font-size: 1.4rem;
@@ -129,18 +130,33 @@
     }
   }
 
-  .addBtn {
+  // .addBtn {
+  //   all: unset;
+  //   display: block;
+  //   width: 30px;
+  //   height: 30px;
+  //   margin: 0 auto;
+  //   border: 2px solid #cacaca;
+  //   border-radius: 50%;
+  //   font-size: 2.4rem;
+  //   color: #cacaca;
+  //   text-align: center;
+  //   line-height: 1.2;
+  //   cursor: pointer;
+  // }
+
+  .organiseBtn {
     all: unset;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 100%;
     margin: 0 auto;
-    border: 2px solid #cacaca;
-    border-radius: 50%;
-    font-size: 2.4rem;
-    color: #cacaca;
+    padding: 10px 0;
+
+    background: #ee6c4d;
+    color: white;
     text-align: center;
-    line-height: 1.2;
+    border-radius: 20px;
+    font-size: 1.4rem;
     cursor: pointer;
   }
 }
