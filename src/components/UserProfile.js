@@ -5,6 +5,8 @@ import { fetchUserInfo } from '../services/users';
 import '../style/userProfile.scss';
 
 const UserProfile = () => {
+
+  // [ data = the name of a new state object that I want to use later. setData = inbuilt function (hook) that enables you to change the previously mentioned state object. = useState({DEFAULT VALUE}). useState is an inbuilt hook function FROM REACT. It returns an array and the first item of the array is the state, the second is the action function to change the first state in the array. ]
   const authContext = useContext(AuthContext);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
