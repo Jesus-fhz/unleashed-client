@@ -160,3 +160,48 @@
     cursor: pointer;
   }
 }
+
+.userPetList-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  top: 0;
+  left: 0;
+  background-color: rgba(83, 83, 83, 0.7);
+  // background-color: rgb(226, 226, 226);
+
+  > div {
+    width: 100%;
+    height: width;
+    border-radius: 50%;
+    margin-top: 100px;
+    padding: 30px;
+    background-color: #3d5a80;
+
+    img {
+      display: block;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    p {
+      font-size: 1.4rem;
+      text-align: center;
+      color: white;
+    }
+  }
+
+  .cancelBtn {
+    all: unset;
+    display: block;
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 10px auto;
+    border-radius: 20px;
+    background-color: #ee6c4d;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+}
