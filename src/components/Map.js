@@ -47,30 +47,24 @@ function Map() {
   }
 
   return (
-    <LoadScript
-    googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko"
-    >
-    
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={currentPostion}
-      zoom={12}
-    > 
-      <Marker
-        position={currentPostion}
-      ></Marker>
-
-      { // get all the markers for close by walkers
-        nearbyWalkers.map( (el, i) => <Marker
-          key={i}
-          icon="https://i.imgur.com/kEXCUkc.png?1"
-          // onLoad={onLoad}
-          position={{lat: el.latitude, lng: el.longitude}}
-          />
-        )
-      }
-    </GoogleMap>
-  </LoadScript>
+    <div className="map">
+      <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
+        <GoogleMap mapContainerStyle={containerStyle} center={currentPostion} zoom={12}> 
+          <Marker position={currentPostion}></Marker>
+          
+          { // get all the markers for close by walkers
+            nearbyWalkers.map( (el, i) => <Marker
+              key={i}
+              icon="https://i.imgur.com/kEXCUkc.png?1"
+              // onLoad={onLoad}
+              position={{lat: el.latitude, lng: el.longitude}}
+              />
+            )
+          }
+          
+        </GoogleMap>
+      </LoadScript>
+    </div>
   )
 }
 
