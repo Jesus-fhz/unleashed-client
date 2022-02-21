@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
 import { get, post } from "../network/http";
-
+import '../style/map.scss';
 
 const containerStyle = {
   width: '400px',
@@ -48,6 +48,10 @@ function Map() {
 
   return (
     <div className="map">
+      <div 
+        className={`loading-effect`} 
+        style={{ left: this.state.current_position.lng, top: this.state.current_position.lat}} 
+      />
       <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
         <GoogleMap mapContainerStyle={containerStyle} center={currentPostion} zoom={12}> 
           <Marker position={currentPostion}></Marker>

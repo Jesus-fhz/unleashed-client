@@ -1,0 +1,37 @@
+.map {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  .loading-effect {
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 30;
+
+    animation: radar 3s infinite 1s;
+  }
+
+  @keyframes radar {
+    0% {
+      width: 0;
+      height: 0;
+    }
+    50% {
+      width: 30vw;
+      height: 30vw;
+    }
+    100% {
+      width: 0;
+      height: 0;
+    }
+  }
+}
