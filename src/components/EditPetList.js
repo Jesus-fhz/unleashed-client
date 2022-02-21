@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { fetchUserPets } from '../services/pets';
-import '../style/userPetList.scss'
 import Nav from './Nav';
+import '../style/userPetList.scss'
 
 
 const UserPetList = () => {
