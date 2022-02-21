@@ -1,10 +1,6 @@
 .signinForm {
-  .error-msg {
-    position: absolute;
-  }
-
   form {
-    margin: 50px 0;
+    margin: 30px 0 10px;
 
     > div {
       width: 320px;
@@ -53,9 +49,9 @@
       all: unset;
       display: block;
       width: 100%;
-      margin-top: 40px;
+      margin-top: 20px;
       padding: 15px 0;
-      background: black;
+      background: #ee6c4d;
       border-radius: 10px;
       font-size: 1.6rem;
       color: white;
@@ -64,10 +60,23 @@
     }
   }
 
+  .error-msg {
+    display: none;
+
+    &.active {
+      display: block;
+      font-size: 1.4rem;
+      text-align: center;
+      color: transparent;
+      color: #ee6c4d;
+    }
+  }
+
   button {
     all: unset;
     display: block;
     width: 100%;
+    margin-top: 20px;
     font-size: 1.4rem;
     text-align: center;
     text-decoration: underline;

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { fetchUserPets } from '../services/pets';
-import edit_icon from '../assets/images/edit_icon.png';
 import dog_icon from '../assets/images/dog_icon.svg';
 import user_icon from '../assets/images/user_icon.svg';
 import home_icon from '../assets/images/home_icon.svg';
@@ -63,9 +62,6 @@ const UserPetList = () => {
               {pets.map((pet) => (
                 <li key={pet.id}>
                   <div className="item-innerbox">
-                    <Link to="/" className="editBtn">
-                      <img src={edit_icon} alt="edit" />
-                    </Link>
                     <div className="img-container">
                       <img src={pet.image} alt={pet.name} />
                     </div>
@@ -74,9 +70,14 @@ const UserPetList = () => {
                       <p className="breed">{pet.breed}, {pet.age} Years old</p>
                     </div>
                   </div>
-                  <button className="findBtn">
-                    Find a walker
-                  </button>
+                  <div className="btn-container">
+                    <Link to="/">
+                      Edit
+                    </Link>
+                    <button>
+                      Delete
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

@@ -35,6 +35,7 @@ const SignupForm = ({swapForm}) => {
     authContext.onSignUp({
       email, username, password, isWalker
     })
+      .catch(() => setError(true));
   }
 
 
@@ -87,6 +88,9 @@ const SignupForm = ({swapForm}) => {
         </div>
         <button type="submit">SignUp</button>
       </form>
+      <p className={error ? "error-msg active" : "error-msg"}>
+          Fail to Sign up.
+      </p>
       <button 
         className="signinBtn"
         onClick={() => swapForm(true)}
