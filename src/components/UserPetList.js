@@ -7,12 +7,14 @@ import dog_icon from '../assets/images/dog_icon.svg';
 import user_icon from '../assets/images/user_icon.svg';
 import home_icon from '../assets/images/home_icon.svg';
 import '../style/userPetList.scss'
+import Nav from './Nav';
 
 
 const UserPetList = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [selectedPet, setSelectedPet] = useState([]);
   const authContext = useContext(AuthContext);
 
   // fetch user's all pets when the component is rendered
@@ -23,6 +25,21 @@ const UserPetList = () => {
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
+
+  const selectPet = (id) => {
+    const isExist = selectedPet.some((item) => item === id);
+
+    if(isExist) {
+      setSelectedPet(selectedPet.filter(item => item !== id));
+    } else {
+      setSelectedPet([...selectedPet, id]);
+    }
+  }
+
+  const organiseWalk = () => {
+    console.log(selectedPet)
+
+  }
 
 
   return (
@@ -40,24 +57,6 @@ const UserPetList = () => {
           <h1>
             <Link to="/">Unleashed</Link>
           </h1>
-          <div className="main-options">
-            <Link to="/owner/profile">
-              <img src={user_icon} alt="my page"/>
-              <p>My page</p>
-            </Link>
-            <Link to="/owner/register">
-              <img src={dog_icon} alt="Add my pet"/>
-              <p>Add my pet</p>
-            </Link>
-            <div>
-              <img src={home_icon} alt="my page"/>
-              <p>???</p>
-            </div>
-            <div>
-              <img src={home_icon} alt="my page"/>
-              <p>???</p>
-            </div>
-          </div>
           <div className="scroll-container">
             <ul>
               {pets.map((pet) => (
@@ -74,16 +73,32 @@ const UserPetList = () => {
                       <p className="breed">{pet.breed}, {pet.age} Years old</p>
                     </div>
                   </div>
-                  <button className="findBtn">
-                    Find a walker
+                  <button 
+                    className="selectBtn"
+                    onClick={() => selectPet(pet.id)}
+                  >
+                    {
+                    selectedPet.some((id) => id === pet.id) 
+                    ?
+                    "Cancel"
+                    :
+                    "Select"
+}
                   </button>
                 </li>
               ))}
             </ul>
-            <Link to="/owner/register" className="addBtn">
+            {/* <Link to="/owner/register" className="addBtn">
               +
-            </Link>
+            </Link> */}
+            {
+            selectedPet.length > 0 
+            ? 
+            <button onClick={() => organiseWalk()}>Organise walk</button> 
+            : ""
+            }
           </div>
+          <Nav />
         </div>
       }
     </>

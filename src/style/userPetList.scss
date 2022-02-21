@@ -15,54 +15,10 @@
     margin-bottom: 20px;
   }
 
-  .main-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    border-bottom: 1px solid rgb(212, 212, 212);
-    padding-bottom: 20px;
-
-    > * {
-      width: 100%;
-      height: fit-content;
-      background: white;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-
-      img {
-        display: block;
-        width: 24px;
-        margin: 0 auto 10px;
-        opacity: 0.3;
-      }
-
-      p {
-        font-size: 1.2rem;
-        color: rgb(150, 150, 150);
-        text-align: center;
-      }
-
-      &:hover {
-        img {
-          filter: invert(55%) sepia(37%) saturate(537%) hue-rotate(159deg)
-            brightness(92%) contrast(86%);
-        }
-
-        p {
-          color: #98c1d9;
-        }
-      }
-    }
-  }
-
   .scroll-container {
     height: calc(100vh - 28px - 155px - 40px);
-    padding-top: 50px;
+    padding-top: 30px;
     overflow: scroll;
-
-    // border: 1px solid red;
   }
 
   ul {
@@ -132,7 +88,7 @@
         }
       }
 
-      .findBtn {
+      .selectBtn {
         all: unset;
         display: block;
         width: fit-content;
