@@ -4,10 +4,14 @@
   position: relative;
   overflow: hidden;
 
+  > div:not(.loading-effect) {
+    width: 100% !important;
+  }
+
   .loading-effect {
     width: 0;
     height: 0;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 0, 0, 0.3);
     border-radius: 50%;
     position: absolute;
     top: 50%;

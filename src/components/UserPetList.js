@@ -71,7 +71,7 @@ const UserPetList = ({
             handleFind={handleFind}
             selectedPet={selectedPet} 
           />
-          <div className="userPetList">
+          <div className={`userPetList ${!isFinding || "hiding" }`}>
             <h1>
               <Link to="/">Unleashed</Link>
             </h1>
@@ -119,21 +119,6 @@ const UserPetList = ({
               }
             </div>
             <Nav />
-
-            {!isFinding || 
-              <div className="userPetList-overlay">
-                <div>
-                  <img src={dog_image} alt="dog" />
-                  <p>Looking for a walker...</p>
-                </div>
-                <button
-                  className="cancelBtn"
-                  onClick={() => cancelWalk()}
-                >
-                  Cancel
-                </button>
-              </div> 
-            }
           </div>
         </>
       }
