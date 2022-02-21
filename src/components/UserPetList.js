@@ -5,10 +5,14 @@ import { fetchUserPets } from '../services/pets';
 import Nav from './Nav';
 import OrganiseWalkModal from './OrganiseWalkModal';
 import edit_icon from '../assets/images/edit_icon.png';
+import dog_image from '../assets/images/login_dog2.png'
 import '../style/userPetList.scss'
 
 
-const UserPetList = () => {
+const UserPetList = ({
+  handleFind,
+  isFinding
+}) => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -43,6 +47,11 @@ const UserPetList = () => {
     handleModal();
   }
 
+  const cancelWalk = () => {
+    console.log("cancel the walk")
+    handleFind();
+  }
+
 
   return (
     <>
@@ -59,6 +68,7 @@ const UserPetList = () => {
           <OrganiseWalkModal
             isOpen={isModalOpen}
             handleModal={handleModal}
+            handleFind={handleFind}
             selectedPet={selectedPet} 
           />
           <div className="userPetList">
@@ -109,6 +119,21 @@ const UserPetList = () => {
               }
             </div>
             <Nav />
+
+            {!isFinding || 
+              <div className="userPetList-overlay">
+                <div>
+                  <img src={dog_image} alt="dog" />
+                  <p>Looking for a walker...</p>
+                </div>
+                <button
+                  className="cancelBtn"
+                  onClick={() => cancelWalk()}
+                >
+                  Cancel
+                </button>
+              </div> 
+            }
           </div>
         </>
       }
