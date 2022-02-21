@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../style/organiseWalkModal.scss';
 
 const OrganiseWalkModal = ({
@@ -6,6 +6,20 @@ const OrganiseWalkModal = ({
   handleModal,
   selectedPet
 }) => {
+  const [duration, setDuration] = useState(0);
+
+  const changeDuration = (e) => setDuration(e.target.value);
+
+  const submitWalk = (e) => {
+    e.preventDefault();
+
+    console.log("----------------- organise submit data here -------------")
+    console.log(duration)
+    console.log(selectedPet)
+
+    // close modal
+    handleModal();
+  }
 
   return (
     <>
@@ -25,7 +39,6 @@ const OrganiseWalkModal = ({
               &times;
             </button>
             <div className="petInfo">
-              {/* <h2>Organise a walk</h2> */}
               <ul>
                 {
                   selectedPet.map((pet) => (
@@ -42,9 +55,9 @@ const OrganiseWalkModal = ({
                 }
               </ul>
             </div>
-            <form>
+            <form onSubmit={(e) => submitWalk(e)}>
               {/* <label>How long do you ?</label> */}
-              <select>
+              <select onChange={(e) => changeDuration(e)}>
                 <option value="15">15 mins</option>
                 <option value="30">30 mins</option>
                 <option value="45">45 mins</option>
