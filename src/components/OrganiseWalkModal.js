@@ -12,12 +12,10 @@ const OrganiseWalkModal = ({
 
   const submitWalk = (e) => {
     e.preventDefault();
-
     console.log("----------------- organise submit data here -------------")
     console.log(duration)
     console.log(selectedPet)
-
-    // close modal
+    // close 
     handleModal();
   }
 
