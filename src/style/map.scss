@@ -9,15 +9,15 @@
     height: 0;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     z-index: 30;
 
-    animation: radar 3s infinite 1s;
+    &.active {
+      animation: radar 3s infinite 1s;
+    }
   }
 
   @keyframes radar {
