@@ -1,0 +1,77 @@
+@import "./global.scss";
+
+.findWalkerModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 51;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+
+    transition: opacity 0.5s;
+
+    dialog {
+      opacity: 1;
+      transition: opacity 0.3s 3s;
+    }
+  }
+
+  dialog {
+    all: unset;
+    display: block;
+    // width: 500px;
+    padding: 40px;
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    z-index: 52;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s;
+    opacity: 0;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    img {
+      display: block;
+      width: 280px;
+      margin: 0 auto;
+    }
+
+    p {
+      font-size: 1.4rem;
+      text-align: center;
+      color: #ee6c4d;
+      margin-bottom: 20px;
+    }
+
+    button {
+      all: unset;
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 12px 20px;
+      background: #3d5a80;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      font-size: 1.4rem;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
