@@ -10,9 +10,6 @@ const ResisterPet = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-
- 
-
   const changePage = (page) => {
     setCurrentPage(page);
   }
@@ -24,7 +21,7 @@ const ResisterPet = () => {
   const submitSecondForm =  (info) => {
     setPetInfo({...petInfo, ...info});
     savePet({...petInfo,...info});
-  } 
+  }
 
   const savePet = async (data)=>{
     const infoPet = {
@@ -39,14 +36,13 @@ const ResisterPet = () => {
       can_walk_offleash: data.offLeash,
       can_be_petted: data.pet,
       can_walk_with_other_dogs: data.friendly
-    }  
+    }
+
     saveUserPet({infoPet})
       .then((data) =>{setData(data)} )
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }
-
- 
 
   return (
     <div className='registerPet'>
