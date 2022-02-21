@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { fetchUserInfo } from '../services/users';
 import '../style/userProfile.scss';
-import { AuthContext } from '../context/AuthContext';
 
 const UserProfile = () => {
 
@@ -12,10 +11,6 @@ const UserProfile = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
-  const authContext = useContext(AuthContext)
-
-  console.log('HELLLOOOO', authContext.user)
 
   // fetch user info when the component is rendered
   useEffect(() => {

@@ -1,19 +1,28 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { fetchUserInfo } from '../services/users';
 
 const EditOwner = () => {
 
   // This returns a stateful value, and a function to update it. It's basically like creating a custom setState function.
+  const authContext = useContext(AuthContext)
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const authContext = useContext(AuthContext)
+  console.log('authContext.user:', authContext.user)
 
-  console.log('THIS IS THE USER:', authContext.user)
+  // now I need to fetch user info when the component is rendered
+  // useEffect(() => {
+  //   const userId = authContext.user.id;
+
+  //   fetchUserInfo(userId)
+  //     .then((data) => setData(data))
+
+  // })
 
   return(
-    <div>Hello</div>
+    <div>This is the div inside of the return in EditOwner</div>
   )
 
 }
