@@ -1,13 +1,13 @@
 import React from 'react';
-import UserPetList from '../../components/UserPetList';
+import EditPetList from '../../components/EditPetList';
 import UserProfile from '../../components/UserProfile';
 import '../../style/profile.scss';
 
 const Profile = () => {
   return (
     <div className="profile">
+      <EditPetList />
       <UserProfile />
-      <UserPetList />
     </div>
   )
 }

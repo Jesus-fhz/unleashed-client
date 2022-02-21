@@ -3,14 +3,12 @@
 .signin {
   width: 100vw;
   height: 100vh;
-
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 4fr 6fr;
 
   > div {
     .signin-contents {
       width: fit-content;
-      max-width: 80%;
       height: fit-content;
       margin: 100px auto 0;
       padding: 30px;
@@ -22,30 +20,38 @@
   }
 
   .signin-infoBox {
-    background: black;
-    // border-bottom-right-radius: 50%;
-    // border-top-right-radius: 50%;
+    background: #3d5a80;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
 
     h1 {
       margin-bottom: 10px;
       font-size: 4.8rem;
       color: white;
+      text-align: center;
     }
 
     p {
       margin-bottom: 50px;
       font-size: 1.6rem;
       color: white;
+      font-weight: 300;
+      line-height: 1.2;
+      text-align: center;
     }
 
     img {
-      width: 400px;
-      height: 300px;
-      border: 1px solid red;
+      display: block;
+      width: 80%;
+      margin: 0 auto;
+      position: relative;
+      right: 40px;
     }
   }
 
   .signin-formBox {
+    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     h1 {
       margin-bottom: 10px;
       font-size: 4.8rem;

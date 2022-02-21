@@ -1,11 +1,69 @@
 @import "./global.scss";
 
 .userPetList {
-  width: 100%;
-  padding: 20px;
-  background: rgb(202, 202, 202);
-  height: calc(100vh - 37px - 30px);
-  overflow: scroll;
+  width: 340px !important;
+  padding: 10px 30px 0;
+  background: rgb(243, 243, 243);
+  height: 100vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 10;
+
+  > h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .main-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-bottom: 1px solid rgb(212, 212, 212);
+    padding-bottom: 20px;
+
+    > * {
+      width: 100%;
+      height: fit-content;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+
+      img {
+        display: block;
+        width: 24px;
+        margin: 0 auto 10px;
+        opacity: 0.3;
+      }
+
+      p {
+        font-size: 1.2rem;
+        color: rgb(150, 150, 150);
+        text-align: center;
+      }
+
+      &:hover {
+        img {
+          filter: invert(55%) sepia(37%) saturate(537%) hue-rotate(159deg)
+            brightness(92%) contrast(86%);
+        }
+
+        p {
+          color: #98c1d9;
+        }
+      }
+    }
+  }
+
+  .scroll-container {
+    height: calc(100vh - 28px - 155px - 40px);
+    padding-top: 50px;
+    overflow: scroll;
+
+    // border: 1px solid red;
+  }
 
   ul {
     li {
@@ -13,37 +71,120 @@
       border-radius: 20px;
       background: white;
       margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
       .item-innerbox {
-        display: flex;
-        gap: 20px;
+        position: relative;
+        padding-top: 50px;
 
-        .img-container {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          background: gray;
-          overflow: hidden;
+        .editBtn {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 0;
 
           img {
-            width: 100%;
+            width: 20px;
+            opacity: 0.3;
+          }
+        }
+
+        .img-container {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          border: 3px solid rgb(221, 221, 221);
+          background: gray;
+          overflow: hidden;
+          position: absolute;
+          left: 50%;
+          top: -50px;
+          transform: translateX(-50%);
+
+          img {
+            width: 130%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        .text-container {
+          padding-top: 10px;
+          margin-bottom: 20px;
+
+          > * {
+            text-align: center;
+          }
+
+          h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+          }
+
+          p {
+            font-size: 1.4rem;
+            color: gray;
+            margin-bottom: 10px;
           }
         }
       }
 
-      .item-btnBox {
+      .findBtn {
+        all: unset;
+        display: block;
         width: fit-content;
-        margin-left: auto;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background: #ee6c4d;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+      }
+
+      .btn-container {
+        width: fit-content;
+        margin: 0 auto;
+        display: flex;
+        gap: 10px;
+
+        a,
+        button {
+          all: unset;
+          display: block;
+          width: fit-content;
+          padding: 10px 20px;
+          border-radius: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          background: #ee6c4d;
+          color: white;
+          font-size: 1.4rem;
+          cursor: pointer;
+        }
 
         a {
-          border: 1px solid red;
+          background: #3d5a80;
         }
       }
     }
   }
 
-  a {
+  .addBtn {
+    all: unset;
     display: block;
-    margin-top: 30px;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    border: 2px solid #cacaca;
+    border-radius: 50%;
+    font-size: 2.4rem;
+    color: #cacaca;
+    text-align: center;
+    line-height: 1.2;
+    cursor: pointer;
   }
 }

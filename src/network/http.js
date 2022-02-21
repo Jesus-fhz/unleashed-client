@@ -7,6 +7,10 @@ const setHeaders = (token) =>{
   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token ;
 }
 
+const clearHeaders = () =>{
+  axios.defaults.headers.common['Authorization'] = "Undefined";
+}
+
 const get = async (url, params) => {
   let res;
 
@@ -48,4 +52,4 @@ const post = async (url, params) => {
   return res;
 }
 
-export {get, post, setHeaders};
+export {get, post, setHeaders,clearHeaders};
