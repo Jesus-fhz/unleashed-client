@@ -56,7 +56,7 @@ function Map({isFinding}) {
         > 
           <Marker 
             position={currentPosition}
-
+            animation = {2}
           />
 
           
