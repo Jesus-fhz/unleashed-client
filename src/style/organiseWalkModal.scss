@@ -1,0 +1,120 @@
+.organiseWalkModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+
+  .overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  dialog {
+    all: unset;
+    display: block;
+    width: 380px;
+    padding: 50px 30px 30px;
+    background: rgb(235, 235, 235);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .closeBtn {
+      all: unset;
+      display: block;
+      font-size: 2.4rem;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .petInfo {
+      > h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      li {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        background: white;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        .img-container {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 3px solid rgb(211, 211, 211);
+          overflow: hidden;
+          position: relative;
+
+          img {
+            display: block;
+            width: 140%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        .text-container {
+          h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+          }
+
+          p {
+            font-size: 1.4rem;
+            color: gray;
+          }
+        }
+      }
+    }
+
+    form {
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.6rem;
+        text-align: center;
+      }
+
+      select {
+        display: block;
+        margin: 20px 0;
+        width: 100%;
+      }
+
+      button {
+        all: unset;
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background: #ee6c4d;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}
