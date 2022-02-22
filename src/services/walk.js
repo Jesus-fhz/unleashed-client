@@ -31,10 +31,28 @@ const acceptWalk = async (info) => {
   return res.data;
 }
 
+
+const sendLocation = async (info) => {
+  let res = await patch(`/walks/${info.walk_id}.json`, {
+    latitude: info.latitude,
+    longitude: info.longitude
+  });
+
+  return res.data;
+}
+
+const getLocation = async (walk_id) => {
+  let res = await get(`/walks/${walk_id}.json`);
+
+  return res.data;
+}
+
   
 
 export {
   requestWalk, 
   requestPendingWalks,
-  acceptWalk
+  acceptWalk,
+  sendLocation,
+  getLocation
 }

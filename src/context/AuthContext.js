@@ -2,13 +2,14 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
-import { getLocation, sendLocation } from '../services/walkers';
+import { getLocation, sendLocation } from '../services/walk';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
   // [:pending, :accepted, :ongoing, :finished]
   const [status, setStatus] = useState("pending");
+  const [ongoingWalkID, setOngoingWalkID] = useState();
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
 
@@ -36,20 +37,27 @@ export const AuthProvider = ({children}) => {
         intervalID = setInterval(() => {
           // if you are a walker, we will send your location to backend 
           if(user.user_type === "waker") {
-            // need to get their location here
-            const location = {lat: 0, lng: 0};
+            // need to get their location here with geo
+            const info = {
+              walk_id: ongoingWalkID,
+              lat: location.lat,
+              lng: location.lng
+            }
 
-            sendLocation(location.lat, location.lng)
-            .then(data => setLocation(data));
+            sendLocation(info);
+            setLocation({
+              lat: info.lat,
+              lng: info.lng
+            })
           }
 
           // if you are a owner, we will get the walker's location from backend
-          if(user.user_type === "owner") {
-            // need to find walk? walker's id
-            const walker_id = 1;
-            
-            getLocation(walker_id)
-              .then(data => setLocation(data));
+          if(user.user_type === "owner") {          
+            getLocation(ongoingWalkID)
+              .then(data => setLocation({
+                lat: data.latitude,
+                lng: data.longitude
+              }));
           }
         }, 3000);
       }
@@ -63,6 +71,10 @@ export const AuthProvider = ({children}) => {
 
     const changeStatus = (status) => {
       setStatus(status);
+    }
+
+    const changeOngoingWalk = (id) => {
+      setOngoingWalkID(id);
     }
 
     // if you are a walker, you need to update state in front end, 
@@ -113,6 +125,7 @@ export const AuthProvider = ({children}) => {
       onSignUp,
       changeStatus,
       updateLocation,
+      changeOngoingWalk
       }}>
       {
         user
