@@ -29,6 +29,7 @@ function Map({isFinding}) {
   }, []);
 
   // This function is performed every 'x' seconds. Where 'x' is the second param to the function
+  
   useInterval(() => {
     fakeMovement();
   }, 10);
