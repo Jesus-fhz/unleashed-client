@@ -45,6 +45,13 @@ function Map({isFinding}) {
     } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
       y = 0 - incrementDistance;
     }
+
+    if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+      //setState for the walk done. 
+      console.log('walk done');
+
+      auth.changeState("finished");
+    }
     
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
