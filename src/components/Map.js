@@ -45,11 +45,12 @@ function Map({isFinding}) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
             // getCurrentLocation();
-            // auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
+            auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             // console.log('the auth obj is:', auth);
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
             fakeMovement(currentPosition, setCurrentPosition, auth.location);
+
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.location);
             // TODO: do the actual walk with dog. 
