@@ -32,26 +32,58 @@ function Map({isFinding}) {
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
     const incrementDistance = 0.00002;
     let x, y;
-    
-    // if current position within range of destination then don't perform fake move 
-    if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
-      x = incrementDistance;
-    } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
-      x = 0 - incrementDistance;
-    }
 
-    if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
-      y = incrementDistance;
-    } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
-      y = 0 - incrementDistance;
-    }
+    const xOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
+    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 10;
+    const xCorrect = !(xOver && xUnder);
 
-    if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
+    const yUnder = moverLocation.lat > stationaryLocation.lat - incrementDistance * 10;
+    const yCorrect = !(yOver && yUnder);
+
+    // too left // too right, perfect
+    // too up  // too down, perfect
+
+    if( xCorrect && yCorrect){
       //setState for the walk done. 
       console.log('walk done');
 
       auth.changeState("finished");
     }
+    else {
+          // if current position within range of destination then don't perform fake move 
+      if (xUnder) { 
+        x = incrementDistance;
+      } else if (xOver){
+        x = 0 - incrementDistance;
+      }
+
+      if (yUnder) {
+        y = incrementDistance;
+      } else if (yOver){
+        y = 0 - incrementDistance;
+      }
+    }
+    
+    // // if current position within range of destination then don't perform fake move 
+    // if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
+    //   x = incrementDistance;
+    // } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
+    //   x = 0 - incrementDistance;
+    // }
+
+    // if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
+    //   y = incrementDistance;
+    // } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
+    //   y = 0 - incrementDistance;
+    // }
+
+    // if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+    //   //setState for the walk done. 
+    //   console.log('walk done');
+
+    //   auth.changeState("finished");
+    // }
     
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
