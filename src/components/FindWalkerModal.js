@@ -26,8 +26,6 @@ const FindWalkerModal = ({
   useEffect(() => {
     const setIntervalID = setInterval(() => generateText(), 3000);
 
-    console.log("hello")
-
     return () => clearInterval(setIntervalID);
   },[])
 

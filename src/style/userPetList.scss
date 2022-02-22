@@ -34,7 +34,7 @@
       padding: 20px;
       border-radius: 20px;
       background: white;
-      margin: 0 10px 20px;
+      margin: 0 10px 50px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
       .item-innerbox {
@@ -136,6 +136,15 @@
         }
       }
     }
+  }
+
+  .noWalk-msg {
+    height: calc(100vh - 28px - 155px - 40px);
+    padding-top: 10vh;
+    font-size: 1.6rem;
+    color: rgb(189, 189, 189);
+    font-weight: 600;
+    text-align: center;
   }
 
   .organiseBtn {
