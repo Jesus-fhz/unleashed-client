@@ -30,43 +30,33 @@ export const AuthProvider = ({children}) => {
 
     // this will run whenever the status changes
     useEffect(() => {
-      let intervalID;
+      // let intervalID;
 
       // we need to start make a api call here
       if(status === "accepted" || status === "ongoing") {
-        intervalID = setInterval(() => {
-          // if you are a walker, we will send your location to backend 
-          if(user.user_type === "waker") {
-            // need to get their location here with geo
-            const info = {
-              walk_id: ongoingWalkID,
-              lat: location.lat,
-              lng: location.lng
-            }
+        console.log(location)
 
-            sendLocation(info);
-            setLocation({
-              lat: info.lat,
-              lng: info.lng
-            })
-          }
+        // if you are a walker, we will send your location to backend 
+        if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
+          // need to get their location here with geo
+          sendLocation({
+            walk_id: ongoingWalkID,
+            lat: location.lat,
+            lng: location.lng,
 
-          // if you are a owner, we will get the walker's location from backend
-          if(user.user_type === "owner") {          
-            getLocation(ongoingWalkID)
-              .then(data => setLocation({
-                lat: data.latitude,
-                lng: data.longitude
-              }));
-          }
-        }, 3000);
+          });
+        }
+
+        // if you are a owner, we will get the walker's location from backend
+        if(user.user_type === "owner") {          
+          getLocation(ongoingWalkID)
+            .then(data => setLocation({
+              lat: data.latitude,
+              lng: data.longitude
+            }));
+        }
       }
-
-      // we need to stop the api calls here
-      if(status === "pending" || status === "finished") {
-        clearInterval(intervalID);
-      }
-    }, [status, user]);
+    }, [status, user, location]);
 
 
     const changeStatus = (status) => {
