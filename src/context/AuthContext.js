@@ -14,6 +14,7 @@ export const AuthProvider = ({children}) => {
   // }
 
   const [user, setUser] = useState(undefined);
+  const [location, setLocation] = useState(false);
 
   // TODO: we need a endpoint for this.
   // when the App is rendered, this will run.
@@ -44,6 +45,10 @@ export const AuthProvider = ({children}) => {
       });
   };
 
+  const updateLocation = (location) => {
+    setLocation(location);
+};
+
 
   // TODO: need to know which info we need here exactly.
   const onSignUp = (userInfo) => {
@@ -64,7 +69,7 @@ export const AuthProvider = ({children}) => {
     setUser(undefined);
   };
   return (
-    <AuthContext.Provider value={{user, onSignIn, onLogout, onSignUp}}>
+    <AuthContext.Provider value={{user,location, onSignIn, onLogout, onSignUp, updateLocation}}>
       {
         user
         ?
