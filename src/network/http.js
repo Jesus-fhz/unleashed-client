@@ -52,4 +52,23 @@ const post = async (url, params) => {
   return res;
 }
 
-export {get, post, setHeaders,clearHeaders};
+const patch = async (url, params) => {
+  let res;
+
+  try {
+    res = await axios.patch(`${BASE_URL}${url}`, {
+      ...params
+    });
+  }catch(err) {
+    console.log(err);
+  }
+
+  if (res.status > 299 || res.status < 200) {
+    const message = res && res.message ? res.message : 'Something went wrong!';
+    throw new Error(message);
+  }
+
+  return res;
+}
+
+export {get, post, patch, setHeaders,clearHeaders};
