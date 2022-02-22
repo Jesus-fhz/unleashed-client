@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
 import { getNearbyWalkers } from '../services/walkers';
 import '../style/map.scss';
+import {useInterval} from './UseInterval'
 
 // TODO: how to make the map size responsively
 const containerStyle = {
@@ -14,13 +15,37 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
+  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.2});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
-  
-    useEffect(() => {
-      getCurrentLocation();
-      loadWalkers();
-    }, []);
 
+  useEffect(() => {
+    getCurrentLocation();
+    loadWalkers();
+
+    
+    return () => {
+      clearInterval(this.timer);
+      
+      console.log('this should only run one time');
+    }
+  }, []);
+
+  useInterval(() => {
+    //TODO: make a fake movement method
+    fakeMovement();
+  }, 10);
+  
+  const fakeMovement = () => {
+    // if current position within range of destination then don't perform fake move 
+    if ( currentPosition.lng > destination.lng ){
+      setCurrentPosition({lat: currentPosition.lat, lng: currentPosition.lng - 0.00003});
+      
+    }
+    console.log(currentPosition);
+    
+    // get the current location and where we need to go
+  }
+  
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       .then((data) => setNearbyWalkers(data))
