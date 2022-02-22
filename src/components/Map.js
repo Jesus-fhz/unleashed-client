@@ -19,6 +19,8 @@ function Map({isFinding}) {
   const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
   const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
+  const [angle, setAngle] = useState(0);
+  
   const auth = useContext(AuthContext);
 
   // On component mount
@@ -33,6 +35,7 @@ function Map({isFinding}) {
   }, []);
 
 
+  // On component update with polling. 
   useEffect(() => {
     let intervalID;
 
@@ -47,7 +50,8 @@ function Map({isFinding}) {
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
             fakeMovement(currentPosition, setCurrentPosition, auth.location);
-          } else {
+          } else if ( auth.status === "ongoing" ) {
+            fakeWalk(currentPosition, setCurrentPosition, auth.location);
             // TODO: do the actual walk with dog. 
           }
         }, 10);
@@ -69,7 +73,7 @@ function Map({isFinding}) {
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
     console.log('fake movement instance ');
     // debugger
-    const incrementDistance = 0.00001;
+    const incrementDistance = 0.00008;
     let x = 0;
     let y = 0;
 
@@ -78,15 +82,17 @@ function Map({isFinding}) {
     const xCorrect = !(xOver || xUnder);
 
     const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
-    const yUnder = moverLocation.lat > stationaryLocation.lat - incrementDistance * 10;
+    const yUnder = moverLocation.lat < stationaryLocation.lat - incrementDistance * 10;
     const yCorrect = !(yOver || yUnder);
 
-    if( xCorrect && yCorrect){
+    if( xCorrect && yCorrect ){
       //setState for the walk done. 
       console.log('walk done');
-
-
+      
+      setMoverLocation(stationaryLocation);
       auth.changeStatus("ongoing");
+
+      return;
     }
     else {
       console.log('this is incrementing movement')
@@ -104,34 +110,32 @@ function Map({isFinding}) {
       }
     }
     
-    // // if current position within range of destination then don't perform fake move 
-    // if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
-    //   x = incrementDistance;
-    // } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
-    //   x = 0 - incrementDistance;
-    // }
-
-    // if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
-    //   y = incrementDistance;
-    // } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
-    //   y = 0 - incrementDistance;
-    // }
-
-    // if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
-    //   //setState for the walk done. 
-    //   console.log('walk done');
-
-    //   auth.changeState("finished");
-    // }
-    
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
     
-    console.log( 'lng and lat: ', newLng, newLat );
     setMoverLocation({lng: newLng, lat: newLat });
   }
 
-  
+  const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
+    let x = 0.00004 * Math.cos(angle);
+    let y = 0.00004 * Math.sin(angle);
+    
+    // how to make the trigger of coming back to home
+    const newLng = moverLocation.lng + x;
+    const newLat = moverLocation.lat + y;
+
+    setAngle(angle + 6.282 / 500);
+
+    if (angle > 6.21){
+      setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
+      auth.changeStatus("finished");
+    }
+    //if angle equals 359 then return
+    // auth.status === "finished"
+
+    setMoverLocation({lng: newLng, lat: newLat });
+  } 
+
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       .then((data) => setNearbyWalkers(data))
@@ -184,6 +188,11 @@ function Map({isFinding}) {
 
             <Marker 
               position={currentPosition}
+              animation = {2}
+            />
+
+            <Marker 
+              position={auth.location}
               animation = {2}
             />
             
