@@ -11,12 +11,11 @@ const WalkList  = () => {
     const [status, setStatus] = useState('Accept');
 
     useEffect(() => {
-        //const ID = setInterval(() => {
+        const ID = setInterval(() => {
             requestWalks();
-            console.log("updating walks...");
-        //}, 3000);
+        }, 3000);
 
-        //return () => clearInterval(ID);
+        return () => clearInterval(ID);
     },[])
 
     const requestWalks = () => {
@@ -33,9 +32,10 @@ const WalkList  = () => {
     }
 
     const clickAccept = (data) => {
-        const currentWalk = [data];
-        setWalks(currentWalk)
+        auth.changeStatus('accepted');
+        setWalks([data])
         setStatus('On going');
+        
         const info = {
             walk_id: data.id,
             pet_id: data.pet_id,
@@ -47,16 +47,14 @@ const WalkList  = () => {
             latitude: data.latitude,
             longitude: data.longitude
         }
-        
-        console.log(data);
 
 
-        // //TODO: connect to accept walk endpoint
         // acceptWalk(info)
         //     .then(data => console.log(data))
-        //     //TODO: we need show them a map (track walkers position) to Both side.
-        //     // how are we gonna start pulling every 1sec
-        //     // start whenever the state is changed?
+
+        //TODO: walker need to send their geolocation every second after they accept job.
+        // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
+        // USER SIDE: we need to keep getting walker's location from API
     }
 
     return (
