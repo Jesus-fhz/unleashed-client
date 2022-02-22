@@ -18,7 +18,7 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.2});
+  const [destination, setDestination] = useState(false);
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const authContext = useContext(AuthContext);
 
@@ -38,17 +38,19 @@ function Map({isFinding}) {
   
   useInterval(() => {
     // if authContext.user.
-    if (authContext.user.user_type === 'owner'){
-      fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
-      console.log('destination:',destination)
-    } else {
-      fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+    if(destination){
+      if (authContext.user.user_type === 'owner'){
+        fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
+        console.log('destination:',destination);
+      } else {
+        fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+      }
     }
   }, 10);
 
   
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
-    const incrementDistance = 0.00003;
+    const incrementDistance = 0.00002;
     let x, y;
     
     // if current position within range of destination then don't perform fake move 
@@ -102,13 +104,15 @@ function Map({isFinding}) {
         <GoogleMap 
           mapContainerStyle={containerStyle} 
           center={currentPosition} 
-          zoom={14}
+          zoom={15}
         > 
           <Marker 
             position={currentPosition}
             animation = {2}
           />
-
+          <Marker 
+            position={destination}
+        />
           
           { // get all the markers for close by walkers
             nearbyWalkers.map((el) => (

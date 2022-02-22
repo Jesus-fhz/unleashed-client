@@ -9,7 +9,6 @@ const WalkList  = () => {
     const [walks,setWalks] = useState([]);
     const [pets,setPets] = useState([]);
     const [status, setStatus] = useState('Accept');
-    
 
     useEffect(() => {
         //const ID = setInterval(() => {
@@ -48,7 +47,8 @@ const WalkList  = () => {
             latitude: data.latitude,
             longitude: data.longitude
         }
-
+        
+        console.log(data);
 
 
         // //TODO: connect to accept walk endpoint
