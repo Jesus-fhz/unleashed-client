@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { requestPendingWalks } from '../services/walk';
+import { AuthContext } from '../context/AuthContext';
+import { acceptWalk, requestPendingWalks } from '../services/walk';
 import Nav from './Nav';
     
 const WalkList  = () => {
+    const auth = useContext(AuthContext);
     const [walks,setWalks] = useState([]);
     const [pets,setPets] = useState([]);
     
 
     useEffect(() => {
-        requestPendingWalks()
+        requestPendingWalks(auth.user.latitude, auth.user.longitude)
             .then(data => {
                 setWalks(data.walks);
                 setPets(data.pets)
@@ -21,8 +23,21 @@ const WalkList  = () => {
        return pets.filter(pet => pet_id === pet.id);
     }
 
-    const clickAccept = (id) => {
-        console.log("accept walk - id: ", id);
+    const clickAccept = (data) => {
+        const info = {
+            walk_id: data.id,
+            pet_id: data.pet_id,
+            user_id: auth.user.id,
+            status: 0,
+            cost: data.cost,
+            duration: data.duration,
+            latitude: data.latitude,
+            longitude: data.longitude
+        }
+
+        //TODO: connect to accept walk endpoint
+        acceptWalk(info)
+            .then(data => console.log(data))
     }
 
     return (
@@ -44,6 +59,10 @@ const WalkList  = () => {
                                         </div>
                                         <div className="text-container">
                                             <h3> {getPetId(el.pet_id)[0].name} </h3>
+                                            <p>
+                                                {/* TODO: we need to get a users address */}
+                                                we need their address!!!
+                                            </p>
                                             <p className="breed">
                                                 Walk Duration: {el.duration} mins
                                             </p>
@@ -52,7 +71,7 @@ const WalkList  = () => {
                                     <div className="btn-container">
                                         <button 
                                             className="accept-btn"
-                                            onClick={(el) => clickAccept(el.id)}
+                                            onClick={() => clickAccept(el)}
                                         >
                                             Accept
                                         </button>
