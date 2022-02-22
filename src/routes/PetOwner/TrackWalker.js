@@ -10,6 +10,10 @@ const TrackWalker = () => {
     // and need to track walker in the map
   }, []);
 
+  // const pollingFunctions = () => {
+    
+  // }
+
   return (
     <div className="trackWalker">
       <TrackWalkerSidebar />
