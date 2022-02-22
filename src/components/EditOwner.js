@@ -147,7 +147,7 @@ const EditOwner = ({handleSubmitter}) => {
       {
         loading === true
         ?
-        <h1>IS LOADING</h1>
+        <h1>Loading...</h1>
         :
         error === true
         ?
