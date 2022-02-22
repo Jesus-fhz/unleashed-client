@@ -16,39 +16,19 @@ const containerStyle = {
 
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
-  //TODO: consider removing this.
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
+  const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
-  const authContext = useContext(AuthContext);
-
-  
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     getCurrentLocation();
     loadWalkers();
-    
-    return () => {
-      clearInterval(this.timer);
-      
-      console.log('this should only run one time');
-    }
+  
+    return () => clearInterval(intervalID);
   }, []);
 
-  
-  useInterval(() => {
-    // if authContext.user.
-    if(destination){
-      if (authContext.user.user_type === 'owner'){
-        fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
-        console.log('destination:',destination);
-      } else {
-        fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
-      }
-    }
-  }, 10);
 
-  
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
     const incrementDistance = 0.00002;
     let x, y;
@@ -70,6 +50,30 @@ function Map({isFinding}) {
     const newLat = moverLocation.lat + y;
     
     setMoverLocation({lng: newLng, lat: newLat });
+  }
+
+  // // since we are using AuthContext for location, it will be eventually like this
+  // useEffect(() => {
+  //   if(auth.status === "ongoing" || auth.status === "accepted") {
+  //     // TODO: move map function here
+  //     // from auth.location to destination
+  //   }
+  // }, [auth]);
+
+
+  let intervalID;
+
+  if(auth.status === "accepted" || auth.status === "ongoing"){
+    console.log(auth.location)
+
+    intervalID = setInterval(() => {
+      if (auth.user.user_type === 'owner'){
+        fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
+        console.log('destination:',destination);
+      } else {
+        fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+      }
+    }, 10000);
   }
   
   const loadWalkers = async () => {
@@ -100,34 +104,40 @@ function Map({isFinding}) {
         className={`loading-effect ${isFinding ? "active" : ""}`} 
       />
       
-      <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
-        <GoogleMap 
-          mapContainerStyle={containerStyle} 
-          center={currentPosition} 
-          zoom={15}
-        > 
-          <Marker 
-            position={currentPosition}
-            animation = {2}
+      {
+        currentPosition?.lat !== 0 && currentPosition?.lng !== 0
+        ?
+        <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
+          <GoogleMap 
+            mapContainerStyle={containerStyle} 
+            center={currentPosition} 
+            zoom={15}
+          > 
+            <Marker 
+              position={currentPosition}
+              animation = {2}
+            />
+            <Marker 
+              position={destination}
           />
-          <Marker 
-            position={destination}
-        />
-          
-          { // get all the markers for close by walkers
-            nearbyWalkers.map((el) => (
-              <Marker
-                key={el.id}
+            
+            { // get all the markers for close by walkers
+              nearbyWalkers.map((el) => (
+                <Marker
+                  key={el.id}
 
-                icon="https://i.imgur.com/kEXCUkc.png?1"
-                // onLoad={onLoad}
-                position={  {lat: el.latitude, lng: el.longitude}}
-              />
-            ))
-          }
-          
-        </GoogleMap>
-      </LoadScript>
+                  icon="https://i.imgur.com/kEXCUkc.png?1"
+                  // onLoad={onLoad}
+                  position={  {lat: el.latitude, lng: el.longitude}}
+                />
+              ))
+            }
+            
+          </GoogleMap>
+        </LoadScript>
+        :
+        <p>Finding your location...</p>
+      }
     </div>
   )
 }
