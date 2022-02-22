@@ -18,7 +18,7 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.21});
+  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.2});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const authContext = useContext(AuthContext);
 
@@ -29,11 +29,12 @@ function Map({isFinding}) {
     loadWalkers();
     
     return () => {
+      clearInterval(this.timer);
+      
       console.log('this should only run one time');
     }
   }, []);
 
-  // This function is performed every 'x' seconds. Where 'x' is the second param to the function
   
   useInterval(() => {
     // if authContext.user.
@@ -44,6 +45,7 @@ function Map({isFinding}) {
       fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
     }
   }, 10);
+
   
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
     const incrementDistance = 0.00003;
