@@ -30,10 +30,10 @@ function Map({isFinding}) {
     }
   }, []);
 
-  useInterval(() => {
-    //TODO: make a fake movement method
-    fakeMovement();
-  }, 10);
+  // useInterval(() => {
+  //   //TODO: make a fake movement method
+  //   fakeMovement();
+  // }, 10);
   
   const fakeMovement = () => {
     // if current position within range of destination then don't perform fake move 

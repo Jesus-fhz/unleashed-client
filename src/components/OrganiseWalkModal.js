@@ -27,10 +27,12 @@ const OrganiseWalkModal = ({
         status : status,
         cost: 212,
         duration: duration,
-        geocode_lng: auth.user.latitude ,
-        geocode_lat: auth.user.longitude,
         special_instruction : 'He is thic boy',
-    } 
+        latitude: auth.user.latitude ,
+        longitude: auth.user.longitude,
+        address: auth.user.address
+    }
+    
     requestWalk(walk) 
       .then(data => console.log('response from walk', data))
       .catch(error => console.log(error));
