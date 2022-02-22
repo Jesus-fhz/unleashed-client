@@ -16,13 +16,19 @@ const containerStyle = {
 
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
-  const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
+  const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
   const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const auth = useContext(AuthContext);
 
+  // On component mount
   useEffect(() => {
-    getCurrentLocation();
+    if(auth.user.user_type === "walker") {
+      getCurrentLocation();
+    } else {
+      // setCurrentPosition({lat: -33.858399, lng: 150.978422}); //TODO: REMOVE THIS LATER ON THIS IS FOR TEStING 
+    }
+
     loadWalkers();
   }, []);
 
@@ -30,13 +36,21 @@ function Map({isFinding}) {
   useEffect(() => {
     let intervalID;
 
-    if(auth.status === "ongoing" || auth.status === "accepted") {
+    if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
       if(auth.user.user_type === "walker") {
         intervalID = setInterval(() => {
-          getCurrentLocation();
-          auth.updateLocation(currentPosition);
-        }, 3000);
+          if(auth.status === "accepted"){
+            // getCurrentLocation();
+            // auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
+            // console.log('the auth obj is:', auth);
+            // console.log( 'auth location: ', auth.location );
+            // console.log( 'input currentPos: ', currentPosition)
+            fakeMovement(currentPosition, setCurrentPosition, auth.location);
+          } else {
+            // TODO: do the actual walk with dog. 
+          }
+        }, 10);
       }
 
       // if you are a owner, we will give you the walker's location
@@ -44,37 +58,38 @@ function Map({isFinding}) {
         intervalID = setInterval(() => {
           setDestination(auth.location.lat, auth.location.lng);
           // update walkers marker with "auth.location.lat, auth.location.lng"
-        }, 3000);
+        }, 50);
       }
-
     }
 
     return () => clearInterval(intervalID);
   }, [auth, currentPosition])
 
 
-  const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
-    const incrementDistance = 0.00002;
-    let x, y;
+  const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
+    console.log('fake movement instance ');
+    // debugger
+    const incrementDistance = 0.00001;
+    let x = 0;
+    let y = 0;
 
     const xOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
     const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 10;
-    const xCorrect = !(xOver && xUnder);
+    const xCorrect = !(xOver || xUnder);
 
     const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
     const yUnder = moverLocation.lat > stationaryLocation.lat - incrementDistance * 10;
-    const yCorrect = !(yOver && yUnder);
-
-    // too left // too right, perfect
-    // too up  // too down, perfect
+    const yCorrect = !(yOver || yUnder);
 
     if( xCorrect && yCorrect){
       //setState for the walk done. 
       console.log('walk done');
 
-      auth.changeState("finished");
+
+      auth.changeStatus("ongoing");
     }
     else {
+      console.log('this is incrementing movement')
           // if current position within range of destination then don't perform fake move 
       if (xUnder) { 
         x = incrementDistance;
@@ -112,6 +127,7 @@ function Map({isFinding}) {
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
     
+    console.log( 'lng and lat: ', newLng, newLat );
     setMoverLocation({lng: newLng, lat: newLat });
   }
 
@@ -137,6 +153,15 @@ function Map({isFinding}) {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+
+  //TODO: Conditional render, showing current position
+  // If active owned walk => 
+    // Walker:
+      // Show:
+  // If Else 
+  console.log(' the current status is:', auth.status );
+  console.log(' the current user is:', auth.user )
+
   return (
     <div className="map">
       {/* TODO: need to put loading effect inside of the map, but can't change their className to style it */}
@@ -153,25 +178,14 @@ function Map({isFinding}) {
             center={currentPosition} 
             zoom={15}
           > 
+            {
+              // auth.status === "accepted" 
+            }
+
             <Marker 
               position={currentPosition}
               animation = {2}
             />
-            <Marker 
-              position={destination}
-          />
-            
-            { // get all the markers for close by walkers
-              nearbyWalkers.map((el) => (
-                <Marker
-                  key={el.id}
-
-                  icon="https://i.imgur.com/kEXCUkc.png?1"
-                  // onLoad={onLoad}
-                  position={  {lat: el.latitude, lng: el.longitude}}
-                />
-              ))
-            }
             
           </GoogleMap>
         </LoadScript>
