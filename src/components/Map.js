@@ -18,8 +18,9 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.2});
+  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.27});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
+  const [isWalkDone, setIsWalkDone] = useState(false);
   const authContext = useContext(AuthContext);
 
   
@@ -37,13 +38,16 @@ function Map({isFinding}) {
 
   
   useInterval(() => {
-    // if authContext.user.
-    if (authContext.user.user_type === 'owner'){
-      fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
-      console.log('destination:',destination)
-    } else {
-      fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+    // only runs when the walk is not done
+    if( !isWalkDone ){
+      if (authContext.user.user_type === 'owner'){
+        fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
+        console.log('destination:',destination)
+      } else {
+        fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+      }
     }
+
   }, 10);
 
   
@@ -62,6 +66,12 @@ function Map({isFinding}) {
       y = incrementDistance;
     } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
       y = 0 - incrementDistance;
+    }
+
+    if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+      //setState for the walk done. 
+      setIsWalkDone(true);
+      console.log('walk done');
     }
     
     const newLng = moverLocation.lng + x;
