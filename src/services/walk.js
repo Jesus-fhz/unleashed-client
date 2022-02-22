@@ -1,7 +1,6 @@
 import { get, post, patch } from "../network/http";
 
-const requestWalk = async (info) => {
-    console.log(info);
+const   requestWalk = async (info) => {
     let res = await post(`/walks.json/`,{...info});
     return res.data;
   }

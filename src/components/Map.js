@@ -113,7 +113,7 @@ function Map({isFinding}) {
 
                 icon="https://i.imgur.com/kEXCUkc.png?1"
                 // onLoad={onLoad}
-                position={{lat: el.latitude, lng: el.longitude}}
+                position={  {lat: el.latitude, lng: el.longitude}}
               />
             ))
           }
