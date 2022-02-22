@@ -1,24 +1,37 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import '../style/organiseWalkModal.scss';
+import { requestWalk } from '../services/walk';
+import { AuthContext } from '../context/AuthContext';
 
 const OrganiseWalkModal = ({
   isOpen,
   handleModal,
   handleFind,
-  selectedPet
+  selectedPet,
+  status,
+  handleStatus
 }) => {
   const [duration, setDuration] = useState(0);
-
+  const auth = useContext(AuthContext);
   const changeDuration = (e) => setDuration(e.target.value);
 
+  console.log(auth);
   const submitWalk = (e) => {
     e.preventDefault();
-    console.log("----------------- organise submit data here -------------")
-    console.log(duration)
-    console.log(selectedPet)
-    // close 
+    const walk = {
+        pet_id : selectedPet[0].id,
+        user_id : '',
+        status : status,
+        cost: 212,
+        duration: duration,
+        geocode_lng: auth.user.latitude ,
+        geocode_lat: auth.user.longitude,
+        special_instruction : 'He is thic boy',
+    } 
+    requestWalk(walk) 
+      .then(data => console.log('response from walk', data))
+      .catch(error => console.log(error));
     handleModal();
-    // show loading effect
     handleFind();
   }
 
