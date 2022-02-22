@@ -42,7 +42,6 @@ const WalkList  = () => {
 
         // We need Authcontext 
         //TODO: make it so that this changes the map for both the current Walker and Owner
-        // TODO: BIND THIS TO FAKE WALK. 
         
         const info = {
             walk_id: data.id,

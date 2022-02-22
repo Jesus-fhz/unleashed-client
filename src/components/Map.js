@@ -49,7 +49,7 @@ function Map({isFinding}) {
             // console.log('the auth obj is:', auth);
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
-            fakeMovement(currentPosition, setCurrentPosition, auth.location);
+            fakeMovement(currentPosition, setCurrentPosition, auth.location); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.location);
