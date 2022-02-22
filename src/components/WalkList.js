@@ -8,22 +8,21 @@ const WalkList  = () => {
     const auth = useContext(AuthContext);
     const [walks,setWalks] = useState([]);
     const [pets,setPets] = useState([]);
+    const [status, setStatus] = useState('Accept');
     
 
     useEffect(() => {
-        const ID = setInterval(() => {
+        //const ID = setInterval(() => {
             requestWalks();
             console.log("updating walks...");
-        }, 3000);
+        //}, 3000);
 
-        return () => clearInterval(ID);
+        //return () => clearInterval(ID);
     },[])
 
     const requestWalks = () => {
         requestPendingWalks(auth.user.latitude, auth.user.longitude)
         .then(data => {
-            console.log(data);
-
             setWalks(data.walks);
             setPets(data.pets)
         })
@@ -35,23 +34,29 @@ const WalkList  = () => {
     }
 
     const clickAccept = (data) => {
+        const currentWalk = [data];
+        setWalks(currentWalk)
+        setStatus('On going');
         const info = {
             walk_id: data.id,
             pet_id: data.pet_id,
             user_id: auth.user.id,
             status: 1,
             cost: data.cost,
+            address: data.address,
             duration: data.duration,
             latitude: data.latitude,
             longitude: data.longitude
         }
 
-        //TODO: connect to accept walk endpoint
-        acceptWalk(info)
-            .then(data => console.log(data))
-            //TODO: we need show them a map (track walkers position) to Both side.
-            // how are we gonna start pulling every 1sec
-            // start whenever the state is changed?
+
+
+        // //TODO: connect to accept walk endpoint
+        // acceptWalk(info)
+        //     .then(data => console.log(data))
+        //     //TODO: we need show them a map (track walkers position) to Both side.
+        //     // how are we gonna start pulling every 1sec
+        //     // start whenever the state is changed?
     }
 
     return (
@@ -75,7 +80,7 @@ const WalkList  = () => {
                                             <h3> {getPetId(el.pet_id)[0].name} </h3>
                                             <p>
                                                 {/* TODO: we need to get a users address */}
-                                                we need their address!!!
+                                                {el.address}
                                             </p>
                                             <p className="breed">
                                                 Walk Duration: {el.duration} mins
@@ -87,7 +92,7 @@ const WalkList  = () => {
                                             className="accept-btn"
                                             onClick={() => clickAccept(el)}
                                         >
-                                            Accept
+                                           {status}
                                         </button>
                                     </div>
                                 </li>
