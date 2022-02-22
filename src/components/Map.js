@@ -18,7 +18,7 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.27});
+  const [destination, setDestination] = useState(false);
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [isWalkDone, setIsWalkDone] = useState(false);
   const authContext = useContext(AuthContext);
@@ -39,10 +39,11 @@ function Map({isFinding}) {
   
   useInterval(() => {
     // only runs when the walk is not done
-    if( !isWalkDone ){
+    // if authContext.user.
+    if(destination &&  !isWalkDone ){
       if (authContext.user.user_type === 'owner'){
         fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
-        console.log('destination:',destination)
+        console.log('destination:',destination);
       } else {
         fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
       }
@@ -52,7 +53,7 @@ function Map({isFinding}) {
 
   
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
-    const incrementDistance = 0.00003;
+    const incrementDistance = 0.00002;
     let x, y;
     
     // if current position within range of destination then don't perform fake move 
@@ -112,13 +113,15 @@ function Map({isFinding}) {
         <GoogleMap 
           mapContainerStyle={containerStyle} 
           center={currentPosition} 
-          zoom={14}
+          zoom={15}
         > 
           <Marker 
             position={currentPosition}
             animation = {2}
           />
-
+          <Marker 
+            position={destination}
+        />
           
           { // get all the markers for close by walkers
             nearbyWalkers.map((el) => (
@@ -127,7 +130,7 @@ function Map({isFinding}) {
 
                 icon="https://i.imgur.com/kEXCUkc.png?1"
                 // onLoad={onLoad}
-                position={{lat: el.latitude, lng: el.longitude}}
+                position={  {lat: el.latitude, lng: el.longitude}}
               />
             ))
           }

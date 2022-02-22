@@ -18,7 +18,6 @@ const OrganiseWalkModal = ({
   const changeDuration = (e) => setDuration(e.target.value);
   const changeMsg = (e) => setMsg(e.target.value);
 
-  console.log(auth);
   const submitWalk = (e) => {
     e.preventDefault();
     const walk = {
