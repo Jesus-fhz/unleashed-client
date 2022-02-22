@@ -24,65 +24,79 @@ function Map({isFinding}) {
   useEffect(() => {
     getCurrentLocation();
     loadWalkers();
-  
-    return () => clearInterval(intervalID);
   }, []);
 
 
-  const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
-    const incrementDistance = 0.00002;
-    let x, y;
-    
-    // if current position within range of destination then don't perform fake move 
-    if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
-      x = incrementDistance;
-    } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
-      x = 0 - incrementDistance;
-    }
+  useEffect(() => {
+    let intervalID;
 
-    if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
-      y = incrementDistance;
-    } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
-      y = 0 - incrementDistance;
-    }
-
-    if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
-      //setState for the walk done. 
-      console.log('walk done');
-
-      auth.changeState("finished");
-    }
-    
-    const newLng = moverLocation.lng + x;
-    const newLat = moverLocation.lat + y;
-    
-    setMoverLocation({lng: newLng, lat: newLat });
-  }
-
-  // // since we are using AuthContext for location, it will be eventually like this
-  // useEffect(() => {
-  //   if(auth.status === "ongoing" || auth.status === "accepted") {
-  //     // TODO: move map function here
-  //     // from auth.location.lat, auth.location.lng to destination
-  //     // 
-  //   }
-  // }, [auth]);
-
-
-  let intervalID;
-
-  if(auth.status === "accepted" || auth.status === "ongoing"){
-    console.log(auth.location)
-
-    intervalID = setInterval(() => {
-      if (auth.user.user_type === 'owner'){
-        fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
-        console.log('destination:',destination);
-      } else {
-        fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+    if(auth.status === "ongoing" || auth.status === "accepted") {
+      // if you are a walker, we will update your location 
+      if(auth.user.user_type === "walker") {
+        intervalID = setInterval(() => {
+          getCurrentLocation();
+          auth.updateLocation(currentPosition);
+        }, 3000);
       }
-    }, 10000);
-  }
+
+      // if you are a owner, we will give you the walker's location
+      if(auth.user.user_type === "owner") {
+        intervalID = setInterval(() => {
+          setDestination(auth.location.lat, auth.location.lng);
+          // update walkers marker with "auth.location.lat, auth.location.lng"
+        }, 3000);
+      }
+
+    }
+
+    return () => clearInterval(intervalID);
+  }, [auth, currentPosition])
+
+
+  // const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
+  //   const incrementDistance = 0.00002;
+  //   let x, y;
+    
+  //   // if current position within range of destination then don't perform fake move 
+  //   if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
+  //     x = incrementDistance;
+  //   } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
+  //     x = 0 - incrementDistance;
+  //   }
+
+  //   if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
+  //     y = incrementDistance;
+  //   } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
+  //     y = 0 - incrementDistance;
+  //   }
+
+  //   if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+  //     //setState for the walk done. 
+  //     console.log('walk done');
+
+  //     auth.changeState("finished");
+  //   }
+    
+  //   const newLng = moverLocation.lng + x;
+  //   const newLat = moverLocation.lat + y;
+    
+  //   setMoverLocation({lng: newLng, lat: newLat });
+  // }
+
+  // let intervalID;
+
+  // if(auth.status === "accepted" || auth.status === "ongoing"){
+  //   console.log(auth.location)
+
+  //   intervalID = setInterval(() => {
+  //     if (auth.user.user_type === 'owner'){
+  //       fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
+  //       console.log('destination:',destination);
+  //     } else {
+  //       fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+  //     }
+  //   }, 10000);
+  // }
   
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)

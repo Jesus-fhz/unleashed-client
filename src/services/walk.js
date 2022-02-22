@@ -34,8 +34,8 @@ const acceptWalk = async (info) => {
 
 const sendLocation = async (info) => {
   let res = await patch(`/walks/${info.walk_id}.json`, {
-    latitude: info.latitude,
-    longitude: info.longitude
+    latitude: info.lat,
+    longitude: info.lng
   });
 
   return res.data;

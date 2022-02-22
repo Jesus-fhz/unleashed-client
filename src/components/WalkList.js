@@ -50,8 +50,8 @@ const WalkList  = () => {
         }
 
 
-        // acceptWalk(info)
-        //     .then(data => console.log(data))
+        acceptWalk(info)
+            .then(data => console.log(data))
 
         //TODO: walker need to send their geolocation every second after they accept job.
         // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
