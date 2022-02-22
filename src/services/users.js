@@ -1,4 +1,4 @@
-import { get, post } from "../network/http";
+import { get, post, patch } from "../network/http";
 
 const fetchUserInfo = async (user_id) => {
   let res = await get(`/users/${user_id}.json`);
@@ -6,8 +6,7 @@ const fetchUserInfo = async (user_id) => {
 }
 
 const writeUserInfo = async (userInfo) => {
-  let res = await post (`/users/`, {...userInfo});
-  console.log(res);
+  let res = await patch (`/users/${userInfo.id}.json`, {...userInfo});
   return res.data
 }
 
