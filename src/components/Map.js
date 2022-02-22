@@ -10,9 +10,10 @@ const containerStyle = {
 };
 
 
+// The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
   //TODO: consider removing this.
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); 
+  const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   
     useEffect(() => {
