@@ -71,4 +71,4 @@ const patch = async (url, params) => {
   return res;
 }
 
-export {get, post, setHeaders,clearHeaders, patch};
+export {get, post, patch, setHeaders,clearHeaders};
