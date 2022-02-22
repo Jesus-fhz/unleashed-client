@@ -6,13 +6,37 @@ const requestWalk = async (info) => {
     return res.data;
   }
 
-  const requestPendingWalks = async () =>{
-      let res = await get(`/walks.json`);
-      const walks = {
-        pets: res.data.pets,
-        walks: res.data.walks
-      }
-      return walks;
-  }
+const requestPendingWalks = async (lat, lng) =>{
+    let res = await get(`/walks/pending/${lat}/${lng}`);
+  
+    const walks = {
+      pets: res.data.pets,
+      walks: res.data.walks
+    }
+    return walks;
+}
 
-export {requestWalk, requestPendingWalks}
+const acceptWalk = async (info) => {
+  let res = await get(`/walks/${info.walk_id}/accepts`, {
+    // :pet_id, :user_id, :status, :cost, :duration, :latitude, :longitude, :special_instruction
+
+    pet_id: info.pet_id,
+    user_id: info.user_id,
+    status: info.status,
+    cost: info.cost,
+    duration: info.duration,
+    latitude: info.lat,
+    longitude: info.lng
+  });
+
+  console.log(res);
+  return res.data;
+}
+
+  
+
+export {
+  requestWalk, 
+  requestPendingWalks,
+  acceptWalk
+}
