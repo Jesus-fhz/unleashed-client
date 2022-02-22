@@ -95,7 +95,8 @@ function Map({isFinding}) {
   // useEffect(() => {
   //   if(auth.status === "ongoing" || auth.status === "accepted") {
   //     // TODO: move map function here
-  //     // from auth.location to destination
+  //     // from auth.location.lat, auth.location.lng to destination
+  //     // 
   //   }
   // }, [auth]);
 
