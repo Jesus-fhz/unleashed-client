@@ -34,8 +34,14 @@ const WalkList  = () => {
     const clickAccept = (data) => {
         auth.changeStatus('accepted');
         auth.changeOngoingWalk(data.id);
+        // console.log('the clickAccept data is:', data)
+        auth.updateLocation({lat: data.latitude, lng: data.longitude})
         setWalks([data])
         setStatus('On going');
+
+
+        // We need Authcontext 
+        //TODO: make it so that this changes the map for both the current Walker and Owner
         
         const info = {
             walk_id: data.id,
