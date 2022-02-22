@@ -51,7 +51,6 @@ export const AuthProvider = ({children}) => {
             getLocation(walker_id)
               .then(data => setLocation(data));
           }
-
         }, 3000);
       }
 
