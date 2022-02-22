@@ -15,7 +15,7 @@ const containerStyle = {
 function Map({isFinding}) {
   //TODO: consider removing this.
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
-  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.21});
+  const [destination, setDestination] = useState({lat: -33.872435, lng: 151.2});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
 
   useEffect(() => {
@@ -24,22 +24,18 @@ function Map({isFinding}) {
 
     
     return () => {
+      clearInterval(this.timer);
+      
       console.log('this should only run one time');
     }
   }, []);
 
-<<<<<<< HEAD
-  // useInterval(() => {
-  //   //TODO: make a fake movement method
-  //   fakeMovement();
-  // }, 10);
-=======
-  // This function is performed every 'x' seconds. Where 'x' is the second param to the function
   
   useInterval(() => {
+    //TODO: make a fake movement method
     fakeMovement();
   }, 10);
->>>>>>> 1ae84ab83d888f317a46f3858cd904b4d39a1a7a
+
   
   const fakeMovement = () => {
     const incrementDistance = 0.00003;
@@ -62,9 +58,12 @@ function Map({isFinding}) {
     const newLat = currentPosition.lat + y;
 
     if ( currentPosition.lng > destination.lng ){
-      setCurrentPosition({lng: newLng, lat: newLat });
+      setCurrentPosition({lat: currentPosition.lat, lng: currentPosition.lng - 0.00003});
+      
     }
     console.log(currentPosition);
+    
+    // get the current location and where we need to go
   }
   
   const loadWalkers = async () => {
