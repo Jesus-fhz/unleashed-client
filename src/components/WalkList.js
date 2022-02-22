@@ -33,6 +33,7 @@ const WalkList  = () => {
 
     const clickAccept = (data) => {
         auth.changeStatus('accepted');
+        auth.changeOngoingWalk(data.id);
         setWalks([data])
         setStatus('On going');
         
