@@ -2,18 +2,16 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
+import { getLocation, sendLocation } from '../services/walk';
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-  // TODO: this user here, should be a object with info
-  // {
-  //   token: "",
-  //   id: "",
-  //   name: ""
-  // }
-
+  // [:pending, :accepted, :ongoing, :finished]
+  const [status, setStatus] = useState("pending");
+  const [ongoingWalkID, setOngoingWalkID] = useState();
   const [user, setUser] = useState(undefined);
+  const [location, setLocation] = useState(false);
 
   // TODO: we need a endpoint for this.
   // when the App is rendered, this will run.
@@ -28,7 +26,51 @@ export const AuthProvider = ({children}) => {
           setUser(data.data)
         })
       }
-    },[])
+    },[]);
+
+    // this will run whenever the status changes
+    useEffect(() => {
+      // let intervalID;
+
+      // we need to start make a api call here
+      if(status === "accepted" || status === "ongoing") {
+        console.log(location)
+
+        // if you are a walker, we will send your location to backend 
+        if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
+          // need to get their location here with geo
+          sendLocation({
+            walk_id: ongoingWalkID,
+            lat: location.lat,
+            lng: location.lng,
+
+          });
+        }
+
+        // if you are a owner, we will get the walker's location from backend
+        if(user.user_type === "owner") {          
+          getLocation(ongoingWalkID)
+            .then(data => setLocation({
+              lat: data.latitude,
+              lng: data.longitude
+            }));
+        }
+      }
+    }, [status, user, location]);
+
+
+    const changeStatus = (status) => {
+      setStatus(status);
+    }
+
+    const changeOngoingWalk = (id) => {
+      setOngoingWalkID(id);
+    }
+
+    // if you are a walker, you need to update state in front end, 
+    const updateLocation = (location) => {
+      setLocation(location);
+    };
 
 
   // It'll use "signIn" function from "service/auth" to fetch data.
@@ -64,13 +106,22 @@ export const AuthProvider = ({children}) => {
     setUser(undefined);
   };
   return (
-    <AuthContext.Provider value={{user, onSignIn, onLogout, onSignUp}}>
+    <AuthContext.Provider value={{
+      user,
+      location,
+      status,
+      onSignIn, 
+      onLogout, 
+      onSignUp,
+      changeStatus,
+      updateLocation,
+      changeOngoingWalk
+      }}>
       {
         user
         ?
         children
         :
-        // children
         <Signin onSignIn={onSignIn} onSignUp={onSignUp} />
       }
     </AuthContext.Provider>

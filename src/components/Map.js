@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
+import { AuthContext } from '../context/AuthContext';
 import { getNearbyWalkers } from '../services/walkers';
 import '../style/map.scss';
+import {useInterval} from './UseInterval'
+import { Link } from 'react-router-dom';
+
 
 // TODO: how to make the map size responsively
 const containerStyle = {
@@ -10,16 +14,108 @@ const containerStyle = {
 };
 
 
+// The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
-  //TODO: consider removing this.
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); 
+  const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
+  const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
-  
-    useEffect(() => {
-      getCurrentLocation();
-      loadWalkers();
-    }, []);
+  const auth = useContext(AuthContext);
 
+  useEffect(() => {
+    getCurrentLocation();
+    loadWalkers();
+  }, []);
+
+
+  useEffect(() => {
+    let intervalID;
+
+    if(auth.status === "ongoing" || auth.status === "accepted") {
+      // if you are a walker, we will update your location 
+      if(auth.user.user_type === "walker") {
+        intervalID = setInterval(() => {
+          getCurrentLocation();
+          auth.updateLocation(currentPosition);
+        }, 3000);
+      }
+
+      // if you are a owner, we will give you the walker's location
+      if(auth.user.user_type === "owner") {
+        intervalID = setInterval(() => {
+          setDestination(auth.location.lat, auth.location.lng);
+          // update walkers marker with "auth.location.lat, auth.location.lng"
+        }, 3000);
+      }
+
+    }
+
+    return () => clearInterval(intervalID);
+  }, [auth, currentPosition])
+
+
+  const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
+    const incrementDistance = 0.00002;
+    let x, y;
+
+    const xOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
+    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 10;
+    const xCorrect = !(xOver && xUnder);
+
+    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
+    const yUnder = moverLocation.lat > stationaryLocation.lat - incrementDistance * 10;
+    const yCorrect = !(yOver && yUnder);
+
+    // too left // too right, perfect
+    // too up  // too down, perfect
+
+    if( xCorrect && yCorrect){
+      //setState for the walk done. 
+      console.log('walk done');
+
+      auth.changeState("finished");
+    }
+    else {
+          // if current position within range of destination then don't perform fake move 
+      if (xUnder) { 
+        x = incrementDistance;
+      } else if (xOver){
+        x = 0 - incrementDistance;
+      }
+
+      if (yUnder) {
+        y = incrementDistance;
+      } else if (yOver){
+        y = 0 - incrementDistance;
+      }
+    }
+    
+    // // if current position within range of destination then don't perform fake move 
+    // if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
+    //   x = incrementDistance;
+    // } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
+    //   x = 0 - incrementDistance;
+    // }
+
+    // if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
+    //   y = incrementDistance;
+    // } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
+    //   y = 0 - incrementDistance;
+    // }
+
+    // if( moverLocation.lat > stationaryLocation.lat + incrementDistance * 10 && moverLocation.lng < stationaryLocation.lng - incrementDistance * 10){
+    //   //setState for the walk done. 
+    //   console.log('walk done');
+
+    //   auth.changeState("finished");
+    // }
+    
+    const newLng = moverLocation.lng + x;
+    const newLat = moverLocation.lat + y;
+    
+    setMoverLocation({lng: newLng, lat: newLat });
+  }
+
+  
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       .then((data) => setNearbyWalkers(data))
@@ -48,32 +144,40 @@ function Map({isFinding}) {
         className={`loading-effect ${isFinding ? "active" : ""}`} 
       />
       
-      <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
-        <GoogleMap 
-          mapContainerStyle={containerStyle} 
-          center={currentPosition} 
-          zoom={14}
-        > 
-          <Marker 
-            position={currentPosition}
-            animation = {2}
+      {
+        currentPosition?.lat !== 0 && currentPosition?.lng !== 0
+        ?
+        <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
+          <GoogleMap 
+            mapContainerStyle={containerStyle} 
+            center={currentPosition} 
+            zoom={15}
+          > 
+            <Marker 
+              position={currentPosition}
+              animation = {2}
+            />
+            <Marker 
+              position={destination}
           />
+            
+            { // get all the markers for close by walkers
+              nearbyWalkers.map((el) => (
+                <Marker
+                  key={el.id}
 
-          
-          { // get all the markers for close by walkers
-            nearbyWalkers.map((el) => (
-              <Marker
-                key={el.id}
-
-                icon="https://i.imgur.com/kEXCUkc.png?1"
-                // onLoad={onLoad}
-                position={{lat: el.latitude, lng: el.longitude}}
-              />
-            ))
-          }
-          
-        </GoogleMap>
-      </LoadScript>
+                  icon="https://i.imgur.com/kEXCUkc.png?1"
+                  // onLoad={onLoad}
+                  position={  {lat: el.latitude, lng: el.longitude}}
+                />
+              ))
+            }
+            
+          </GoogleMap>
+        </LoadScript>
+        :
+        <p>Finding your location...</p>
+      }
     </div>
   )
 }
