@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import UserPetList from '../components/UserPetList';
-import Map from '../components/Map';
-import '../style/home.scss'
-import WalkList from '../components/WalkList';
 import { AuthContext } from '../context/AuthContext';
+import UserPetList from '../components/UserPetList';
+import WalkList from '../components/WalkList';
+import Map from '../components/Map';
+import FindWalkerModal from '../components/FindWalkerModal';
+import '../style/home.scss'
+
 
 const Home  = () => {
   const [isFinding, setIsFinding] = useState(false);
@@ -33,6 +35,11 @@ const Home  = () => {
     }
       
       <Map isFinding={isFinding}/>
+        {/* loading screen */}
+        <FindWalkerModal
+          isFinding={isFinding}
+          handleFind={handleFind}
+        />
     </div>
   )
 }

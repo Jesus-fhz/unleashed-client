@@ -75,7 +75,7 @@ const UserPetList = ({
             status = {status}
             handleStatus={handleStatus}
           />
-          <div className={`userPetList ${!isFinding || "hiding" }`}>
+          <div className={`userPetList ${isFinding ? "hiding" : ""}`}>
             <h1>
               <Link to="/">Unleashed</Link>
             </h1>

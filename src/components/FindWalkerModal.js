@@ -26,11 +26,13 @@ const FindWalkerModal = ({
   useEffect(() => {
     const setIntervalID = setInterval(() => generateText(), 3000);
 
+    console.log("hello")
+
     return () => clearInterval(setIntervalID);
   },[])
 
   return (
-    <div className={`findWalkerModal ${!isFinding || "active"}`}>
+    <div className={`findWalkerModal ${isFinding ? "active" : ""}`}>
       <dialog>
         <h2>We are looking for a walker nearby. </h2>
         <img src={dog_image} alt="dog" />
@@ -43,4 +45,4 @@ const FindWalkerModal = ({
   )
 }
 
-export default FindWalkerModal;
+export default FindWalkerModal; 
