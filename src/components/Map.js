@@ -32,19 +32,19 @@ function Map({isFinding}) {
 
   useInterval(() => {
     //TODO: make a fake movement method
-    fakeMovement();
+    //fakeMovement();
   }, 10);
   
-  const fakeMovement = () => {
-    // if current position within range of destination then don't perform fake move 
-    if ( currentPosition.lng > destination.lng ){
-      setCurrentPosition({lat: currentPosition.lat, lng: currentPosition.lng - 0.00003});
+  // const fakeMovement = () => {
+  //   // if current position within range of destination then don't perform fake move 
+  //   if ( currentPosition.lng > destination.lng ){
+  //     setCurrentPosition({lat: currentPosition.lat, lng: currentPosition.lng - 0.00003});
       
-    }
-    console.log(currentPosition);
+  //   }
+  //   console.log(currentPosition);
     
-    // get the current location and where we need to go
-  }
+  //   // get the current location and where we need to go
+  // }
   
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)
