@@ -6,23 +6,36 @@
   left: 0;
   z-index: 50;
 
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.5s;
+  transition: z-index 0s 1s;
+
+  &.active {
+    z-index: 50;
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
   .overlay {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
   }
 
   dialog {
     all: unset;
     display: block;
     width: 380px;
-    padding: 50px 30px 30px;
-    background: rgb(235, 235, 235);
+    padding: 60px 40px 40px;
+    background: rgb(241, 241, 241);
     border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 40%;
     left: 50%;
@@ -36,6 +49,7 @@
       top: 10px;
       right: 20px;
       cursor: pointer;
+      color: gray;
     }
 
     .petInfo {
@@ -89,17 +103,41 @@
     }
 
     form {
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 1.6rem;
-        text-align: center;
-      }
-
-      select {
-        display: block;
+      > div {
         margin: 20px 0;
-        width: 100%;
+
+        select {
+          display: block;
+          padding: 5px 10px;
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          font-size: 1.5rem;
+        }
+
+        label {
+          display: block;
+          font-size: 1.3rem;
+          color: gray;
+          text-align: left;
+          margin-bottom: 7px;
+        }
+
+        textarea {
+          resize: vertical;
+          box-sizing: border-box;
+          width: 100%;
+          padding: 10px 10px;
+          margin-bottom: 10px;
+          outline: none;
+          border: none;
+          background-color: white;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          border-radius: 5px;
+          font-size: 1.5rem;
+        }
       }
 
       button {
@@ -107,7 +145,7 @@
         display: block;
         width: fit-content;
         margin: 0 auto;
-        padding: 10px 20px;
+        padding: 12px 20px;
         background: #ee6c4d;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 20px;

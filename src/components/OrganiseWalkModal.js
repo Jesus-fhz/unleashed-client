@@ -13,7 +13,10 @@ const OrganiseWalkModal = ({
 }) => {
   const [duration, setDuration] = useState(0);
   const auth = useContext(AuthContext);
+  const [msg, setMsg] = useState("");
+
   const changeDuration = (e) => setDuration(e.target.value);
+  const changeMsg = (e) => setMsg(e.target.value);
 
   console.log(auth);
   const submitWalk = (e) => {
@@ -36,11 +39,11 @@ const OrganiseWalkModal = ({
   }
 
   return (
-    <>
-      {
-        !isOpen 
-        ||
-        <div className="organiseWalkModal">
+    // <>
+    //   {
+    //     !isOpen 
+    //     ||
+        <div className={`organiseWalkModal ${!isOpen || "active"}`}>
           <div 
             className="overlay"
             onClick={() => handleModal()}
@@ -70,21 +73,30 @@ const OrganiseWalkModal = ({
               </ul>
             </div>
             <form onSubmit={(e) => submitWalk(e)}>
-              {/* <label>How long do you ?</label> */}
+              <div>
+              <label>Duration</label>
               <select onChange={(e) => changeDuration(e)}>
                 <option value="15">15 mins</option>
                 <option value="30">30 mins</option>
                 <option value="45">45 mins</option>
                 <option value="60">1 hr</option>
-                <option value="90">1 hr 30 mins</option>
+                <option value="90">1.5 hr</option>
                 <option value="120">2 hr</option>
               </select>
+              </div>
+              <div>
+                <label>Special Instruction</label>
+                  <textarea 
+                  type="text"
+                  onChange={(e) => changeMsg(e)}
+                />
+              </div>
               <button>Find a walker nearby</button>
             </form>
           </dialog>
         </div>
-      }
-    </>
+    //   }
+    // </>
   )
 }
 
