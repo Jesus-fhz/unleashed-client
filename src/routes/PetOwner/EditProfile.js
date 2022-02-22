@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import EditOwner from '../../components/EditOwner.js'
 import { writeUserInfo } from '../../services/users'
@@ -6,18 +5,20 @@ import { writeUserInfo } from '../../services/users'
 const EditProfile = () => {
 
   const handleSubmitter = (userInfo) => {
-    console.log('USER INFO:', {...userInfo})
     updateProfile({...userInfo})
   }
 
-  const updateProfile = async (userInfo) => {
-    let profileDetails = { 
-      name: userInfo.name,
-      email: userInfo.email
+  const updateProfile = async (data) => {
+    let userInfo = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      address: data.address,
+      profile_image: data.profile_image
      };
-     writeUserInfo({profileDetails})
-      .then(data => console.log(data))
-      .catch(error => console.log(error))
+     writeUserInfo({...userInfo})
+      .then(data => console.log('data from writeUserinfo:', data))
+      .catch(error => console.log('the error from writeUserInfo: ', error))
   }
 
   return (
