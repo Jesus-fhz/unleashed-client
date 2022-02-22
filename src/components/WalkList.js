@@ -11,13 +11,24 @@ const WalkList  = () => {
     
 
     useEffect(() => {
-        requestPendingWalks(auth.user.latitude, auth.user.longitude)
-            .then(data => {
-                setWalks(data.walks);
-                setPets(data.pets)
-            })
-            .catch(error => console.log(error));
+        const ID = setInterval(() => {
+            requestWalks();
+            console.log("updating walks...");
+        }, 3000);
+
+        return () => clearInterval(ID);
     },[])
+
+    const requestWalks = () => {
+        requestPendingWalks(auth.user.latitude, auth.user.longitude)
+        .then(data => {
+            console.log(data);
+
+            setWalks(data.walks);
+            setPets(data.pets)
+        })
+        .catch(error => console.log(error));
+    }
 
     const getPetId = (pet_id) => {
        return pets.filter(pet => pet_id === pet.id);
@@ -28,7 +39,7 @@ const WalkList  = () => {
             walk_id: data.id,
             pet_id: data.pet_id,
             user_id: auth.user.id,
-            status: 0,
+            status: 1,
             cost: data.cost,
             duration: data.duration,
             latitude: data.latitude,
@@ -38,6 +49,9 @@ const WalkList  = () => {
         //TODO: connect to accept walk endpoint
         acceptWalk(info)
             .then(data => console.log(data))
+            //TODO: we need show them a map (track walkers position) to Both side.
+            // how are we gonna start pulling every 1sec
+            // start whenever the state is changed?
     }
 
     return (
