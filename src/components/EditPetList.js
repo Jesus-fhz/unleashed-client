@@ -37,7 +37,6 @@ const UserPetList = () => {
           <h1>
             <Link to="/">Unleashed</Link>
           </h1>
-          <Nav />
           <div className="scroll-container">
             <ul>
               {pets.map((pet) => (
@@ -62,10 +61,9 @@ const UserPetList = () => {
                 </li>
               ))}
             </ul>
-            <Link to="/owner/register" className="addBtn">
-              +
-            </Link>
           </div>
+          <Nav />
+
         </div>
       }
     </>

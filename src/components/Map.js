@@ -52,11 +52,11 @@ function Map({isFinding}) {
         <GoogleMap 
           mapContainerStyle={containerStyle} 
           center={currentPosition} 
-          zoom={12}
+          zoom={14}
         > 
           <Marker 
             position={currentPosition}
-
+            animation = {2}
           />
 
           
