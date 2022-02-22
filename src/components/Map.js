@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Marker, GoogleMap, LoadScript } from '@react-google-maps/api';
+import { AuthContext } from '../context/AuthContext';
 import { getNearbyWalkers } from '../services/walkers';
 import '../style/map.scss';
 import {useInterval} from './UseInterval'
+import { Link } from 'react-router-dom';
+
 
 // TODO: how to make the map size responsively
 const containerStyle = {
@@ -17,11 +20,13 @@ function Map({isFinding}) {
   const [currentPosition, setCurrentPosition] = useState({lat: -33.8724235, lng: 151.2591179}); //NOTE this is a test value will change later 
   const [destination, setDestination] = useState({lat: -33.872435, lng: 151.21});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
+  const authContext = useContext(AuthContext);
+
+  
 
   useEffect(() => {
     getCurrentLocation();
     loadWalkers();
-
     
     return () => {
       console.log('this should only run one time');
@@ -31,33 +36,36 @@ function Map({isFinding}) {
   // This function is performed every 'x' seconds. Where 'x' is the second param to the function
   
   useInterval(() => {
-    fakeMovement();
+    // if authContext.user.
+    if (authContext.user.user_type === 'owner'){
+      fakeMovement(destination, setDestination, currentPosition, setCurrentPosition );
+      console.log('destination:',destination)
+    } else {
+      fakeMovement(currentPosition, setCurrentPosition, destination, setDestination);
+    }
   }, 10);
   
-  const fakeMovement = () => {
+  const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation, setStationaryLocation) => {
     const incrementDistance = 0.00003;
     let x, y;
     
     // if current position within range of destination then don't perform fake move 
-    if (currentPosition.lng < destination.lng + incrementDistance * 10) { 
+    if (moverLocation.lng < stationaryLocation.lng + incrementDistance * 10) { 
       x = incrementDistance;
-    } else if (currentPosition.lng > destination.lng - incrementDistance * 10){
+    } else if (moverLocation.lng > stationaryLocation.lng - incrementDistance * 10){
       x = 0 - incrementDistance;
     }
 
-    if (currentPosition.lat < destination.lat + incrementDistance * 10) {
+    if (moverLocation.lat < stationaryLocation.lat + incrementDistance * 10) {
       y = incrementDistance;
-    } else if (currentPosition.lat > destination.lat - incrementDistance * 10){
+    } else if (moverLocation.lat > stationaryLocation.lat - incrementDistance * 10){
       y = 0 - incrementDistance;
     }
     
-    const newLng = currentPosition.lng + x;
-    const newLat = currentPosition.lat + y;
-
-    if ( currentPosition.lng > destination.lng ){
-      setCurrentPosition({lng: newLng, lat: newLat });
-    }
-    console.log(currentPosition);
+    const newLng = moverLocation.lng + x;
+    const newLat = moverLocation.lat + y;
+    
+    setMoverLocation({lng: newLng, lat: newLat });
   }
   
   const loadWalkers = async () => {
