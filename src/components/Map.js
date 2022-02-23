@@ -176,6 +176,7 @@ function Map({isFinding, showRadar}) {
             />
             
             {
+              //We only show the walker tracking if user === owner and the location of the ower is set
               auth.user.user_type === "owner" && auth.location
               ?
               <Marker 
