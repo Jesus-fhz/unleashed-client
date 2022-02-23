@@ -70,6 +70,10 @@ export const AuthProvider = ({children}) => {
                if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
                    setWalkData(data);
                    setStatus(data.walks.status);
+                   setLocation({
+                     lat: data.walks.latitude,
+                     lng: data.walks.longitude
+                   })
                    clearInterval(intervalID);
                }
               })
@@ -99,10 +103,12 @@ export const AuthProvider = ({children}) => {
   // TODO: need to know which info we need here exactly.
   const onSignUp = (userInfo) => {
     return signUp({
-      name: userInfo.username,
+      name: userInfo.name,
       email: userInfo.email,
-      user_type: userInfo.isWalker ? "walker" : "owner",
-      password: userInfo.password
+      user_type: userInfo.user_type,
+      address: userInfo.address,
+      password: userInfo.password,
+      profile_image: userInfo.profile_image
     })
       .then(data => {
         setUser(data);
