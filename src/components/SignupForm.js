@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import '../style/signinForm.scss'
+import { postUserInfo } from '../services/users';
 
 const SignupForm = ({swapForm}) => {
   const authContext = useContext(AuthContext);
@@ -8,14 +9,16 @@ const SignupForm = ({swapForm}) => {
   const [error, setError] = useState(false);
   const [isWalker, setIsWalker] = useState(false);
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [name, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(true);
 
   const changeUserType = (e) => setIsWalker(!isWalker);
   const changeEmail = (e) => setEmail(e.target.value);
   const changeUsername = (e) => setUsername(e.target.value);
   const changePassword = (e) => setPassword(e.target.value);
+  const changeAddress = (e) => setAddress(e.target.value)
 
   const changePasswordConfirm = (e) => {
     if(e.target.value >= password.length && e.target.value !== password) {
@@ -30,10 +33,16 @@ const SignupForm = ({swapForm}) => {
 
     if(!isPasswordConfirmed) return;
 
-    console.log(email, username, password, isWalker);
+    let user_type = isWalker ? 'walker' : 'owner'
+
+    console.log('email: ', email, 'username:', name, 'password: ', password, 'user-type:', user_type, 'address: ', address)
+
+    postUserInfo({
+      email, name, password, user_type, address
+    })
 
     authContext.onSignUp({
-      email, username, password, isWalker
+      email, name, password, isWalker, address
     })
       .catch(() => setError(true));
   }
@@ -62,12 +71,21 @@ const SignupForm = ({swapForm}) => {
           />
         </div>
         <div>
-          <label>Username</label>
+          <label>Full Name</label>
           <input 
             required 
             type="text" 
-            placeholder='Username' 
+            placeholder='Full Name' 
             onChange={(e) => changeUsername(e)}
+          />
+        </div>
+        <div>
+          <label>Address</label>
+          <input 
+            required 
+            type="text" 
+            placeholder='Address' 
+            onChange={(e) => changeAddress(e)}
           />
         </div>
         <div>
