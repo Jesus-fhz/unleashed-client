@@ -13,10 +13,10 @@ const containerStyle = {
   height: window.innerHeight
 };
 
-
+//TODO: ask laurence about the GetCurrentPosition function, I think is my computer location but I need to double check with him
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding, showRadar}) {
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.849146, lng: 150.997037});
+  const [currentPosition, setCurrentPosition] = useState({lat: -33.849146, lng: 150.997037}); 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
   
@@ -33,13 +33,11 @@ function Map({isFinding, showRadar}) {
   // On component update with polling. 
   useEffect(() => {
     let intervalID;
-
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
       if(auth.user.user_type === "walker" && auth.destination !== false) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
-            // getCurrentLocation();
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
@@ -82,10 +80,8 @@ function Map({isFinding, showRadar}) {
 
     if( xCorrect && yCorrect ){
       //setState for the walk done. 
-      
       setMoverLocation(stationaryLocation);
       auth.changeStatus("ongoing");
-
       return;
     }
     else {
