@@ -77,31 +77,31 @@ const WalkList  = () => {
                     <ul>
                         {   
                         walks?.map((el, index)=>(
-                                <li key={index}>
-                                    <div className="item-innerbox">
-                                        <div className="img-container">
-                                            <img src={getPetId(el.pet_id)[0].image} alt="" />
-                                        </div>
-                                        <div className="text-container">
-                                            <h3> {getPetId(el.pet_id)[0].name} </h3>
-                                            <p>
-                                                {/* TODO: we need to get a users address */}
-                                                {el.address}
-                                            </p>
-                                            <p className="breed">
-                                                Walk Duration: {el.duration} mins
-                                            </p>
-                                        </div>
+                            <li key={index}>
+                                <div className="item-innerbox">
+                                    <div className="img-container">
+                                        <img src={getPetId(el.pet_id)[0]?.image} alt="" />
                                     </div>
-                                    <div className="btn-container">
-                                        <button 
-                                            className="accept-btn"
-                                            onClick={() => clickAccept(el)}
-                                        >
-                                           {status}
-                                        </button>
+                                    <div className="text-container">
+                                        <h3> {getPetId(el.pet_id)[0]?.name} </h3>
+                                        <p>
+                                            {/* TODO: we need to get a users address */}
+                                            {el.address}
+                                        </p>
+                                        <p className="breed">
+                                            Walk Duration: {el.duration} mins
+                                        </p>
                                     </div>
-                                </li>
+                                </div>
+                                <div className="btn-container">
+                                    <button 
+                                        className="accept-btn"
+                                        onClick={() => clickAccept(el)}
+                                    >
+                                        {status}
+                                    </button>
+                                </div>
+                            </li>
                                 
                             ))
                         }
