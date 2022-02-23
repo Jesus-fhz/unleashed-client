@@ -17,7 +17,6 @@ const containerStyle = {
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
   const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
-  const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
   
@@ -41,7 +40,7 @@ function Map({isFinding}) {
 
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
-      if(auth.user.user_type === "walker") {
+      if(auth.user.user_type === "walker" && auth.destination !== false) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
             // getCurrentLocation();
@@ -49,7 +48,7 @@ function Map({isFinding}) {
             // console.log('the auth obj is:', auth);
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
-            fakeMovement(currentPosition, setCurrentPosition, {lat: -33.858399, lng:  150.978422}); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
+            fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.location);
@@ -62,6 +61,9 @@ function Map({isFinding}) {
       if(auth.user.user_type === "owner") {
         intervalID = setInterval(() => {
           setCurrentPosition(auth.location.lat, auth.location.lng);
+          // setDestination(auth.location.lat, auth.location.lng);
+          auth.updateDestination(auth.location.lat, auth.location.lng);
+
           // update walkers marker with "auth.location.lat, auth.location.lng"
         }, 50);
       }
@@ -90,7 +92,6 @@ function Map({isFinding}) {
 
     if( xCorrect && yCorrect ){
       //setState for the walk done. 
-      console.log('walk done');
       
       setMoverLocation(stationaryLocation);
       auth.changeStatus("ongoing");
@@ -166,8 +167,6 @@ function Map({isFinding}) {
     // Walker:
       // Show:
   // If Else 
-  console.log(' the current status is:', auth.status );
-  console.log(' the current user is:', auth.user )
 
   return (
     <div className="map">
@@ -193,11 +192,14 @@ function Map({isFinding}) {
               position={currentPosition}
               animation = {2}
             />
-
-            {/* <Marker 
-              position={auth.location}
+            {auth.status === 'accepted' || auth.status === 'ongoing' ?
+            
+            <Marker 
+              position={auth.destination}
               animation = {2}
-            /> */}
+            />
+            : ''
+          }
             
           </GoogleMap>
         </LoadScript>
