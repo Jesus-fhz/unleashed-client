@@ -6,7 +6,7 @@ import Nav from './Nav';
 const TrackWalkerSidebar = () => {
   const auth = useContext(AuthContext);
 
-  console.log(auth.walkData)
+  console.log('walk data,',auth.walkData)
 
   return (
     <aside className="trackWalkerSidebar">
@@ -16,10 +16,12 @@ const TrackWalkerSidebar = () => {
           <h1>Walker is coming!</h1>
           <div className="item-innerbox">
             <div className="img-container">
-              <img src={auth.walkData.walker?.image} alt="" />
-            </div>
+              <img src={auth.walkData.walker?.profile_image} alt="" />
+            </div>  
             <div className="text-container">
               <h3>{auth.walkData.walker?.name}</h3>
+              <p>Instructions:</p>
+              <p>{auth.walkData.walks?.special_instruction} </p>
             </div>
           </div>
         </div>
@@ -31,7 +33,19 @@ const TrackWalkerSidebar = () => {
             </div>
             <div className="text-container">
               <h3>{auth.walkData.pets?.name}</h3>
-              <p>{auth.walkData.pets?.breed}, {auth.walkData.pets?.age} Years old</p>
+              <p>
+                <ol>
+                    <li>
+                        {auth.walkData.pets?.breed}
+                    </li>
+                    <li>
+                    {auth.walkData.pets?.size}
+                    </li>
+                    <li>
+                      {auth.walkData.pets?.age} Years old
+                    </li>
+                </ol>
+              </p>
             </div>
           </div>
         </div>
