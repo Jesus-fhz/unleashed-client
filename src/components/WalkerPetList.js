@@ -1,40 +1,36 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { fetchUserPets } from '../services/pets';
 import Nav from './Nav';
 import '../style/userPetList.scss'
 
 
 const WalkerPetList = () => {
-  const authContext = useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
-  console.log(authContext.walkData)
+  console.log(auth.walkData, 'ASDAS' ) 
 
   return (
       <>
         <div className="userPetList">
-          HELLOOOOOOOOOOO
-          WE NEED PET INFORMATION HERE!!!!!
-          {/* <h1>Unleashed</h1>
+          <h1>Unleashed</h1>
           <div className="scroll-container">
             <ul>
-              {pets.map((pet) => (
-                <li key={pet.id}>
+              {
+                <li>
                   <div className="item-innerbox">
                     <div className="img-container">
-                      <img src={pet.image} alt={pet.name} />
+                      <img src={auth.walkData.pets.image}/>
                     </div>
                     <div className="text-container">
-                      <h3>{pet.name}</h3>
-                      <p className="breed">{pet.breed}, {pet.age} Years old</p>
+                      <h3>{auth.walkData.pets.name}</h3>
+                      <p className="breed"> sad Years old</p>
                     </div>
                   </div>
                 </li>
-              ))}
+             }
             </ul>
           </div>
-          <Nav /> */}
+          <Nav />
         </div>
       </>
   )

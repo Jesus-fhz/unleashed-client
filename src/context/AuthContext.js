@@ -61,24 +61,19 @@ export const AuthProvider = ({children}) => {
     }, [status, user]);
 
 
-
     const changeOngoingWalk = (id) => {
       setOngoingWalkID(id);
-
       let intervalID;
-        if(user.user_type === "owner") {
           intervalID = setInterval(() => {
             getWalkInfo(id)
               .then(data => {
                if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
-                  // console.log('accepted yaaaay,', data.walks)
                    setWalkData(data);
                    setStatus(data.walks.status);
                    clearInterval(intervalID);
                }
               })
           }, 4000)
-        }
     }
     
     const changeStatus = (status) => setStatus(status);
