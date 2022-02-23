@@ -7,15 +7,79 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 31;
   transition: 0.5s 0.5s;
 
-  .walk-info,
+  > h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  > div {
+    height: calc(100vh - 28px - 155px - 40px);
+    overflow: scroll;
+  }
+
+  .walker-info {
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #ee6c4d;
+      margin: 10px 0;
+    }
+
+    border-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+  }
+
   .pet-info {
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #ee6c4d;
+      margin: 10px 0;
+    }
+  }
+
+  .item-innerbox {
     padding: 20px;
     border-radius: 20px;
     background: white;
-    margin: 0 10px 50px;
+    margin: 0 10px 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    gap: 20px;
+
+    .img-container {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 130%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .text-container {
+      h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1.4rem;
+        color: gray;
+      }
+    }
   }
 }
