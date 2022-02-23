@@ -45,9 +45,6 @@ function Map({isFinding}) {
           if(auth.status === "accepted"){
             // getCurrentLocation();
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
-            // console.log('the auth obj is:', auth);
-            // console.log( 'auth location: ', auth.location );
-            // console.log( 'input currentPos: ', currentPosition)
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
@@ -74,8 +71,6 @@ function Map({isFinding}) {
 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    // console.log('fake movement instance ');
-    // debugger
     const incrementDistance = 0.00008;
     let x = 0;
     let y = 0;
@@ -99,8 +94,7 @@ function Map({isFinding}) {
       return;
     }
     else {
-      // console.log('this is incrementing movement')
-          // if current position within range of destination then don't perform fake move 
+      // if current position within range of destination then don't perform fake move 
       if (xUnder) { 
         x = incrementDistance;
       } else if (xOver){
