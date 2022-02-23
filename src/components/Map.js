@@ -44,6 +44,7 @@ function Map({isFinding}) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
             // getCurrentLocation();
+            // debugger;
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
@@ -181,7 +182,7 @@ function Map({isFinding}) {
             />
 
             {
-              auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished' 
+              (auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished') && (auth.destination) 
               ?            
                 <Marker 
                   position={auth.destination}
@@ -197,11 +198,6 @@ function Map({isFinding}) {
                   />
                 ))
             }
-            
-            { // get all the markers for close by walkers
-
-            }
-            
           </GoogleMap>
         </LoadScript>
         :
