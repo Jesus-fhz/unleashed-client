@@ -12,6 +12,7 @@ export const AuthProvider = ({children}) => {
   const [ongoingWalkID, setOngoingWalkID] = useState();
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
+  const [destination, setDestination] = useState(false);
 
   // TODO: we need a endpoint for this.
   // when the App is rendered, this will run.
@@ -34,7 +35,6 @@ export const AuthProvider = ({children}) => {
 
       // we need to start make a api call here
       if(status === "accepted" || status === "ongoing") {
-        console.log(location)
 
         // if you are a walker, we will send your location to backend 
         if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
@@ -71,6 +71,10 @@ export const AuthProvider = ({children}) => {
     const updateLocation = (location) => {
       setLocation(location);
     };
+
+    const updateDestination = (destination) => {
+      setDestination(destination);
+    }
 
 
   // It'll use "signIn" function from "service/auth" to fetch data.
@@ -109,12 +113,14 @@ export const AuthProvider = ({children}) => {
     <AuthContext.Provider value={{
       user,
       location,
+      destination,
       status,
       onSignIn, 
       onLogout, 
       onSignUp,
       changeStatus,
       updateLocation,
+      updateDestination,
       changeOngoingWalk
       }}>
       {

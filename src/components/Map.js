@@ -17,7 +17,6 @@ const containerStyle = {
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding}) {
   const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
-  const [destination, setDestination] = useState();
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
   
@@ -41,7 +40,7 @@ function Map({isFinding}) {
 
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
-      if(auth.user.user_type === "walker") {
+      if(auth.user.user_type === "walker" && auth.destination !== false) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
             // getCurrentLocation();
@@ -49,7 +48,7 @@ function Map({isFinding}) {
             // console.log('the auth obj is:', auth);
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
-            fakeMovement(currentPosition, setCurrentPosition, auth.location); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
+            fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.location);
@@ -61,7 +60,9 @@ function Map({isFinding}) {
       // if you are a owner, we will give you the walker's location
       if(auth.user.user_type === "owner") {
         intervalID = setInterval(() => {
-          setDestination(auth.location.lat, auth.location.lng);
+          // setDestination(auth.location.lat, auth.location.lng);
+          auth.updateDestination(auth.location.lat, auth.location.lng);
+
           // update walkers marker with "auth.location.lat, auth.location.lng"
         }, 50);
       }
@@ -72,23 +73,24 @@ function Map({isFinding}) {
 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    console.log('fake movement instance ');
+    // console.log('fake movement instance ');
     // debugger
     const incrementDistance = 0.00008;
     let x = 0;
     let y = 0;
 
-    const xOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
-    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 10;
+    const xOver = moverLocation.lng > stationaryLocation.lng + incrementDistance * 2;
+    
+    // debugger;
+    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 2;
     const xCorrect = !(xOver || xUnder);
 
-    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
-    const yUnder = moverLocation.lat < stationaryLocation.lat - incrementDistance * 10;
+    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 2;
+    const yUnder = moverLocation.lat < stationaryLocation.lat - incrementDistance * 2;
     const yCorrect = !(yOver || yUnder);
 
     if( xCorrect && yCorrect ){
       //setState for the walk done. 
-      console.log('walk done');
       
       setMoverLocation(stationaryLocation);
       auth.changeStatus("ongoing");
@@ -96,7 +98,7 @@ function Map({isFinding}) {
       return;
     }
     else {
-      console.log('this is incrementing movement')
+      // console.log('this is incrementing movement')
           // if current position within range of destination then don't perform fake move 
       if (xUnder) { 
         x = incrementDistance;
@@ -164,8 +166,6 @@ function Map({isFinding}) {
     // Walker:
       // Show:
   // If Else 
-  console.log(' the current status is:', auth.status );
-  console.log(' the current user is:', auth.user )
 
   return (
     <div className="map">
@@ -191,11 +191,14 @@ function Map({isFinding}) {
               position={currentPosition}
               animation = {2}
             />
-
+            {auth.status === 'accepted' || auth.status === 'ongoing' ?
+            
             <Marker 
-              position={auth.location}
+              position={auth.destination}
               animation = {2}
             />
+            : ''
+          }
             
           </GoogleMap>
         </LoadScript>
