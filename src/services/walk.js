@@ -9,8 +9,7 @@ const requestPendingWalks = async (lat, lng) =>{
     let res = await get(`/walks/pending/${lat}/${lng}`);
   
     const walks = {
-      pets: res.data.pets,
-      walks: res.data.walks
+      walks: res.data
     }
     return walks;
 }
