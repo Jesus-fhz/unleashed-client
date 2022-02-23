@@ -26,7 +26,7 @@ const OrganiseWalkModal = ({
         status : status,
         cost: 1 * duration,
         duration: duration,
-        special_instruction : 'He is thic boy',
+        special_instruction : msg,
         latitude: auth.user.latitude ,
         longitude: auth.user.longitude,
         address: auth.user.address

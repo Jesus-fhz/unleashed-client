@@ -24,7 +24,7 @@ const acceptWalk = async (info) => {
     duration: info.duration,
     latitude: info.lat,
     longitude: info.lng,
-    special_instruction: "fuckkkkkkkkk"
+    special_instruction: info.special_instruction
   });
 
   return res.data;
