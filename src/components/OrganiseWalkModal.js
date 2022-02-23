@@ -11,7 +11,7 @@ const OrganiseWalkModal = ({
   status,
   handleStatus
 }) => {
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(15);
   const auth = useContext(AuthContext);
   const [msg, setMsg] = useState("");
 
@@ -20,11 +20,11 @@ const OrganiseWalkModal = ({
 
   const submitWalk = (e) => {
     e.preventDefault();
+    debugger;
     const walk = {
         pet_id : selectedPet[0].id,
-        user_id : '',
         status : status,
-        cost: 212,
+        cost: 404,
         duration: duration,
         special_instruction : 'He is thic boy',
         latitude: auth.user.latitude ,
