@@ -16,20 +16,16 @@ const containerStyle = {
 
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding, showRadar}) {
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
+  const [currentPosition, setCurrentPosition] = useState({lat: -33.849146, lng: 150.997037});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
   
   const auth = useContext(AuthContext);
-
   // On component mount
   useEffect(() => {
-    if(auth.user.user_type === "walker") {
-      getCurrentLocation();
-    } else {
-      // setCurrentPosition({lat: -33.858399, lng: 150.978422}); //TODO: REMOVE THIS LATER ON THIS IS FOR TEStING 
-    }
-
+      if(auth.user.user_type === "walker") {
+        getCurrentLocation();
+      }
     loadWalkers();
   }, []);
 
@@ -50,18 +46,19 @@ function Map({isFinding, showRadar}) {
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
           }
-        }, 10);
+        }, 25);
       }
 
       // if you are a owner, we will give you the walker's location
       if(auth.user.user_type === "owner") {
-        intervalID = setInterval(() => {
-          setCurrentPosition(auth.location.lat, auth.location.lng);
-          // setDestination(auth.location.lat, auth.location.lng);
-          auth.updateDestination(auth.location.lat, auth.location.lng);
-
-          // update walkers marker with "auth.location.lat, auth.location.lng"
-        }, 50);
+        if(auth.status === "accepted"){
+          intervalID = setInterval(() => {
+            fakeMovement(currentPosition, setCurrentPosition, auth.location);
+          }, 25);
+        }
+        if(auth.status === "ongoing"){
+          fakeWalk(currentPosition, setCurrentPosition, auth.location);
+        }
       }
     }
 
@@ -126,7 +123,7 @@ function Map({isFinding, showRadar}) {
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
       auth.changeStatus("finished");
     }
-
+ 
     setMoverLocation({lng: newLng, lat: newLat });
   } 
 
@@ -152,12 +149,6 @@ function Map({isFinding, showRadar}) {
   }
 
 
-  //TODO: Conditional render, showing current position
-  // If active owned walk => 
-    // Walker:
-      // Show:
-  // If Else 
-
   return (
     <div className="map">
       {/* TODO: need to put loading effect inside of the map, but can't change their className to style it */}
@@ -179,11 +170,22 @@ function Map({isFinding, showRadar}) {
             center={currentPosition} 
             zoom={15}
           > 
-
             <Marker 
               position={currentPosition}
               animation = {2}
             />
+            
+            {
+              auth.user.user_type === "owner" && auth.location
+              ?
+              <Marker 
+                position={auth.location}
+                animation = {2}
+              />
+              :
+              '' 
+            }
+
 
             {
               (auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished') && (auth.destination) 
