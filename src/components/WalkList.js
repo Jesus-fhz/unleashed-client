@@ -7,7 +7,6 @@ import Nav from './Nav';
 const WalkList  = () => {
     const auth = useContext(AuthContext);
     const [walks,setWalks] = useState([]);
-    // const [pets,setPets] = useState([]);
     const [status, setStatus] = useState('Accept');
 
     useEffect(() => {
@@ -31,7 +30,7 @@ const WalkList  = () => {
         // console.log('the clickAccept data is:', data)
         auth.updateLocation({lat: data.latitude, lng: data.longitude})
         setWalks([data])
-        setStatus('On going');
+        setStatus('On going'); //This is just for display porpuses
         // We need Authcontext 
         //TODO: make it so that this changes the map for both the current Walker and Owner 
         const info = {
@@ -74,10 +73,10 @@ const WalkList  = () => {
                                 <li key={index}>
                                     <div className="item-innerbox">
                                         <div className="img-container">
-                                            <img src={el.pet.image} alt="" />
+                                            <img src={ el.pet.image } alt="" />
                                         </div>
                                         <div className="text-container">
-                                            <h3> {el.pet.name} </h3>
+                                            <h3> { el.pet.name } </h3>
                                             <p>
                                                 {el.address}
                                             </p>
