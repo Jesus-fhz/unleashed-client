@@ -1,28 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { getWalkInfo } from '../services/walk';
+import React, {useContext} from 'react';
 import { AuthContext } from '../context/AuthContext';
-
+import '../style/trackWalkerSidebar.scss'
 
 const TrackWalkerSidebar = () => {
   const auth = useContext(AuthContext);
 
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    // fetch data here
-    getWalkInfo(auth.ongoingWalkID)
-      .then(data => {
-        setData(data)
-      })
-  }, []);
+  console.log(auth.walkData)
 
   return (
     <aside className="trackWalkerSidebar">
       <div className="walker-info">
-        walker's info
+        <h1>Walker is coming!</h1>
+        {/* <h2>{auth.walkdata.walker.name}</h2> */}
       </div>
       <div className="pet-info">
-        pet's information
+        {/* <h1>Get ready {auth.walkData.pet.name}!</h1> */}
       </div>
     </aside>
   )

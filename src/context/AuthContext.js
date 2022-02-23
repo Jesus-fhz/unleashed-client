@@ -3,7 +3,7 @@ import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
 import { getLocation, sendLocation } from '../services/walk';
-
+import {getWalkInfo} from '../services/walk.js'
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
@@ -13,7 +13,13 @@ export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
   const [destination, setDestination] = useState(false);
+<<<<<<< HEAD
+  const [walkData, setWalkData] = useState(undefined);
+ 
+  // TODO: we need a endpoint for this.
+=======
 
+>>>>>>> 45d50079a2bbf23c525b9d0f6304634cc30091bc
   // when the App is rendered, this will run.
   // it'll send our token in LocalStorage, and need to et response with the user's information. 
 
@@ -56,8 +62,39 @@ export const AuthProvider = ({children}) => {
       }
     }, [status, user, location]);
 
+<<<<<<< HEAD
+
+    const changeStatus = (status) => {
+      setStatus(status);
+    }
+
+    const changeOngoingWalk = (id) => {
+      setOngoingWalkID(id);
+
+      let intervalID;
+        if(user.user_type === "owner") {
+          intervalID = setInterval(() => {
+            getWalkInfo(id)
+              .then(data => {
+               if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
+                  console.log('accepted yaaaay,', data.walks)
+                   setWalkData(data);
+                   setStatus(data.walks.status);
+                   clearInterval(intervalID);
+               }
+              })
+          }, 4000)
+        }
+  
+      
+  
+    }
+  
+
+=======
     const changeStatus = (status) => setStatus(status);
     const changeOngoingWalk = (id) => setOngoingWalkID(id);
+>>>>>>> 45d50079a2bbf23c525b9d0f6304634cc30091bc
     // if you are a walker, you need to update state in front end, 
     const updateLocation = (location) => setLocation(location);
     const updateDestination = (destination) => setDestination(destination);
@@ -100,6 +137,7 @@ export const AuthProvider = ({children}) => {
       location,
       destination,
       status,
+      walkData,
       onSignIn, 
       onLogout, 
       onSignUp,

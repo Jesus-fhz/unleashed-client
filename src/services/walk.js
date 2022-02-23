@@ -34,7 +34,7 @@ const acceptWalk = async (info) => {
 
 const getOwnerAddress = async(walk_id) => {
   let res = await get(`/walks/${walk_id}/owner/loc`)
-  console.log("res from getting owner location,", res.data);
+
   return res.data
 }
 
