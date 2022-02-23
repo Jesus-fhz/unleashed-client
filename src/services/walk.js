@@ -32,6 +32,12 @@ const acceptWalk = async (info) => {
 }
 
 
+const getOwnerAddress = async(walk_id) => {
+  let res = await get(`/walks/${walk_id}/owner/loc`)
+  console.log("res from getting owner location,", res.data);
+  return res.data
+}
+
 const sendLocation = async (info) => {
   let res = await patch(`/walks/${info.walk_id}.json`, {
     latitude: info.lat,
@@ -54,5 +60,6 @@ export {
   requestPendingWalks,
   acceptWalk,
   sendLocation,
-  getLocation
+  getLocation,
+  getOwnerAddress
 }
