@@ -61,7 +61,7 @@ function Map({isFinding}) {
       // if you are a owner, we will give you the walker's location
       if(auth.user.user_type === "owner") {
         intervalID = setInterval(() => {
-          setDestination(auth.location.lat, auth.location.lng);
+          setCurrentPosition(auth.location.lat, auth.location.lng);
           // update walkers marker with "auth.location.lat, auth.location.lng"
         }, 50);
       }
