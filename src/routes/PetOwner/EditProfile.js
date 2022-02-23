@@ -1,5 +1,6 @@
 import React from 'react';
 import EditOwner from '../../components/EditOwner.js'
+import EditPetList from '../../components/EditPetList';
 import { writeUserInfo } from '../../services/users'
 
 const EditProfile = () => {
@@ -23,6 +24,7 @@ const EditProfile = () => {
 
   return (
     <div className="edit_profile">
+      <EditPetList />
       <EditOwner handleSubmitter={handleSubmitter} />
     </div>
   )
