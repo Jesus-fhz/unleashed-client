@@ -39,15 +39,9 @@ const SignupForm = ({swapForm}) => {
     if(!isPasswordConfirmed) return;
 
     let user_type = isWalker ? 'walker' : 'owner'
-
-    console.log('email: ', email, 'username:', name, 'password: ', password, 'user-type:', user_type, 'address: ', address)
-
-    postUserInfo({
-      email, name, password, user_type, address, profile_image
-    })
-
+    
     authContext.onSignUp({
-      email, name, password, isWalker, address, profile_image
+      email, name, password, user_type, address, profile_image
     })
       .catch(() => setError(true));
   }
