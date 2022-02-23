@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { fetchUserInfo } from '../services/users';
+import '../style/editProfile.scss';
 
 const EditOwner = ({handleSubmitter}) => {
 
@@ -11,7 +12,7 @@ const EditOwner = ({handleSubmitter}) => {
   const [error, setError] = useState(false);
 
   // specific state dealing with errors within the form & the state we are updating prior to submit
-  const [nameError, setNameError] = useState({error: 'None', value: null});
+  const [nameError, setNameError] = useState({error: false, value: 'None'});
   const [addressError, setAddressError] = useState({error: 'None', value: null});
   const [profileImageError, setProfileImageError] = useState({error: 'None', value: null});
   const [emailError, setEmailError] = useState({error: 'None', value: null});
@@ -21,6 +22,9 @@ const EditOwner = ({handleSubmitter}) => {
   let [hasProfileChanged, setHasProfileChanged] = useState(false)
   let [hasAddressChanged, setHasAddressChanged] = useState(false)
   let [hasEmailChanged, setHasEmailChanged] = useState(false)
+
+  // a simple state that shows the user edits were pushed through successfully
+  let [submitSuccess, setSubmitSuccess] = useState(false)
 
   // regex for valid profile image URL and emails for checking the form before we submit
   const VALID_URL_REGEX = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
@@ -57,6 +61,7 @@ const EditOwner = ({handleSubmitter}) => {
   }  
   
   const handleAddressChange = (e) => {
+    console.log(e.target.value)
     setHasAddressChanged(true)
     setAddress(e.target.value)
   }
@@ -76,6 +81,7 @@ const EditOwner = ({handleSubmitter}) => {
   }  
   
   const isAddressValid = (address) => {
+    console.log(address)
     if (address.length > 10) {
       return true
     } else {
@@ -113,6 +119,7 @@ const EditOwner = ({handleSubmitter}) => {
     setAddressError({error: false, value: 'None'})
     setProfileImageError({error: false, value: 'None'})
     setEmailError({error: false, value: 'None'})
+    setSubmitSuccess(false)
 
     // this is where we check to see if that the piece of state has been updated at all on the page (I had to do this because it was returning *empty string* if I didn't put this further validation in). If it has been updated, it is taken as the image to pass to Axios. If it has NOT been updated, we take what is existing in the authContext.
     let id = authContext.user.id;
@@ -127,6 +134,7 @@ const EditOwner = ({handleSubmitter}) => {
         handleSubmitter({
           profile_image, name, address, email, id
         });
+        setSubmitSuccess(true)
       } 
       if (isProfileImageValid(profile_image) === false) {
         setProfileImageError({error: true, value: 'That does not look like an image URL! Please try again.' })
@@ -155,26 +163,54 @@ const EditOwner = ({handleSubmitter}) => {
         :
         <section className="ownerProfile">
           <div className="ownerProfile-innerbox">
-          <h1>Edit Profile</h1>
+          <h2>Edit Profile</h2>
             <form onSubmit={ (e) => handleSubmit(e) } >
-              <label> Profile Image </label>
-              <input onChange={ (e) => handleProfileImageChange(e) } type="text" defaultValue={authContext.user.profile_image} />
-              <br />
-              <label> Name </label>
-              <input onChange={ (e) => handleNameChange(e) } type="text" defaultValue={authContext.user.name} />
-              <br />
-              <label> Address </label>
-              <input onChange={ (e) => handleAddressChange(e) } type="text" defaultValue={authContext.user.address} />
-              <br />
-              <label> Email </label>
-              <input onChange={ (e) => handleEmailChange(e) } key={'name'} type="text" defaultValue={authContext.user.email} />
-              <br />
-              <button type='submit'>I AM A BUTTON</button>
-              <br />
-              {nameError.value !== 'None' ? <h1 className="error-message">{nameError.value}</h1> : null}
-              {addressError.value !== 'None' ? <h1 className="error-message">{addressError.value}</h1> : null}
-              {profileImageError.value !== 'None' ? <h1 className="error-message">{profileImageError.value}</h1> : null}
-              {emailError.value !== 'None' ? <h1 className="error-message">{emailError.value}</h1> : null}
+
+              {/* Profile Image Section */}
+              <div className='img-container' >
+                <img src={authContext.user.profile_image} alt="" />
+              </div>
+              <div>
+                <p>Profile Image</p>
+                <p><input className='profileInput' onChange={ (e) => handleProfileImageChange(e) } type="text" defaultValue={authContext.user.profile_image} /></p>
+              </div>
+
+              {/* Name Section */}
+              <div>
+                <p>Name</p>
+                <p><input className='profileInput' onChange={ (e) => handleNameChange(e) } type="text" defaultValue={authContext.user.name} /></p>
+              </div>
+
+              {/* Address Section */}
+              <div>
+                <p>Address</p>
+                <p><textarea rows="3" className='profileInput' onChange={ (e) => handleAddressChange(e) } type="text" defaultValue={authContext.user.address} /></p>
+              </div>
+
+              {/* Email Section */}
+              <div>
+                <p>Email</p>
+                <p><input className='profileInput' onChange={ (e) => handleEmailChange(e) } key={'name'} type="text" defaultValue={authContext.user.email} /></p>
+              </div>
+
+              {/* Button Section */}
+              <div className='btn-container' >
+                <button type='submit'>Submit Changes</button>
+              </div>
+
+              <div>
+
+                {nameError.error === true ? <p className={true ? "error-message" : null}>{nameError.value}</p> : null}
+
+                {addressError.error === true ? <p className={true ? "error-message" : null}>{addressError.value}</p> : null}
+
+                {profileImageError.error === true ? <p className={true ? "error-message" : null}>{profileImageError.value}</p> : null}
+
+                {emailError.error === true ? <p className={true ? "error-message" : null}>{emailError.value}</p> : null}
+
+                {submitSuccess ? <p className="success-message">Your profile has been edited successfully.</p> : null}
+                
+              </div>
             </form>
           </div>
         </section>
