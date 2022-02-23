@@ -48,8 +48,7 @@ function Map({isFinding}) {
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
-            fakeWalk(currentPosition, setCurrentPosition, auth.location);
-            // TODO: do the actual walk with dog. 
+            fakeWalk(currentPosition, setCurrentPosition, auth.destination);
           }
         }, 10);
       }
@@ -77,7 +76,6 @@ function Map({isFinding}) {
 
     const xOver = moverLocation.lng > stationaryLocation.lng + incrementDistance * 2;
     
-    // debugger;
     const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 2;
     const xCorrect = !(xOver || xUnder);
 
@@ -124,12 +122,10 @@ function Map({isFinding}) {
 
     setAngle(angle + 6.282 / 500);
 
-    if (angle > 6.21){
+    if (angle > 6.22){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
       auth.changeStatus("finished");
     }
-    //if angle equals 359 then return
-    // auth.status === "finished"
 
     setMoverLocation({lng: newLng, lat: newLat });
   } 
@@ -178,22 +174,33 @@ function Map({isFinding}) {
             center={currentPosition} 
             zoom={15}
           > 
-            {
-              // auth.status === "accepted" 
-            }
 
             <Marker 
               position={currentPosition}
               animation = {2}
             />
-            {auth.status === 'accepted' || auth.status === 'ongoing' ?
+
+            {
+              auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished' 
+              ?            
+                <Marker 
+                  position={auth.destination}
+                  animation = {2}
+                />
+              : 
+                nearbyWalkers.map((el) => (
+                  <Marker
+                    key={el.id}
+                    icon="https://i.imgur.com/cVTBuZe.png?1"
+                    // onLoad={onLoad}
+                    position={{lat: el.latitude, lng: el.longitude}}
+                  />
+                ))
+            }
             
-            <Marker 
-              position={auth.destination}
-              animation = {2}
-            />
-            : ''
-          }
+            { // get all the markers for close by walkers
+
+            }
             
           </GoogleMap>
         </LoadScript>

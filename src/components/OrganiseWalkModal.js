@@ -20,11 +20,10 @@ const OrganiseWalkModal = ({
 
   const submitWalk = (e) => {
     e.preventDefault();
-    debugger;
     const walk = {
         pet_id : selectedPet[0].id,
         status : status,
-        cost: 404,
+        cost: 1 * duration,
         duration: duration,
         special_instruction : 'He is thic boy',
         latitude: auth.user.latitude ,
