@@ -24,9 +24,6 @@ const WalkList  = () => {
         .catch(error => console.log(error));
     }
 
-    // const getPetId = (pet_id) => {
-    //    return pets.filter(pet => pet_id === pet.id);
-    // }
 
     const clickAccept = (data) => {
         auth.changeStatus('accepted');
@@ -89,15 +86,24 @@ const WalkList  = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="btn-container">
-                                        <button 
-                                            className="accept-btn"
-                                            onClick={() => clickAccept(el)}
-                                        >
-                                           {status}
-                                        </button>
+                                    <div className="text-container">
+                                        <h3> {el.pet.name} </h3>
+                                        <p>
+                                            {el.address}
+                                        </p>
+                                        <p className="breed">
+                                            Walk Duration: {el.duration} mins
+                                        </p>
                                     </div>
-                                </li>
+                                <div className="btn-container">
+                                    <button 
+                                        className="accept-btn"
+                                        onClick={() => clickAccept(el)}
+                                    >
+                                        {status}
+                                    </button>
+                                </div>
+                            </li>
                                 
                             ))
                         }
