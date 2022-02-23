@@ -5,12 +5,14 @@ import WalkList from '../components/WalkList';
 import Map from '../components/Map';
 import FindWalkerModal from '../components/FindWalkerModal';
 import '../style/home.scss'
+import TrackWalkerSidebar from '../components/TrackWalkerSidebar';
 
 
 const Home  = () => {
   const [isFinding, setIsFinding] = useState(false);
   const [status, setStatus] = useState(0);
   const auth = useContext(AuthContext);
+
   const handleFind = () => {
     isFinding ? setIsFinding(false) : setIsFinding(true);
   }
@@ -18,11 +20,20 @@ const Home  = () => {
   const handleStatus = (status) => {
     setStatus(status)
   }
+
+  useEffect(() => {
+    console.log(auth)
+  }, [auth])
   return (
     <div className="home">
     {
       auth.user.user_type === "owner" 
       ?
+      auth.status === "accepted" && auth.status === "ongoing"
+      ?
+      <TrackWalkerSidebar
+      />
+      :
       <UserPetList 
         handleFind={handleFind}
         isFinding={isFinding}
@@ -34,11 +45,18 @@ const Home  = () => {
     }
       
       <Map isFinding={isFinding}/>
-        {/* loading screen */}
+
+      {
+        auth.status !== "accepted" || auth.status !== "ongoing"
+        ?
         <FindWalkerModal
           isFinding={isFinding}
           handleFind={handleFind}
         />
+        :
+        ""
+      }
+
     </div>
   )
 }

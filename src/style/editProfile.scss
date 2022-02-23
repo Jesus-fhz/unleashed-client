@@ -1,0 +1,102 @@
+.ownerProfile {
+  width: calc(100vw - 340px);
+  margin-left: auto;
+
+  .ownerProfile-innerbox {
+    width: 75%;
+    margin: 100px auto 0;
+
+    .img-container {
+      width: 240px;
+      height: 240px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      background: gray;
+      margin-bottom: 20px;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .profileInput {
+      border-radius: 5px;
+      font-size: 1.8rem;
+      width: 65%;
+      text-align: center;
+      color: gray;
+      margin-bottom: 5px;
+    }
+
+    h2,
+    p {
+      max-width: 50vw;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2.4rem;
+      font-weight: 600;
+    }
+
+    div {
+
+      p {
+        font-size: 1.8rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: black;
+        margin-bottom: 10px;
+      }
+    }
+
+    .btn-container {
+      width: fit-content;
+      margin: 30px auto 0;
+      display: flex;
+      gap: 10px;
+
+      > * {
+        all: unset;
+        display: block;
+        width: fit-content;
+        padding: 10px 20px;
+        border-radius: 20px;
+        background-color: #3d5a80;
+        font-size: 1.4rem;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 20px;
+
+        &.logoutBtn {
+          background-color: #ee6c4d;
+        }
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error-message {
+      width: 55%;
+      background-color: #ee6c4d;
+      padding: 1%;
+      border-radius: 15px;
+      font-size: 1.2rem;
+    }
+
+    .success-message {
+      width: 55%;
+      background-color: lightgreen;
+      padding: 1%;
+      border-radius: 15px;
+      font-size: 1.2rem;
+    }
+
+  }
+}
