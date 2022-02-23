@@ -14,7 +14,6 @@ export const AuthProvider = ({children}) => {
   const [location, setLocation] = useState(false);
   const [destination, setDestination] = useState(false);
 
-  // TODO: we need a endpoint for this.
   // when the App is rendered, this will run.
   // it'll send our token in LocalStorage, and need to et response with the user's information. 
 
@@ -35,9 +34,8 @@ export const AuthProvider = ({children}) => {
 
       // we need to start make a api call here
       if(status === "accepted" || status === "ongoing") {
-
         // if you are a walker, we will send your location to backend 
-        if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
+        if(user.user_type === "walker" && location.lat !== undefined && location.lng !== undefined) {
           // need to get their location here with geo
           sendLocation({
             walk_id: ongoingWalkID,
@@ -58,23 +56,11 @@ export const AuthProvider = ({children}) => {
       }
     }, [status, user, location]);
 
-
-    const changeStatus = (status) => {
-      setStatus(status);
-    }
-
-    const changeOngoingWalk = (id) => {
-      setOngoingWalkID(id);
-    }
-
+    const changeStatus = (status) => setStatus(status);
+    const changeOngoingWalk = (id) => setOngoingWalkID(id);
     // if you are a walker, you need to update state in front end, 
-    const updateLocation = (location) => {
-      setLocation(location);
-    };
-    
-    const updateDestination = (destination) => {
-      setDestination(destination);
-    }
+    const updateLocation = (location) => setLocation(location);
+    const updateDestination = (destination) => setDestination(destination);
 
   // It'll use "signIn" function from "service/auth" to fetch data.
   // and "signIn" function returns the fetched data which is token.
