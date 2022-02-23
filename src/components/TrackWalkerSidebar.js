@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import { AuthContext } from '../context/AuthContext';
 import '../style/trackWalkerSidebar.scss'
+import Nav from './Nav';
 
 const TrackWalkerSidebar = () => {
   const auth = useContext(AuthContext);
@@ -9,13 +10,33 @@ const TrackWalkerSidebar = () => {
 
   return (
     <aside className="trackWalkerSidebar">
-      <div className="walker-info">
-        <h1>Walker is coming!</h1>
-        {/* <h2>{auth.walkdata.walker.name}</h2> */}
+      <h1>Unleashed</h1>
+      <div>
+        <div className="walker-info">
+          <h1>Walker is coming!</h1>
+          <div className="item-innerbox">
+            <div className="img-container">
+              <img src={auth.walkData.walker?.image} alt="" />
+            </div>
+            <div className="text-container">
+              <h3>{auth.walkData.walker?.name}</h3>
+            </div>
+          </div>
+        </div>
+        <div className="pet-info">
+          <h1>Get ready {auth.walkData.pets?.name}!</h1>
+          <div className="item-innerbox">
+            <div className="img-container">
+              <img src={auth.walkData.pets?.image} alt="" />
+            </div>
+            <div className="text-container">
+              <h3>{auth.walkData.pets?.name}</h3>
+              <p>{auth.walkData.pets?.breed}, {auth.walkData.pets?.age} Years old</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="pet-info">
-        {/* <h1>Get ready {auth.walkData.pet.name}!</h1> */}
-      </div>
+      <Nav />
     </aside>
   )
 }

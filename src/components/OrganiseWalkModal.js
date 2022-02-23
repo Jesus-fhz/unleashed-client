@@ -20,6 +20,7 @@ const OrganiseWalkModal = ({
 
   const submitWalk = (e) => {
     e.preventDefault();
+
     const walk = {
         pet_id : selectedPet[0].id,
         status : status,
