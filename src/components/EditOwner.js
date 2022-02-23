@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { fetchUserInfo } from '../services/users';
 import '../style/editProfile.scss';
+import { Upload } from '../services/upload.js'
+import axios from 'axios';
 
 const EditOwner = ({handleSubmitter}) => {
 
@@ -30,6 +32,10 @@ const EditOwner = ({handleSubmitter}) => {
   const VALID_URL_REGEX = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi
   const VALID_EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+  // for cloudinary
+  const cloudName = "metaverse-fc"; // replace with your own cloud name
+  const uploadPreset = "unleashed"; // replace with your own upload preset
+
   // now I need to fetch user info when the component is rendered.
   // TODO: As we already have the information from the authcontext, the question is whether or not we need to fetch data on ComponentDidMount (managed by useEffect). Test this, especially at update.
   useEffect(() => {
@@ -42,7 +48,7 @@ const EditOwner = ({handleSubmitter}) => {
   }, [authContext.user]);
   
   // These cannot be in the ComponentDidMount / useEffect
-  let [profile_image, setProfileImage] = useState('');
+  let [profile_image, setProfileImage] = useState(authContext.user.profile_image);
   let [name, setName] = useState('');
   let [address, setAddress] = useState('');
   let [email, setEmail] = useState('');
@@ -52,7 +58,7 @@ const EditOwner = ({handleSubmitter}) => {
     // this is letting state know that this particular input has been changed
     setHasProfileChanged(true)
     // sets profile image in the state using the value from the input
-    setProfileImage(e.target.value)
+    setProfileImage(e)
   } 
 
   const handleNameChange = (e) => {
@@ -103,8 +109,10 @@ const EditOwner = ({handleSubmitter}) => {
     if (profileImage
           .toLowerCase()
           .match(VALID_URL_REGEX)) {
+            console.log('profile valid')
       return true
     } else {
+      console.log('profile invalid')
       return false
     }
   }
@@ -131,6 +139,7 @@ const EditOwner = ({handleSubmitter}) => {
     // This is the validation check and the if check that requires all the state and helper functions above to assess if a relevant value has been submitted to the form before we handleSubmitter() which is the axios patch request in EditProfile.js
     if (isNameValid(name) && isAddressValid(address) && isEmailValid(email) && isProfileImageValid(profile_image)) {
       console.log('ALL VALID - SUBMITTING FORM')
+      console.log('this is the profile image in handleSubmitter: ', profile_image)
         handleSubmitter({
           profile_image, name, address, email, id
         });
@@ -150,6 +159,37 @@ const EditOwner = ({handleSubmitter}) => {
       }
     };
 
+
+
+    const myWidget = window.cloudinary.createUploadWidget(
+      {
+        cloudName: cloudName,
+        uploadPreset: uploadPreset,
+        // cropping: true, //add a cropping step
+        // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+        // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+        // multiple: false,  //restrict upload to a single file
+        // folder: "user_images", //upload files to the specified folder
+        // tags: ["users", "profile"], //add the given tags to the uploaded files
+        // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+        // clientAllowedFormats: ["images"], //restrict uploading to image files only
+        // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+        // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+        // theme: "purple", //change to a purple theme
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          console.log("Done! Here is the image info: ", result.info);
+          console.log(result.info.secure_url)
+          handleProfileImageChange(result.info.secure_url)
+        }
+      }
+    );
+
+    function openWidget () {
+      myWidget.open()
+    }
+
   return(
     <>
       {
@@ -164,16 +204,23 @@ const EditOwner = ({handleSubmitter}) => {
         <section className="ownerProfile">
           <div className="ownerProfile-innerbox">
           <h2>Edit Profile</h2>
+
+              <div className='img-container' >
+                <img src={profile_image} alt="" />
+              </div>
+
+              <div className='btn-container' >
+                <button 
+                  onClick={openWidget} 
+                  id="upload_widget" 
+                  className='cloudinary-button'>
+                    Upload Profile Image
+                </button>
+              </div>
+
             <form onSubmit={ (e) => handleSubmit(e) } >
 
               {/* Profile Image Section */}
-              <div className='img-container' >
-                <img src={authContext.user.profile_image} alt="" />
-              </div>
-              <div>
-                <p>Profile Image</p>
-                <p><input className='profileInput' onChange={ (e) => handleProfileImageChange(e) } type="text" defaultValue={authContext.user.profile_image} /></p>
-              </div>
 
               {/* Name Section */}
               <div>
