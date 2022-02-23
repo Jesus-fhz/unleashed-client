@@ -83,7 +83,7 @@ export const AuthProvider = ({children}) => {
     // const changeOngoingWalk = (id) => setOngoingWalkID(id);
     // if you are a walker, you need to update state in front end, 
     const updateLocation = (location) => setLocation(location);
-    const updateDestination = (destination) => setDestination(destination);
+    const updateDestination = (destination) => setDestination(destination); //FIXME: check if we're setting the whole walk obj in here OR is it just the lat and lng
 
   // It'll use "signIn" function from "service/auth" to fetch data.
   // and "signIn" function returns the fetched data which is token.
