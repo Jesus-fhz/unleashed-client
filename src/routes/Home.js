@@ -1,16 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import UserPetList from '../components/UserPetList';
+import WalkerPetList from '../components/WalkerPetList';
 import WalkList from '../components/WalkList';
 import Map from '../components/Map';
 import FindWalkerModal from '../components/FindWalkerModal';
 import '../style/home.scss'
+import TrackWalkerSidebar from '../components/TrackWalkerSidebar';
+
 
 
 const Home  = () => {
   const [isFinding, setIsFinding] = useState(false);
   const [status, setStatus] = useState(0);
+  const [showFindWalkerModal, setShowFindWalkerModal] = useState(true);
   const auth = useContext(AuthContext);
+
+
+  useEffect(() => {
+    console.log("auth.status is changed");
+
+    if((auth.status === "accepted" || auth.status === "ongoing") && showFindWalkerModal === true){
+      setShowFindWalkerModal(false);
+    }
+  }, [auth.status])
+
   const handleFind = () => {
     isFinding ? setIsFinding(false) : setIsFinding(true);
   }
@@ -23,6 +37,10 @@ const Home  = () => {
     {
       auth.user.user_type === "owner" 
       ?
+      !showFindWalkerModal
+      ?
+      <TrackWalkerSidebar />
+      :
       <UserPetList 
         handleFind={handleFind}
         isFinding={isFinding}
@@ -30,15 +48,26 @@ const Home  = () => {
         handleStatus={handleStatus}
       />
       :
+      !showFindWalkerModal
+      ?
+      <WalkerPetList />
+      :
       <WalkList/>
     }
       
-      <Map isFinding={isFinding}/>
-        {/* loading screen */}
-        <FindWalkerModal
-          isFinding={isFinding}
-          handleFind={handleFind}
-        />
+    <Map isFinding={isFinding} showRadar={showFindWalkerModal} />
+
+    {
+      showFindWalkerModal
+      ?
+      <FindWalkerModal
+        isFinding={isFinding}
+        handleFind={handleFind}
+      />
+      :
+      ""
+    }
+
     </div>
   )
 }

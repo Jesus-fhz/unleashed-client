@@ -7,7 +7,6 @@ import Nav from './Nav';
 const WalkList  = () => {
     const auth = useContext(AuthContext);
     const [walks,setWalks] = useState([]);
-    const [pets,setPets] = useState([]);
     const [status, setStatus] = useState('Accept');
 
     useEffect(() => {
@@ -20,16 +19,10 @@ const WalkList  = () => {
 
     const requestWalks = () => {
         requestPendingWalks(auth.user.latitude, auth.user.longitude)
-        .then(data => {
-            setWalks(data.walks);
-            setPets(data.pets)
-        })
+        .then(data => setWalks(data.walks))
         .catch(error => console.log(error));
     }
 
-    const getPetId = (pet_id) => {
-       return pets.filter(pet => pet_id === pet.id);
-    }
 
     const clickAccept = (data) => {
         auth.changeStatus('accepted');
@@ -37,7 +30,7 @@ const WalkList  = () => {
         // console.log('the clickAccept data is:', data)
         auth.updateLocation({lat: data.latitude, lng: data.longitude})
         setWalks([data])
-        setStatus('On going');
+        setStatus('On going'); //This is just for display porpuses
         // We need Authcontext 
         //TODO: make it so that this changes the map for both the current Walker and Owner 
         const info = {
@@ -57,11 +50,10 @@ const WalkList  = () => {
             .then(data => console.log(data));
 
         getOwnerAddress(data.id)
-            .then((data) => { auth.updateDestination(data)
-                console.log('sadasdasdasdsa,', data)
+            .then((res) => { auth.updateDestination(res)
+                console.log('sadasdasdasdsa,', res)
             });
 
-        //TODO: walker need to send their geolocation every second after they accept job.
         // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
         // USER SIDE: we need to keep getting walker's location from API
     }
@@ -72,7 +64,7 @@ const WalkList  = () => {
             <Link to="/">Unleashed</Link>
             </h1>
             {
-                walks?.length > 0 && pets?.length > 0 
+                walks?.length > 0
                 ?
                 <div className="scroll-container">
                     <ul>
@@ -81,12 +73,11 @@ const WalkList  = () => {
                                 <li key={index}>
                                     <div className="item-innerbox">
                                         <div className="img-container">
-                                            <img src={getPetId(el.pet_id)[0].image} alt="" />
+                                            <img src={ el.pet.image } alt="" />
                                         </div>
                                         <div className="text-container">
-                                            <h3> {getPetId(el.pet_id)[0].name} </h3>
+                                            <h3> { el.pet.name } </h3>
                                             <p>
-                                                {/* TODO: we need to get a users address */}
                                                 {el.address}
                                             </p>
                                             <p className="breed">
@@ -94,15 +85,24 @@ const WalkList  = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="btn-container">
-                                        <button 
-                                            className="accept-btn"
-                                            onClick={() => clickAccept(el)}
-                                        >
-                                           {status}
-                                        </button>
+                                    <div className="text-container">
+                                        <h3> {el.pet.name} </h3>
+                                        <p>
+                                            {el.address}
+                                        </p>
+                                        <p className="breed">
+                                            Walk Duration: {el.duration} mins
+                                        </p>
                                     </div>
-                                </li>
+                                <div className="btn-container">
+                                    <button 
+                                        className="accept-btn"
+                                        onClick={() => clickAccept(el)}
+                                    >
+                                        {status}
+                                    </button>
+                                </div>
+                            </li>
                                 
                             ))
                         }

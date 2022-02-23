@@ -3,7 +3,7 @@ import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
 import { getLocation, sendLocation } from '../services/walk';
-
+import {getWalkInfo} from '../services/walk.js'
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
@@ -13,7 +13,8 @@ export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
   const [destination, setDestination] = useState(false);
-
+  const [walkData, setWalkData] = useState(undefined);
+ 
   // TODO: we need a endpoint for this.
   // when the App is rendered, this will run.
   // it'll send our token in LocalStorage, and need to et response with the user's information. 
@@ -35,47 +36,51 @@ export const AuthProvider = ({children}) => {
 
       // we need to start make a api call here
       if(status === "accepted" || status === "ongoing") {
-
         // if you are a walker, we will send your location to backend 
-        if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
+        if(user.user_type === "walker" && location.lat !== undefined && location.lng !== undefined) {
           // need to get their location here with geo
           sendLocation({
             walk_id: ongoingWalkID,
             lat: location.lat,
             lng: location.lng,
-
           });
         }
 
         // if you are a owner, we will get the walker's location from backend
         if(user.user_type === "owner") {          
           getLocation(ongoingWalkID)
-            .then(data => setLocation({
-              lat: data.latitude,
-              lng: data.longitude
-            }));
+            .then(data => {
+              console.log('data returned from getLocation:', data)
+              setLocation({
+                lat: data.latitude,
+                lng: data.longitude, 
+              });
+            });
         }
       }
-    }, [status, user, location]);
+    }, [status, user]);
 
-
-    const changeStatus = (status) => {
-      setStatus(status);
-    }
 
     const changeOngoingWalk = (id) => {
       setOngoingWalkID(id);
+      let intervalID;
+          intervalID = setInterval(() => {
+            getWalkInfo(id)
+              .then(data => {
+               if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
+                   setWalkData(data);
+                   setStatus(data.walks.status);
+                   clearInterval(intervalID);
+               }
+              })
+          }, 4000)
     }
-
+    
+    const changeStatus = (status) => setStatus(status);
+    // const changeOngoingWalk = (id) => setOngoingWalkID(id);
     // if you are a walker, you need to update state in front end, 
-    const updateLocation = (location) => {
-      setLocation(location);
-    };
-
-    const updateDestination = (destination) => {
-      setDestination(destination);
-    }
-
+    const updateLocation = (location) => setLocation(location);
+    const updateDestination = (destination) => setDestination(destination); //FIXME: check if we're setting the whole walk obj in here OR is it just the lat and lng
 
   // It'll use "signIn" function from "service/auth" to fetch data.
   // and "signIn" function returns the fetched data which is token.
@@ -115,6 +120,7 @@ export const AuthProvider = ({children}) => {
       location,
       destination,
       status,
+      walkData,
       onSignIn, 
       onLogout, 
       onSignUp,

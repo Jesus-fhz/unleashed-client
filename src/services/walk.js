@@ -9,8 +9,7 @@ const requestPendingWalks = async (lat, lng) =>{
     let res = await get(`/walks/pending/${lat}/${lng}`);
   
     const walks = {
-      pets: res.data.pets,
-      walks: res.data.walks
+      walks: res.data
     }
     return walks;
 }
@@ -25,7 +24,7 @@ const acceptWalk = async (info) => {
     duration: info.duration,
     latitude: info.lat,
     longitude: info.lng,
-    special_instruction: "fuckkkkkkkkk"
+    special_instruction: info.special_instruction
   });
 
   return res.data;
@@ -34,7 +33,7 @@ const acceptWalk = async (info) => {
 
 const getOwnerAddress = async(walk_id) => {
   let res = await get(`/walks/${walk_id}/owner/loc`)
-  console.log("res from getting owner location,", res.data);
+
   return res.data
 }
 
@@ -43,13 +42,18 @@ const sendLocation = async (info) => {
     latitude: info.lat,
     longitude: info.lng
   });
-
+  
   return res.data;
 }
 
 const getLocation = async (walk_id) => {
-  let res = await get(`/walks/${walk_id}.json`);
+  let res = await get(`/walks/${walk_id}`);
 
+  return res.data;
+}
+
+const getWalkInfo = async (walkID) => {
+  let res = await get(`/walks/accepted/${walkID}`);
   return res.data;
 }
 
@@ -61,5 +65,6 @@ export {
   acceptWalk,
   sendLocation,
   getLocation,
-  getOwnerAddress
+  getOwnerAddress,
+  getWalkInfo
 }

@@ -11,7 +11,7 @@ const OrganiseWalkModal = ({
   status,
   handleStatus
 }) => {
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(15);
   const auth = useContext(AuthContext);
   const [msg, setMsg] = useState("");
 
@@ -20,21 +20,26 @@ const OrganiseWalkModal = ({
 
   const submitWalk = (e) => {
     e.preventDefault();
+
     const walk = {
         pet_id : selectedPet[0].id,
-        user_id : '',
         status : status,
-        cost: 212,
+        cost: 1 * duration,
         duration: duration,
-        special_instruction : 'He is thic boy',
+        special_instruction : msg,
         latitude: auth.user.latitude ,
         longitude: auth.user.longitude,
         address: auth.user.address
     }
     
     requestWalk(walk) 
-      .then(data => console.log('response from walk', data))
+      .then(data => {
+        console.log('response from walk', data);
+        auth.changeOngoingWalk(data.id)
+      })
       .catch(error => console.log(error));
+
+
     handleModal();
     handleFind();
   }
