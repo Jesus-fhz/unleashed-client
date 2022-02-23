@@ -10,6 +10,12 @@ const writeUserInfo = async (userInfo) => {
   return res.data
 }
 
+const postUserInfo = async (userInfo) => {
+  console.log('User post successful: ', userInfo)
+  let res = await post (`/users.json/`, {...userInfo});
+  return res.data
+}
+
 export {
-  fetchUserInfo, writeUserInfo
+  fetchUserInfo, writeUserInfo, postUserInfo
 };

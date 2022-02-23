@@ -52,7 +52,7 @@ const UserProfile = () => {
               <p>{data.address}</p>
             </div>
             <div className="btn-container">
-              <Link to="/" className="editBtn">Edit my profile</Link>
+              <Link to="/owner/edit_profile" className="editBtn">Edit my profile</Link>
               <button 
                 className="logoutBtn"
                 onClick={clickLogout}

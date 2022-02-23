@@ -28,8 +28,19 @@ const Nav = () => {
       </div>
       }
       <div>
+      {
+        auth.user.user_type === "owner"
+        ?
+        <Link to="/owner/edit_profile">
+          <img src={user_icon} alt="edit profile"/>
+          <p>Edit Profile</p>
+        </Link>
+        :
+        <div>
         <img src={home_icon} alt="my page"/>
         <p>???</p>
+        </div>
+      }
       </div>
       <div>
         <img src={home_icon} alt="my page"/>
