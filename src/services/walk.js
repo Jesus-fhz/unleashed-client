@@ -42,12 +42,12 @@ const sendLocation = async (info) => {
     latitude: info.lat,
     longitude: info.lng
   });
-
+  
   return res.data;
 }
 
 const getLocation = async (walk_id) => {
-  let res = await get(`/walks/${walk_id}.json`);
+  let res = await get(`/walks/${walk_id}`);
 
   return res.data;
 }

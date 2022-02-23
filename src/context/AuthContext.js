@@ -49,14 +49,16 @@ export const AuthProvider = ({children}) => {
         // if you are a owner, we will get the walker's location from backend
         if(user.user_type === "owner") {          
           getLocation(ongoingWalkID)
-            .then(data => setLocation({
-              lat: data.latitude,
-              lng: data.longitude, 
-
-            }));
+            .then(data => {
+              console.log('data returned from getLocation:', data)
+              setLocation({
+                lat: data.latitude,
+                lng: data.longitude, 
+              });
+            });
         }
       }
-    }, [status, user, location]);
+    }, [status, user]);
 
 
 
@@ -69,7 +71,7 @@ export const AuthProvider = ({children}) => {
             getWalkInfo(id)
               .then(data => {
                if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
-                  console.log('accepted yaaaay,', data.walks)
+                  // console.log('accepted yaaaay,', data.walks)
                    setWalkData(data);
                    setStatus(data.walks.status);
                    clearInterval(intervalID);

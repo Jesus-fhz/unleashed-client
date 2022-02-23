@@ -44,7 +44,6 @@ function Map({isFinding}) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
             // getCurrentLocation();
-            // debugger;
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
