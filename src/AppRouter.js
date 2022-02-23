@@ -5,7 +5,6 @@ import Home from './routes/Home';
 import EditProfile from './routes/PetOwner/EditProfile'
 
 import './style/global.scss';
-import TrackWalker from "./routes/PetOwner/TrackWalker";
 
 const AppRouter = () => {
   return (
@@ -16,7 +15,6 @@ const AppRouter = () => {
         <Route path="/owner/profile" element={<OwnerProfile />} />
         <Route path="/owner/edit_profile" element={<EditProfile />} />
         <Route path="/owner/register" element={<RegisterPet />} />
-        <Route path="/owner/found-walker" element={<TrackWalker />} />
       </Routes>
     </Router>
   )
