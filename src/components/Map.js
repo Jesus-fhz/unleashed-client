@@ -49,7 +49,7 @@ function Map({isFinding}) {
             // console.log('the auth obj is:', auth);
             // console.log( 'auth location: ', auth.location );
             // console.log( 'input currentPos: ', currentPosition)
-            fakeMovement(currentPosition, setCurrentPosition, auth.location); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
+            fakeMovement(currentPosition, setCurrentPosition, {lat: -33.858399, lng:  150.978422}); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
 
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.location);
@@ -72,18 +72,20 @@ function Map({isFinding}) {
 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    console.log('fake movement instance ');
+    // console.log('fake movement instance ');
     // debugger
     const incrementDistance = 0.00008;
     let x = 0;
     let y = 0;
 
-    const xOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
-    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 10;
+    const xOver = moverLocation.lng > stationaryLocation.lng + incrementDistance * 2;
+    
+    // debugger;
+    const xUnder = moverLocation.lng < stationaryLocation.lng - incrementDistance * 2;
     const xCorrect = !(xOver || xUnder);
 
-    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 10;
-    const yUnder = moverLocation.lat < stationaryLocation.lat - incrementDistance * 10;
+    const yOver = moverLocation.lat > stationaryLocation.lat + incrementDistance * 2;
+    const yUnder = moverLocation.lat < stationaryLocation.lat - incrementDistance * 2;
     const yCorrect = !(yOver || yUnder);
 
     if( xCorrect && yCorrect ){
@@ -96,7 +98,7 @@ function Map({isFinding}) {
       return;
     }
     else {
-      console.log('this is incrementing movement')
+      // console.log('this is incrementing movement')
           // if current position within range of destination then don't perform fake move 
       if (xUnder) { 
         x = incrementDistance;
@@ -192,10 +194,10 @@ function Map({isFinding}) {
               animation = {2}
             />
 
-            <Marker 
+            {/* <Marker 
               position={auth.location}
               animation = {2}
-            />
+            /> */}
             
           </GoogleMap>
         </LoadScript>
