@@ -44,7 +44,6 @@ export const AuthProvider = ({children}) => {
             walk_id: ongoingWalkID,
             lat: location.lat,
             lng: location.lng,
-
           });
         }
 
@@ -53,7 +52,8 @@ export const AuthProvider = ({children}) => {
           getLocation(ongoingWalkID)
             .then(data => setLocation({
               lat: data.latitude,
-              lng: data.longitude
+              lng: data.longitude, 
+
             }));
         }
       }
@@ -72,8 +72,7 @@ export const AuthProvider = ({children}) => {
     const updateLocation = (location) => {
       setLocation(location);
     };
-
-
+    
   // It'll use "signIn" function from "service/auth" to fetch data.
   // and "signIn" function returns the fetched data which is token.
   // if data fetching succeeds, it will set user state with the token.
