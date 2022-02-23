@@ -39,6 +39,7 @@ export const AuthProvider = ({children}) => {
         // if you are a walker, we will send your location to backend 
         if(user.user_type === "walker" && (location.lat !== undefined || location.lng !== undefined)) {
           // need to get their location here with geo
+          console.log('location:', location)
           sendLocation({
             walk_id: ongoingWalkID,
             lat: location.lat,
