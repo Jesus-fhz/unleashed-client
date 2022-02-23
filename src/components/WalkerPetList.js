@@ -9,9 +9,13 @@ import '../style/userPetList.scss'
 const WalkerPetList = () => {
   const authContext = useContext(AuthContext);
 
+  console.log(authContext.walkData)
+
   return (
       <>
         <div className="userPetList">
+          HELLOOOOOOOOOOO
+          WE NEED PET INFORMATION HERE!!!!!
           {/* <h1>Unleashed</h1>
           <div className="scroll-container">
             <ul>
