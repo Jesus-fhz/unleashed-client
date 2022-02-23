@@ -61,7 +61,6 @@ const WalkList  = () => {
                 console.log('sadasdasdasdsa,', data)
             });
 
-        //TODO: walker need to send their geolocation every second after they accept job.
         // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
         // USER SIDE: we need to keep getting walker's location from API
     }
