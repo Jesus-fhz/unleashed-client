@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { acceptWalk, requestPendingWalks } from '../services/walk';
+import { acceptWalk, getOwnerAddress, requestPendingWalks } from '../services/walk';
 import Nav from './Nav';
     
 const WalkList  = () => {
@@ -38,11 +38,8 @@ const WalkList  = () => {
         auth.updateLocation({lat: data.latitude, lng: data.longitude})
         setWalks([data])
         setStatus('On going');
-
-
         // We need Authcontext 
-        //TODO: make it so that this changes the map for both the current Walker and Owner
-        
+        //TODO: make it so that this changes the map for both the current Walker and Owner 
         const info = {
             walk_id: data.id,
             pet_id: data.pet_id,
@@ -57,7 +54,12 @@ const WalkList  = () => {
 
 
         acceptWalk(info)
-            .then(data => console.log(data))
+            .then(data => console.log(data));
+
+        getOwnerAddress(data.id)
+            .then((data) => { auth.updateDestination(data)
+                console.log('sadasdasdasdsa,', data)
+            });
 
         //TODO: walker need to send their geolocation every second after they accept job.
         // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
