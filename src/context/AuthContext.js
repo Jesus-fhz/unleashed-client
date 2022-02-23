@@ -59,9 +59,6 @@ export const AuthProvider = ({children}) => {
     }, [status, user, location]);
 
 
-    const changeStatus = (status) => {
-      setStatus(status);
-    }
 
     const changeOngoingWalk = (id) => {
       setOngoingWalkID(id);
@@ -80,12 +77,10 @@ export const AuthProvider = ({children}) => {
               })
           }, 4000)
         }
-  
-      
-  
     }
-  
-
+    
+    const changeStatus = (status) => setStatus(status);
+    // const changeOngoingWalk = (id) => setOngoingWalkID(id);
     // if you are a walker, you need to update state in front end, 
     const updateLocation = (location) => setLocation(location);
     const updateDestination = (destination) => setDestination(destination);
