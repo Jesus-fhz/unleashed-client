@@ -33,8 +33,13 @@ const OrganiseWalkModal = ({
     }
     
     requestWalk(walk) 
-      .then(data => console.log('response from walk', data))
+      .then(data => {
+        console.log('response from walk', data);
+        auth.changeOngoingWalk(data.id)
+      })
       .catch(error => console.log(error));
+
+
     handleModal();
     handleFind();
   }
