@@ -53,6 +53,11 @@ const getLocation = async (walk_id) => {
   return res.data;
 }
 
+const getWalkInfo = async (walkID) => {
+  let res = await get(`/walks/accepted/${walkID}`);
+  return res.data;
+}
+
   
 
 export {
@@ -61,5 +66,6 @@ export {
   acceptWalk,
   sendLocation,
   getLocation,
-  getOwnerAddress
+  getOwnerAddress,
+  getWalkInfo
 }
