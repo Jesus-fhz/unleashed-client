@@ -15,7 +15,7 @@ const containerStyle = {
 
 
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
-function Map({isFinding}) {
+function Map({isFinding, showRadar}) {
   const [currentPosition, setCurrentPosition] = useState({lat: -33.858399, lng: 150.978422});
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
@@ -161,9 +161,14 @@ function Map({isFinding}) {
   return (
     <div className="map">
       {/* TODO: need to put loading effect inside of the map, but can't change their className to style it */}
-      <div 
-        className={`loading-effect ${isFinding ? "active" : ""}`} 
-      />
+
+      {
+        showRadar
+        ?
+        <div className={`loading-effect ${isFinding ? "active" : ""}`} />
+        :
+        ""
+      }
       
       {
         currentPosition?.lat !== 0 && currentPosition?.lng !== 0
