@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import UserPetList from '../components/UserPetList';
+import WalkerPetList from '../components/WalkerPetList';
 import WalkList from '../components/WalkList';
 import Map from '../components/Map';
 import FindWalkerModal from '../components/FindWalkerModal';
@@ -47,21 +48,25 @@ const Home  = () => {
         handleStatus={handleStatus}
       />
       :
+      !showFindWalkerModal
+      ?
+      <WalkerPetList />
+      :
       <WalkList/>
     }
       
-      <Map isFinding={isFinding}/>
+    <Map isFinding={isFinding} showRadar={showFindWalkerModal} />
 
-      {
-        showFindWalkerModal
-        ?
-        <FindWalkerModal
-          isFinding={isFinding}
-          handleFind={handleFind}
-        />
-        :
-        ""
-      }
+    {
+      showFindWalkerModal
+      ?
+      <FindWalkerModal
+        isFinding={isFinding}
+        handleFind={handleFind}
+      />
+      :
+      ""
+    }
 
     </div>
   )
