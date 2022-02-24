@@ -106,6 +106,8 @@ function Map({isFinding, showRadar}) {
   }
 
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
+    console.log('stationaryLocation:', stationaryLocation);
+    
     let x = 0.00004 * Math.cos(angle);
     let y = 0.00004 * Math.sin(angle);
     
@@ -115,9 +117,10 @@ function Map({isFinding, showRadar}) {
 
     setAngle(angle + 6.282 / 500);
 
-    if (angle > 6.22){
+    if (angle > 6.282){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
       auth.changeStatus("finished");
+      return;
     }
  
     setMoverLocation({lng: newLng, lat: newLat });
