@@ -7,6 +7,7 @@ import '../style/userPetList.scss'
 const WalkerPetList = () => {
   const auth = useContext(AuthContext);
 
+  console.log('the auth is:', auth);
   return (
       <>
         <div className="userPetList">
@@ -29,7 +30,7 @@ const WalkerPetList = () => {
                       <p>
                           {auth.walkData.pets.age} Years old
                       </p>
-                      <p>Address: there is a seed problem with the Addresses (no all dogs have them) </p>
+                      <p>{auth.walkData.walks.address}</p>
                     </div>
                   </div>
                 </li>
