@@ -3,7 +3,7 @@ import {signIn, signUp, logout, getPayload } from '../services/auth';
 import Signin from '../routes/Signin';
 import { getToken } from '../localStorage/token';
 import { getLocation, sendLocation } from '../services/walk';
-import {getWalkInfo} from '../services/walk.js'
+import {getWalkInfo, changeStatusWalk} from '../services/walk.js'
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
@@ -35,7 +35,7 @@ export const AuthProvider = ({children}) => {
       // let intervalID;
 
       // we need to start make a api call here
-      if(status === "accepted" || status === "ongoing") {
+      if(status === "accepted" || status === "ongoing" || status === "pickup" || status === "dropoff"){
         // if you are a walker, we will send your location to backend 
         if(user.user_type === "walker" && location.lat !== undefined && location.lng !== undefined) {
           // need to get their location here with geo
@@ -60,6 +60,12 @@ export const AuthProvider = ({children}) => {
       }
     }, [status, user, location]);
 
+    useEffect(() => {
+      console.log("checking status change:",status);
+      changeStatusWalk(ongoingWalkID, status)
+      .then(data =>console.log("updating walk status", data))
+      .catch(error => console.log(error))
+    },[status])
 
     const changeOngoingWalk = (id) => {
       setOngoingWalkID(id);
