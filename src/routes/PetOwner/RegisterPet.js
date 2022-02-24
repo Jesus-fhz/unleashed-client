@@ -1,9 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+
+
 import { PetRegisterFormFirst, PetRegisterFormSecond } from '../../components/PetRegisterForm';
 import '../../style/registerPet.scss'
 import { saveUserPet } from '../../services/pets';
 
 const ResisterPet = () => {
+  const navigate = useNavigate()
+  const authContext = useContext(AuthContext);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [petInfo, setPetInfo] = useState({});
   const [data, setData] = useState({});
@@ -21,11 +28,13 @@ const ResisterPet = () => {
   const submitSecondForm =  (info) => {
     setPetInfo({...petInfo, ...info});
     savePet({...petInfo,...info});
+
+    navigate("/");
   }
 
   const savePet = async (data)=>{
     const infoPet = {
-      user_id: 21,
+      user_id: authContext.user.id,
       image: "http://placedog.com/300/300",
       name: data.name,
       breed: data.breed,
