@@ -7,18 +7,41 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
   const [size, setSize] = useState('');
   const [breed, setBreed] = useState('');
   const [gender, setGender] = useState('');
+  const [image, setImage] = useState('');
+
+  const cloudName = "metaverse-fc"; // replace with your own cloud name
+  const uploadPreset = "unleashed"; // replace with your own upload preset
 
   const changeName = (e) => setName(e.target.value);
   const changeAge = (e) => setAge(e.target.value);
   const changeSize = (e) =>  setSize(e.target.value);
   const changeBreed = (e) => setBreed(e.target.value);
+  const changeImage = (e) => setImage(e)
 
   const onSubmit = (e) => {
     e.preventDefault();
     submitForm({
-      name, age, size, breed, gender
+      name, age, size, breed, gender, image
     });
     changePage(2)
+  }
+
+  const myWidget = window.cloudinary.createUploadWidget(
+    {
+      cloudName: cloudName,
+      uploadPreset: uploadPreset,
+    },
+    (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log("Done! Here is the image info: ", result.info);
+        console.log(result.info.secure_url)
+        changeImage(result.info.secure_url)
+      }
+    }
+  );
+
+  function openWidget () {
+    myWidget.open()
   }
 
   return (
@@ -33,12 +56,20 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
             onChange={(e) => changeName(e)}
           />
         </div>
-        <div>
-          <label>Image</label>
-          <input
-            type="file"
-          />
+
+        <div className='img-container' >
+          <img src={image} alt="" />
         </div>
+
+        <div className='btn-container' >
+          <button 
+            onClick={openWidget} 
+            id="upload_widget" 
+            className='cloudinary-button'>
+              Upload Profile Image
+          </button>
+        </div>
+
         <div>
           <label>Age</label>
           <input

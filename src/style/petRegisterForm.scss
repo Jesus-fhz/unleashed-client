@@ -76,6 +76,21 @@
     }
   }
 
+  .img-container {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    background: gray;
+    margin-bottom: 20px;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+
   form button {
     all: unset;
     display: block;
