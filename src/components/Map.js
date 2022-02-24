@@ -144,7 +144,7 @@ function Map({isFinding, showRadar}) {
     if( xCorrect && yCorrect ){
       //setState for the walk done. 
       setMoverLocation(stationaryLocation);
-      auth.changeStatus("ongoing");
+      auth.changeStatus("pickup");
       return;
     }
     else {
@@ -182,7 +182,7 @@ function Map({isFinding, showRadar}) {
 
     if (angle > 6.282){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
-      auth.changeStatus("finished");
+      auth.changeStatus("dropoff");
       return;
     }
  
@@ -234,7 +234,7 @@ function Map({isFinding, showRadar}) {
             }
 
             {
-              (auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished') && (auth.destination) 
+              auth.status !== 'pending' && auth.status !== null && (auth.destination) 
               ?            
                 <Marker 
                   position={auth.destination}
