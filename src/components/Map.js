@@ -40,14 +40,13 @@ function Map({isFinding, showRadar}) {
 
 
   // On component update with polling. 
-  //OWNER USEEFFECT
+  //OWNER USE EFFECT
   useEffect(() => {
     if(auth.user.user_type === "owner") {
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
-          // TODO: JESUS & LAURENCE: this isn't meant to be fake movement this is meant to be polling and getting the walker's current position. 
           // add polling in here
           getLocation(auth.walkData.walks.id)
           .then(data => {
@@ -70,7 +69,7 @@ function Map({isFinding, showRadar}) {
     }
   }, [auth.status])
   
-  //WALK USEEFFECT
+  //WALKER USE EFFECT
   useEffect(() => {
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
