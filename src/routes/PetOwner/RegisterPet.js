@@ -48,6 +48,8 @@ const ResisterPet = () => {
       can_walk_with_other_dogs: data.friendly
     }
 
+    
+
     saveUserPet({infoPet})
       .then((data) =>{setData(data)} )
       .catch(() => setError(true))
