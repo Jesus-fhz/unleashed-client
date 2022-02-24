@@ -22,7 +22,7 @@ const Home  = () => {
     if((auth.status === "accepted" || auth.status === "ongoing") && showFindWalkerModal === true){
       setShowFindWalkerModal(false);
     }
-
+    
   }, [auth.status])
 
   const handleFind = () => {
@@ -42,12 +42,7 @@ const Home  = () => {
         // handleStatus={handleStatus}
       />
     }
-
-    // TODO: 
-    if(isFinding) {
-      return <FindWalkerModal />
-    }
-
+   
     if(auth.status === "accepted" || auth.status === "ongoing") {
       return <TrackWalkerSidebar />
     }
