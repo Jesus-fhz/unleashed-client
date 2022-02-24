@@ -6,8 +6,6 @@ import '../style/userPetList.scss'
 
 const WalkerPetList = () => {
   const auth = useContext(AuthContext);
-
-  console.log('the auth is:', auth);
   return (
       <>
         <div className="userPetList">
