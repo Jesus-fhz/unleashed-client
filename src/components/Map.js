@@ -45,6 +45,7 @@ function Map({isFinding, showRadar}) {
     if(auth.user.user_type === "owner") {
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
+        console.log('auth status', auth.status);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // add polling in here
@@ -80,8 +81,6 @@ function Map({isFinding, showRadar}) {
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             // FIXME: get this location actually changing location
-            
-            
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
@@ -216,10 +215,11 @@ function Map({isFinding, showRadar}) {
             center={currentPosition} 
             zoom={15}
           > 
+           
             <Marker 
               position={currentPosition}
               animation = {2}
-              icon="https://i.imgur.com/cVTBuZe.png?1"
+              icon={auth.user.user_type === "owner" ? "https://i.imgur.com/kEXCUkc.png?1" : "https://i.imgur.com/cVTBuZe.png?1"}
             />
             
             {
@@ -230,6 +230,7 @@ function Map({isFinding, showRadar}) {
                   position={walkerPosition
                     // this is owner's house location
                   }
+                  icon={"https://i.imgur.com/cVTBuZe.png?1"}
                   animation = {2}
                 />
               :
