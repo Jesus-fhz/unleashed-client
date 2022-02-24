@@ -22,6 +22,7 @@ const ResisterPet = () => {
   }
 
   const submitFirstForm = (info) => {
+    console.log('petInfo in state: ',petInfo, 'info passed by form: ', info)
     setPetInfo({...petInfo, ...info});
   }
   
@@ -35,7 +36,7 @@ const ResisterPet = () => {
   const savePet = async (data)=>{
     const infoPet = {
       user_id: authContext.user.id,
-      image: "http://placedog.com/300/300",
+      image: data.image,
       name: data.name,
       breed: data.breed,
       age: data.age,
