@@ -1,32 +1,38 @@
 .petRegisterForm {
   > p {
-    margin-bottom: 20px;
-    font-size: 1.6rem;
+    margin-bottom: 30px;
+    font-size: 1.4rem;
     text-align: center;
   }
 
   &.--first form > div {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     label,
     input {
       display: block;
     }
 
     label {
-      margin-bottom: 10px;
-      font-size: 1.6rem;
+      margin-bottom: 5px;
+      font-size: 1.4rem;
+      color: gray;
     }
 
     input[type="text"] {
+      all: unset;
       width: 100%;
       box-sizing: border-box;
       padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgb(211, 211, 211);
+      font-size: 1.6rem;
     }
 
     &.gender {
       p {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
+        font-size: 1.4rem;
+        color: gray;
+        margin-bottom: 5px;
       }
 
       > div {
@@ -37,7 +43,21 @@
         input {
           display: inline-block;
         }
+
+        label {
+          font-size: 1.6rem;
+          color: black;
+        }
       }
+    }
+
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgb(211, 211, 211);
+      font-size: 1.6rem;
     }
   }
 
@@ -62,8 +82,14 @@
     padding: 10px 30px;
     margin: 0 auto;
     border-radius: 20px;
-    border: 1px solid black;
-    font-size: 1.6rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #3d5a80;
+    color: white;
+    font-size: 1.4rem;
     cursor: pointer;
+
+    &:last-child {
+      background: #ee6c4d;
+    }
   }
 }
