@@ -29,7 +29,7 @@ const UserPetList = ({
       .then((data) => setPets(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  }, []);
+  });
 
   const selectPet = (pet) => {
     const isExist = selectedPet.some((item) => item.id === pet.id);
