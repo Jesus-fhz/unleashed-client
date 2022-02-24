@@ -25,18 +25,17 @@ const UserPetList = ({
   // fetch user's all pets when the component is rendered
   useEffect(() => {
     // put example user id
-    fetchUserPets(authContext.user.id) 
-      .then((data) => setPets(data))
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  },[]);
+    const intervalId = setInterval(() => {
+      console.log('running')
+      fetchUserPets(authContext.user.id) 
+        .then((data) => setPets(data))
+        .catch(() => setError(true))
+        .finally(() => setLoading(false));
+    }, 1000);
 
-  // to refresh petlist when pet added
-  useEffect(() => {
-    if (pets) {
-      console.log('useEffect moved')
-    }
-  }, [pets])
+    return () => clearInterval(intervalId)
+
+  },[]);
 
   const selectPet = (pet) => {
     const isExist = selectedPet.some((item) => item.id === pet.id);
