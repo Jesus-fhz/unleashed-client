@@ -26,7 +26,6 @@ function Map({isFinding, showRadar}) {
       if(auth.user.user_type === "walker") {
         getCurrentLocation();
       }
-    loadWalkers();
   }, []);
 
 
@@ -63,6 +62,12 @@ function Map({isFinding, showRadar}) {
     return () => clearInterval(intervalID);
   }, [auth, currentPosition])
 
+  // useEffect(()=> {
+  //   if(auth.status === "pending" && currentPosition){
+  //     loadWalkers();
+  //   }
+  // }, [currentPosition])
+
   const getCurrentLocation = () => {
     const success = (position) => {
       setCurrentPosition({
@@ -78,10 +83,15 @@ function Map({isFinding, showRadar}) {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
+  //TODO: figure out why this is breaking when
   const loadWalkers = async () => {
-    getNearbyWalkers(currentPosition.lat, currentPosition.lng)
-      .then((data) => setNearbyWalkers(data))
-      .catch(() => console.log("loadWalker ERROR"));
+    try{
+      let res = await getNearbyWalkers(currentPosition.lat, currentPosition.lng)
+      setNearbyWalkers(res)
+    } catch(err) {
+      console.log("loadWalker ERROR:", err)
+    }
+    // }
   }
 
   //////////////////////////////
