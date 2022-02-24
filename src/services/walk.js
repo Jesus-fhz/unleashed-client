@@ -7,7 +7,7 @@ const   requestWalk = async (info) => {
 
 const requestPendingWalks = async (lat, lng) =>{
     let res = await get(`/walks/pending/${lat}/${lng}`);
-  
+      console.log("response from requesting pengin walks", res);
     const walks = {
       walks: res.data
     }
