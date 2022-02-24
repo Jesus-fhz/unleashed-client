@@ -12,8 +12,8 @@ import '../style/userPetList.scss'
 const UserPetList = ({
   handleFind,
   isFinding,
-  status,
-  handleStatus
+  // status,
+  // handleStatus
 }) => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const UserPetList = ({
       .then((data) => setPets(data))
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  });
+  },[]);
 
   const selectPet = (pet) => {
     const isExist = selectedPet.some((item) => item.id === pet.id);
@@ -72,8 +72,8 @@ const UserPetList = ({
             handleModal={handleModal}
             handleFind={handleFind}
             selectedPet={selectedPet} 
-            status = {status}
-            handleStatus={handleStatus}
+            // status = {status}
+            // handleStatus={handleStatus}
           />
           <div className={`userPetList ${isFinding ? "hiding" : ""}`}>
             <h1>
