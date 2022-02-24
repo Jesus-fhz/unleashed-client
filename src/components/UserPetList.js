@@ -26,7 +26,6 @@ const UserPetList = ({
   useEffect(() => {
     // put example user id
     const intervalId = setInterval(() => {
-      console.log('running')
       fetchUserPets(authContext.user.id) 
         .then((data) => setPets(data))
         .catch(() => setError(true))

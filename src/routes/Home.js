@@ -48,6 +48,7 @@ const Home  = () => {
     }
 
     if(auth.status === "pickup") {
+      console.log("status from homessssss", auth.status);
       return <>
         <TrackWalkerSidebar />
         <WalkerArriveModal />

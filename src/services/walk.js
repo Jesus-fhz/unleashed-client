@@ -31,6 +31,18 @@ const acceptWalk = async (info) => {
 }
 
 
+const changeStatusWalk = async(id, statusWalk) => {
+  const status =["pending", "accepted", "pickup", "ongoing", "dropoff", "finished"]
+  let res = await patch(`/walks/${id}/accepts`, {
+    // :pet_id, :user_id, :status, :cost, :duration, :latitude, :longitude, :special_instruction
+    status: status.indexOf(statusWalk),
+  });
+
+  return res.data;
+}
+
+
+
 const getOwnerAddress = async(walk_id) => {
   let res = await get(`/walks/${walk_id}/owner/loc`)
 
@@ -66,5 +78,6 @@ export {
   sendLocation,
   getLocation,
   getOwnerAddress,
-  getWalkInfo
+  getWalkInfo,
+  changeStatusWalk
 }
