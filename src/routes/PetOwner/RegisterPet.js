@@ -56,8 +56,8 @@ const ResisterPet = () => {
   return (
     <div className='registerPet'>
       <div className="registerPet-innerbox">
-        <h2>Add your pet</h2>
-        {
+        <h2>Register pet</h2>
+        {/* {
           loading === true && error === false
             ?
             <p>loading...</p>
@@ -67,7 +67,7 @@ const ResisterPet = () => {
             <p>error...</p>
             :
              data.name
-        } 
+        }  */}
 
         {
           currentPage === 1
