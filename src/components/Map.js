@@ -63,6 +63,30 @@ function Map({isFinding, showRadar}) {
     return () => clearInterval(intervalID);
   }, [auth, currentPosition])
 
+  const getCurrentLocation = () => {
+    const success = (position) => {
+      setCurrentPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+    }
+
+    const error = (err) => {
+      console.log("geolocation error: ", err);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+  const loadWalkers = async () => {
+    getNearbyWalkers(currentPosition.lat, currentPosition.lng)
+      .then((data) => setNearbyWalkers(data))
+      .catch(() => console.log("loadWalker ERROR"));
+  }
+
+  //////////////////////////////
+  // WALKER SPECIFIC FUNCTIONS// 
+  //////////////////////////////
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
     const incrementDistance = 0.00008;
@@ -125,28 +149,6 @@ function Map({isFinding, showRadar}) {
  
     setMoverLocation({lng: newLng, lat: newLat });
   } 
-
-  const loadWalkers = async () => {
-    getNearbyWalkers(currentPosition.lat, currentPosition.lng)
-      .then((data) => setNearbyWalkers(data))
-      .catch(() => console.log("loadWalker ERROR"));
-  }
-
-  const getCurrentLocation = () => {
-    const success = (position) => {
-      setCurrentPosition({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      })
-    }
-
-    const error = (err) => {
-      console.log("geolocation error: ", err);
-    }
-
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
-
 
   return (
     <div className="map">
