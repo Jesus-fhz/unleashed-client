@@ -46,6 +46,7 @@ const WalkList  = () => {
         }
 
 
+        console.log('setting status before the acceptWalk function:', info.status)
         acceptWalk(info)
             .then(data => console.log(data));
 

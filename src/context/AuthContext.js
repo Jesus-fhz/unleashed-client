@@ -73,13 +73,15 @@ export const AuthProvider = ({children}) => {
           intervalID = setInterval(() => {
             getWalkInfo(id)
               .then(data => {
-                if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
+                if(data.walks.status === "accepted" || data.walks.status === "ongoing" || data.walks.status === "pickup" || data.walks.status === "dropoff"){
                    setWalkData(data);
+                   console.log('setStatus inside changeOngoingWalk:', data.walks.status)
                    setStatus(data.walks.status);
                    setLocation({
-                    lat: data.walks.latitude,
-                    lng: data.walks.longitude
-                   })
+                     lat: data.walks.latitude,
+                     lng: data.walks.longitude
+                    })
+                    console.log('status', status);
                    clearInterval(intervalID);
                }
               })

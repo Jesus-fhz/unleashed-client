@@ -112,7 +112,6 @@ function Map({isFinding, showRadar}) {
   //TODO: figure out why this is breaking when
   const loadWalkers = async () => {
     try{
-
       let res = await getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       setNearbyWalkers(res)
     } catch(err) {
