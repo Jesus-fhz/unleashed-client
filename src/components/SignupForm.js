@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import '../style/signinForm.scss'
 import { postUserInfo } from '../services/users';
 
 const SignupForm = ({swapForm}) => {
-  const navigate = useNavigate()
-
   const authContext = useContext(AuthContext);
 
   const cloudName = "metaverse-fc"; // replace with your own cloud name
@@ -48,8 +45,7 @@ const SignupForm = ({swapForm}) => {
     })
       .catch(() => setError(true));
 
-      navigate("/");
-  
+      swapForm();
   }
 
   const myWidget = window.cloudinary.createUploadWidget(

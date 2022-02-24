@@ -12,10 +12,10 @@
   z-index: 31;
   transition: 0.5s 0.5s;
 
-  &.hiding {
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
+  // &.hiding {
+  //   transform: translateX(-100%);
+  //   transition: transform 0.5s;
+  // }
 
   > h1 {
     font-size: 1.8rem;
@@ -24,7 +24,7 @@
   }
 
   .scroll-container {
-    height: calc(100vh - 28px - 155px - 40px);
+    height: calc(100vh - 28px - 82px - 40px);
     padding-top: 30px;
     overflow: scroll;
   }
