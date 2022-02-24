@@ -70,6 +70,7 @@ export const AuthProvider = ({children}) => {
                 if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
                    setWalkData(data);
                    setStatus(data.walks.status);
+                   console.log('is this where the status comes from: ', data.walks.status)
                    setLocation({
                     lat: data.walks.latitude,
                     lng: data.walks.longitude
