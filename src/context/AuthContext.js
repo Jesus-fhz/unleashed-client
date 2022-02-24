@@ -7,8 +7,8 @@ import {getWalkInfo} from '../services/walk.js'
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-  // [:pending, :accepted, :ongoing, :finished]
-  const [status, setStatus] = useState("pending");
+  // [:pending, :accepted, :pickup, :ongoing, :dropoff, :finished]
+  const [status, setStatus] = useState('pending');
   const [ongoingWalkID, setOngoingWalkID] = useState();
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
@@ -39,6 +39,7 @@ export const AuthProvider = ({children}) => {
         // if you are a walker, we will send your location to backend 
         if(user.user_type === "walker" && location.lat !== undefined && location.lng !== undefined) {
           // need to get their location here with geo
+          // console.log('location inside AuthContext useEffect:', location);
           sendLocation({
             walk_id: ongoingWalkID,
             lat: location.lat,
@@ -50,7 +51,6 @@ export const AuthProvider = ({children}) => {
         if(user.user_type === "owner") {          
           getLocation(ongoingWalkID)
             .then(data => {
-              console.log('data returned from getLocation:', data)
               setLocation({
                 lat: data.latitude,
                 lng: data.longitude, 
@@ -58,7 +58,7 @@ export const AuthProvider = ({children}) => {
             });
         }
       }
-    }, [status, user]);
+    }, [status, user, location]);
 
 
     const changeOngoingWalk = (id) => {
@@ -67,12 +67,12 @@ export const AuthProvider = ({children}) => {
           intervalID = setInterval(() => {
             getWalkInfo(id)
               .then(data => {
-               if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
+                if(data.walks.status === "accepted" || data.walks.status === "ongoing"){
                    setWalkData(data);
                    setStatus(data.walks.status);
                    setLocation({
-                     lat: data.walks.latitude,
-                     lng: data.walks.longitude
+                    lat: data.walks.latitude,
+                    lng: data.walks.longitude
                    })
                    clearInterval(intervalID);
                }
@@ -117,7 +117,7 @@ export const AuthProvider = ({children}) => {
   };
 
   const onLogout = () => {
-    logout()
+    logout();
     setUser(undefined);
   };
   return (

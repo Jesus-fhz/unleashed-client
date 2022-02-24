@@ -12,8 +12,8 @@ import '../style/userPetList.scss'
 const UserPetList = ({
   handleFind,
   isFinding,
-  status,
-  handleStatus
+  // status,
+  // handleStatus
 }) => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,8 +72,8 @@ const UserPetList = ({
             handleModal={handleModal}
             handleFind={handleFind}
             selectedPet={selectedPet} 
-            status = {status}
-            handleStatus={handleStatus}
+            // status = {status}
+            // handleStatus={handleStatus}
           />
           <div className={`userPetList ${isFinding ? "hiding" : ""}`}>
             <h1>

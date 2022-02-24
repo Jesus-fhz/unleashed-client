@@ -6,7 +6,7 @@ import Nav from './Nav';
 const TrackWalkerSidebar = () => {
   const auth = useContext(AuthContext);
 
-  console.log('walk data,',auth.walkData )
+  // console.log('walk data,',auth.walkData )
 
   return (
     <aside className="trackWalkerSidebar">

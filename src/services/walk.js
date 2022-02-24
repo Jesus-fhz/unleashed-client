@@ -48,7 +48,7 @@ const sendLocation = async (info) => {
 
 const getLocation = async (walk_id) => {
   let res = await get(`/walks/${walk_id}`);
-
+  // console.log('response inside getLocation:', res);
   return res.data;
 }
 
