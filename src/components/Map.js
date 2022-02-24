@@ -5,6 +5,7 @@ import { getNearbyWalkers } from '../services/walkers';
 import '../style/map.scss';
 import {useInterval} from './UseInterval'
 import { Link } from 'react-router-dom';
+import { getLocation } from '../services/walk';
 
 
 // TODO: how to make the map size responsively
@@ -16,15 +17,21 @@ const containerStyle = {
 //TODO: ask laurence about the GetCurrentPosition function, I think is my computer location but I need to double check with him
 // The main map showing on OWNER page, populated with <Markers /> representing nearby WALKERS
 function Map({isFinding, showRadar}) {
-  const [currentPosition, setCurrentPosition] = useState({lat: -33.849146, lng: 150.997037}); 
+  const [currentPosition, setCurrentPosition] = useState(undefined); 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
+
+  // OWNER SPECIFIC DB
+  const [walkerPosition, setWalkerPosition] = useState(undefined)
   
   const auth = useContext(AuthContext);
   // On component mount
   useEffect(() => {
       if(auth.user.user_type === "walker") {
         getCurrentLocation();
+      } else {
+        //TODO: RIGHT NOW CHANGE THIS TO THE OWNER CURRENT LOCATION
+        setCurrentPosition({lat: auth.user.latitude, lng: auth.user.longitude})
       }
     loadWalkers();
   }, []);
@@ -38,9 +45,11 @@ function Map({isFinding, showRadar}) {
       if(auth.user.user_type === "walker" && auth.destination !== false) {
         intervalID = setInterval(() => {
           if(auth.status === "accepted"){
-            auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
-
+            auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
+            // FIXME: get this location actually changing location
+            
+            
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
           }
@@ -50,12 +59,27 @@ function Map({isFinding, showRadar}) {
       // if you are a owner, we will give you the walker's location
       if(auth.user.user_type === "owner") {
         if(auth.status === "accepted"){
+          // console.log(auth.walkData.walks.id);
           intervalID = setInterval(() => {
-            fakeMovement(currentPosition, setCurrentPosition, auth.location);
-          }, 25);
+            // TODO: JESUS & LAURENCE: this isn't meant to be fake movement this is meant to be polling and getting the walker's current position. 
+            // add polling in here
+            // console.log('auth.destination', auth.destination)
+            getLocation(auth.walkData.walks.id)
+            .then(data => {
+              console.log('data returned from getLocation:', data);
+              // setWalkerPosition({
+              //   lat: data.latitude,
+              //   lng: data.longitude, 
+              // });
+            });
+            
+            
+            // setWalkerPosition(auth.location)
+          }, 1000);
         }
         if(auth.status === "ongoing"){
-          fakeWalk(currentPosition, setCurrentPosition, auth.location);
+          
+          // add polling here aswell. 
         }
       }
     }
@@ -174,26 +198,31 @@ function Map({isFinding, showRadar}) {
             <Marker 
               position={currentPosition}
               animation = {2}
+              icon="https://i.imgur.com/cVTBuZe.png?1"
             />
             
             {
               //We only show the walker tracking if user === owner and the location of the ower is set
               auth.user.user_type === "owner" && auth.location
               ?
-              <Marker 
-                position={auth.location}
-                animation = {2}
-              />
+                <Marker 
+                  position={walkerPosition
+                    // this is owner's house location
+                  }
+                  animation = {2}
+                />
               :
-              '' 
+                ''
+                
             }
-
 
             {
               (auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished') && (auth.destination) 
               ?            
                 <Marker 
                   position={auth.destination}
+                  icon="https://i.imgur.com/kEXCUkc.png?1"
+
                   animation = {2}
                 />
               : 
