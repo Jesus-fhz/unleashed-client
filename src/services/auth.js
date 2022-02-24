@@ -41,7 +41,9 @@ const checkSignIn = async () => {
   // return res;
 }
 
-const signUp  = async ({userInfo}) => {
+const signUp  = async (userInfo) => {
+  console.log(userInfo)
+  
   let res = await post(`/users.json`, {
     ...userInfo
   });

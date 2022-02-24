@@ -33,7 +33,7 @@ const TrackWalkerSidebar = () => {
             </div>
             <div className="text-container">
               <h3>{auth.walkData.pets?.name}</h3>
-              <p>
+
                 <ol>
                     <li>
                         {auth.walkData.pets?.breed}
@@ -45,7 +45,7 @@ const TrackWalkerSidebar = () => {
                       {auth.walkData.pets?.age} Years old
                     </li>
                 </ol>
-              </p>
+
             </div>
           </div>
         </div>
