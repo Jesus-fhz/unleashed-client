@@ -31,6 +31,13 @@ const UserPetList = ({
       .finally(() => setLoading(false));
   },[]);
 
+  // to refresh petlist when pet added
+  useEffect(() => {
+    if (pets) {
+      console.log('useEffect moved')
+    }
+  }, [pets])
+
   const selectPet = (pet) => {
     const isExist = selectedPet.some((item) => item.id === pet.id);
 
