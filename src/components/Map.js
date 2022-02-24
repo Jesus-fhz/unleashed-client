@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import { getLocation } from '../services/walk';
 
 
+let intervalID1;
+let intervalID2;
+
 // TODO: how to make the map size responsively
 const containerStyle = {
   width: window.innerWidth - 340,
@@ -20,7 +23,7 @@ function Map({isFinding, showRadar}) {
   const [currentPosition, setCurrentPosition] = useState(undefined); 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
-
+  
   // OWNER SPECIFIC DB
   const [walkerPosition, setWalkerPosition] = useState(undefined)
   
@@ -38,12 +41,48 @@ function Map({isFinding, showRadar}) {
 
 
   // On component update with polling. 
+  //OWNER USEEFFECT
   useEffect(() => {
-    let intervalID;
+    if(auth.user.user_type === "owner") {
+      
+      if(auth.status === "accepted" || auth.status === "ongoing" ){
+        console.log('at the top of owner setInterval', auth);
+        // console.log(auth.walkData.walks.id);
+        clearInterval(intervalID1);
+        intervalID1 = setInterval(() => {
+          // TODO: JESUS & LAURENCE: this isn't meant to be fake movement this is meant to be polling and getting the walker's current position. 
+          // add polling in here
+          getLocation(auth.walkData.walks.id)
+          .then(data => {
+            console.log('data returned from getLocation:', data);
+            setWalkerPosition({
+              lat: data.latitude,
+              lng: data.longitude, 
+            });
+            // console.log('the walker Position data: ', data)
+          }).catch( err => {
+            console.log('getLocation() ERROR:', err);
+          });
+          
+          
+          // setWalkerPosition(auth.location)
+        }, 1000);
+      }
+      if(auth.status === "ongoing"){
+        
+        // add polling here aswell. 
+      }
+    }
+  }, [auth.status])
+  
+  //WALK USEEFFECT
+  useEffect(() => {
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
       if(auth.user.user_type === "walker" && auth.destination !== false) {
-        intervalID = setInterval(() => {
+        console.log('at the top of useEffect() auth:', auth);
+        clearInterval(intervalID2);
+        intervalID2 = setInterval(() => {
           if(auth.status === "accepted"){
             fakeMovement(currentPosition, setCurrentPosition, auth.destination); // TODO: make the currentPosition and ad the set the auth equivalent methods. 
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
@@ -52,40 +91,16 @@ function Map({isFinding, showRadar}) {
             
           } else if ( auth.status === "ongoing" ) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
+            auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
           }
         }, 25);
       }
 
       // if you are a owner, we will give you the walker's location
-      if(auth.user.user_type === "owner") {
-        if(auth.status === "accepted"){
-          // console.log(auth.walkData.walks.id);
-          intervalID = setInterval(() => {
-            // TODO: JESUS & LAURENCE: this isn't meant to be fake movement this is meant to be polling and getting the walker's current position. 
-            // add polling in here
-            // console.log('auth.destination', auth.destination)
-            getLocation(auth.walkData.walks.id)
-            .then(data => {
-              console.log('data returned from getLocation:', data);
-              // setWalkerPosition({
-              //   lat: data.latitude,
-              //   lng: data.longitude, 
-              // });
-            });
-            
-            
-            // setWalkerPosition(auth.location)
-          }, 1000);
-        }
-        if(auth.status === "ongoing"){
-          
-          // add polling here aswell. 
-        }
-      }
     }
 
-    return () => clearInterval(intervalID);
-  }, [auth, currentPosition])
+    // return () => clearInterval(intervalID);
+  }, [auth, currentPosition]);
 
   const getCurrentLocation = () => {
     const success = (position) => {
@@ -109,8 +124,8 @@ function Map({isFinding, showRadar}) {
   }
 
   //////////////////////////////
-  // WALKER SPECIFIC FUNCTIONS// 
-  //////////////////////////////
+  // WALKER SPECIFIC FUNCTIONS//
+  ////////////////////////////// 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
     const incrementDistance = 0.00008;
@@ -174,6 +189,8 @@ function Map({isFinding, showRadar}) {
     setMoverLocation({lng: newLng, lat: newLat });
   } 
 
+
+  
   return (
     <div className="map">
       {/* TODO: need to put loading effect inside of the map, but can't change their className to style it */}
