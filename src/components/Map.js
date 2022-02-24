@@ -46,20 +46,16 @@ function Map({isFinding, showRadar}) {
     if(auth.user.user_type === "owner") {
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
-        console.log('at the top of owner setInterval', auth);
-        // console.log(auth.walkData.walks.id);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // TODO: JESUS & LAURENCE: this isn't meant to be fake movement this is meant to be polling and getting the walker's current position. 
           // add polling in here
           getLocation(auth.walkData.walks.id)
           .then(data => {
-            console.log('data returned from getLocation:', data);
             setWalkerPosition({
               lat: data.latitude,
               lng: data.longitude, 
             });
-            // console.log('the walker Position data: ', data)
           }).catch( err => {
             console.log('getLocation() ERROR:', err);
           });
@@ -80,7 +76,6 @@ function Map({isFinding, showRadar}) {
     if(auth.status === "accepted" || auth.status === "ongoing") {
       // if you are a walker, we will update your location 
       if(auth.user.user_type === "walker" && auth.destination !== false) {
-        console.log('at the top of useEffect() auth:', auth);
         clearInterval(intervalID2);
         intervalID2 = setInterval(() => {
           if(auth.status === "accepted"){
@@ -120,7 +115,7 @@ function Map({isFinding, showRadar}) {
   const loadWalkers = async () => {
     getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       .then((data) => setNearbyWalkers(data))
-      .catch(() => console.log("loadWalker ERROR"));
+      .catch((err) => console.log("loadWalker ERROR:", err));
   }
 
   //////////////////////////////
@@ -144,8 +139,7 @@ function Map({isFinding, showRadar}) {
     if( xCorrect && yCorrect ){
       //setState for the walk done. 
       setMoverLocation(stationaryLocation);
-      auth.changeStatus("ongoing");
-      
+      auth.changeStatus("pickup");
       return;
     }
     else {
@@ -170,8 +164,6 @@ function Map({isFinding, showRadar}) {
   }
 
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
-    console.log('stationaryLocation:', stationaryLocation);
-    
     let x = 0.00004 * Math.cos(angle);
     let y = 0.00004 * Math.sin(angle);
     
@@ -183,7 +175,7 @@ function Map({isFinding, showRadar}) {
 
     if (angle > 6.282){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
-      auth.changeStatus("finished");
+      auth.changeStatus("dropoff");
       return;
     }
  
@@ -235,7 +227,7 @@ function Map({isFinding, showRadar}) {
             }
 
             {
-              (auth.status === 'accepted' || auth.status === 'ongoing' || auth.status === 'finished') && (auth.destination) 
+              auth.status !== 'pending' && auth.status !== null && (auth.destination) 
               ?            
                 <Marker 
                   position={auth.destination}
