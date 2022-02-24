@@ -1,7 +1,10 @@
 .map {
-  width: 100%;
+  // width: 100%;
+  width: calc(100vw - 340px);
   height: 100vh;
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
   overflow: hidden;
 
   > div:not(.loading-effect) {
