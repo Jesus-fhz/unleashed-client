@@ -7,8 +7,8 @@ import {getWalkInfo} from '../services/walk.js'
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-  // [:pending, :accepted, :ongoing, :finished]
-  const [status, setStatus] = useState("pending");
+  // [:pending, :accepted, :pickup, :ongoing, :dropoff, :finished]
+  const [status, setStatus] = useState('pending');
   const [ongoingWalkID, setOngoingWalkID] = useState();
   const [user, setUser] = useState(undefined);
   const [location, setLocation] = useState(false);
