@@ -39,7 +39,6 @@ const OrganiseWalkModal = ({
       })
       .catch(error => console.log(error));
 
-
     handleModal();
     handleFind();
   }
