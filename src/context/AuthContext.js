@@ -111,7 +111,7 @@ export const AuthProvider = ({children}) => {
       profile_image: userInfo.profile_image
     })
       .then(data => {
-        setUser(data);
+        // setUser(data);
         return data;
       })
   };

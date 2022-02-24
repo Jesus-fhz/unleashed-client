@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../style/petRegisterForm.scss'
+import '../style/petRegisterForm.scss';
 
 const PetRegisterFormFirst = ({changePage, submitForm}) => {
   const [name, setName] = useState('');
@@ -28,7 +28,7 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
         <div>
           <label>Name</label>
           <input
-            required
+            required={true}
             type="text"
             onChange={(e) => changeName(e)}
           />
@@ -48,7 +48,7 @@ const PetRegisterFormFirst = ({changePage, submitForm}) => {
         </div>
         <div>
           <label>Size</label>
-          <select required='true' onChange={(e) => changeSize(e)}>
+          <select required={true} onChange={(e) => changeSize(e)}>
             <option value="">Select size</option>
             <option value="tiny">Tiny (1kg - 4kg)</option>
             <option value="small"> Small (4kg - 9kg)</option>
