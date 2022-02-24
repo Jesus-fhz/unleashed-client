@@ -18,15 +18,12 @@ const WalkerArriveModal = () => {
   return (
     <>
       {
-        data.walkers
-        ?
         <div className="walkArriveModal">
           <h2>Walker is arrived! Did you meet them?</h2>
           <button onClick={() => clickYes()}>
             Yes!
           </button>
         </div>
-        : ""
       }
     </>
 

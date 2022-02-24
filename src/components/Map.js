@@ -22,7 +22,6 @@ function Map({isFinding, showRadar}) {
   const [currentPosition, setCurrentPosition] = useState(undefined); 
   const [nearbyWalkers, setNearbyWalkers] = useState([]);
   const [angle, setAngle] = useState(0);
-  
   // OWNER SPECIFIC DB
   const [walkerPosition, setWalkerPosition] = useState(undefined)
   
@@ -35,7 +34,7 @@ function Map({isFinding, showRadar}) {
         //TODO: RIGHT NOW CHANGE THIS TO THE OWNER CURRENT LOCATION
         setCurrentPosition({lat: auth.user.latitude, lng: auth.user.longitude})
       }
-  }, []);
+  }, []);         
 
 
   // On component update with polling. 
@@ -57,7 +56,6 @@ function Map({isFinding, showRadar}) {
           }).catch( err => {
             console.log('getLocation() ERROR:', err);
           });
-          
           
           // setWalkerPosition(auth.location)
         }, 1000);
@@ -115,7 +113,6 @@ function Map({isFinding, showRadar}) {
   //TODO: figure out why this is breaking when
   const loadWalkers = async () => {
     try{
-
       let res = await getNearbyWalkers(currentPosition.lat, currentPosition.lng)
       setNearbyWalkers(res)
     } catch(err) {
@@ -130,7 +127,7 @@ function Map({isFinding, showRadar}) {
   ////////////////////////////// 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    const incrementDistance = 0.00008;
+    const incrementDistance = 0.0008;
     let x = 0;
     let y = 0;
 
@@ -195,7 +192,6 @@ function Map({isFinding, showRadar}) {
  
     setMoverLocation({lng: newLng, lat: newLat });
   } 
-
 
   
   return (

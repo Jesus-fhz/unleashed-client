@@ -7,7 +7,6 @@ const   requestWalk = async (info) => {
 
 const requestPendingWalks = async (lat, lng) =>{
     let res = await get(`/walks/pending/${lat}/${lng}`);
-      console.log("response from requesting pengin walks", res);
     const walks = {
       walks: res.data
     }
@@ -29,6 +28,19 @@ const acceptWalk = async (info) => {
 
   return res.data;
 }
+
+
+const changeStatusWalk = async(id, statusWalk) => {
+  const status =["pending", "accepted", "pickup", "ongoing", "dropoff", "finished"]
+  
+  let res = await patch(`/walks/${id}/accepts`, {
+    // :pet_id, :user_id, :status, :cost, :duration, :latitude, :longitude, :special_instruction
+    status: status.indexOf(statusWalk),
+  });
+
+  return res.data;
+}
+
 
 
 const getOwnerAddress = async(walk_id) => {
@@ -66,5 +78,6 @@ export {
   sendLocation,
   getLocation,
   getOwnerAddress,
-  getWalkInfo
+  getWalkInfo,
+  changeStatusWalk
 }
