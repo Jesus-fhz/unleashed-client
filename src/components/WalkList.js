@@ -39,13 +39,14 @@ const WalkList  = () => {
             user_id: auth.user.id,
             status: 1,
             cost: data.cost,
-            address: data.address,
+            address: data.address, 
             duration: data.duration,
             latitude: data.latitude,
             longitude: data.longitude
         }
 
 
+        console.log('setting status before the acceptWalk function:', info.status)
         acceptWalk(info)
             .then(data => console.log(data));
 
