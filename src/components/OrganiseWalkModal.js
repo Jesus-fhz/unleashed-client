@@ -8,8 +8,8 @@ const OrganiseWalkModal = ({
   handleModal,
   handleFind,
   selectedPet,
-  status,
-  handleStatus
+  // status,
+  // handleStatus
 }) => {
   const [duration, setDuration] = useState(15);
   const auth = useContext(AuthContext);
@@ -23,7 +23,7 @@ const OrganiseWalkModal = ({
 
     const walk = {
         pet_id : selectedPet[0].id,
-        status : status,
+        status : 0,
         cost: 1 * duration,
         duration: duration,
         special_instruction : msg,

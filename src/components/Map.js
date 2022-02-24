@@ -145,6 +145,7 @@ function Map({isFinding, showRadar}) {
       //setState for the walk done. 
       setMoverLocation(stationaryLocation);
       auth.changeStatus("ongoing");
+      
       return;
     }
     else {
