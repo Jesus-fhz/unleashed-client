@@ -7,8 +7,6 @@ import '../style/userPetList.scss'
 const WalkerPetList = () => {
   const auth = useContext(AuthContext);
 
-  console.log(auth.walkData, 'ASDAS' ) 
-
   return (
       <>
         <div className="userPetList">
