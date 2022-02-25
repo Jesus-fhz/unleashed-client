@@ -5,6 +5,7 @@ import WalkerPetList from '../components/WalkerPetList';
 import WalkList from '../components/WalkList';
 import Map from '../components/Map';
 import FindWalkerModal from '../components/FindWalkerModal';
+import FinishModal from '../components/FinishModal';
 import WalkerArriveModal from '../components/WalkerArriveModal';
 import DropoffModal from '../components/DropoffModal';
 import TrackWalkerSidebar from '../components/TrackWalkerSidebar';
@@ -35,7 +36,7 @@ const Home  = () => {
   // }
 
   const ownerSidebar = () => {
-    if(auth.status === "pending" || auth.status === "finished") {
+    if(auth.status === "pending") {
       return <UserPetList 
         handleFind={handleFind}
         isFinding={isFinding}
@@ -48,36 +49,31 @@ const Home  = () => {
       return <TrackWalkerSidebar />
     }
 
-    // if(auth.status === "pickup") {
+    // if(auth.status === "dropoff") {
     //   return <>
-    //     <WalkerPetList />
-    //     <WalkerArriveModal />
+    //     <TrackWalkerSidebar />
+    //     <DropoffModal />
     //   </>
     // }
 
-
-
-    if(auth.status === "dropoff") {
+    if(auth.status === "finished") {
       return <>
-        <TrackWalkerSidebar />
-        <DropoffModal />
+        <UserPetList 
+          handleFind={handleFind}
+          isFinding={isFinding}
+        />
+        <FinishModal />
       </>
     }
 
-    if(auth.status === "dropoff") {
-      return <>
-        <TrackWalkerSidebar />
-        <FinaliseWalkModal />
-      </>
-    }
   }
 
   const walkerSidebar = () => {
-    if(auth.status === "pending" || auth.status === "finished") {
+    if(auth.status === "pending") {
       return <WalkList/>
     }
 
-    if(auth.status === "accepted" || auth.status === "ongoing" || auth.status === "dropoff") {
+    if(auth.status === "accepted" || auth.status === "ongoing") {
       return <WalkerPetList />
     }
 
@@ -85,6 +81,20 @@ const Home  = () => {
       return <>
         <WalkerPetList />
         <WalkerArriveModal />
+      </>
+    }
+
+    if(auth.status === "dropoff") {
+      return <>
+        <WalkerPetList />
+        <FinaliseWalkModal />
+      </>
+    }
+
+    if(auth.status === "finished") {
+      return <>
+        <WalkList/>
+        <FinishModal />
       </>
     }
   }
