@@ -42,9 +42,9 @@ function Map({isFinding, showRadar}) {
   //OWNER USE EFFECT
   useEffect(() => {
     if(auth.user.user_type === "owner") {
+      console.log('auth status', auth.status);
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
-        console.log('auth status', auth.status);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // add polling in here
@@ -60,6 +60,10 @@ function Map({isFinding, showRadar}) {
           
           // setWalkerPosition(auth.location)
         }, 1000);
+      }
+
+      if(auth.status === "pickup") {
+        console.log("owner's status is pickup")
       }
     }
   }, [auth.status])

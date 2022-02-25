@@ -47,6 +47,13 @@ const Home  = () => {
       return <TrackWalkerSidebar />
     }
 
+    // if(auth.status === "pickup") {
+    //   return <>
+    //     <WalkerPetList />
+    //     <WalkerArriveModal />
+    //   </>
+    // }
+
 
 
     if(auth.status === "dropoff") {
@@ -67,12 +74,12 @@ const Home  = () => {
     }
 
     if(auth.status === "pickup") {
-      console.log("status from homessssss", auth.status);
       return <>
-        {/* <TrackWalkerSidebar /> */}
+        <WalkerPetList />
         <WalkerArriveModal />
       </>
     }
+
     if(auth.status === "pickup") {
       return <>
         <WalkerPetList />
