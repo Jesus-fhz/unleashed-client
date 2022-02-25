@@ -77,6 +77,7 @@ export const AuthProvider = ({children}) => {
                    setWalkData(data);
                    console.log('setStatus inside changeOngoingWalk:', data.walks.status)
                    setStatus(data.walks.status);
+                   console.log('is this where the status comes from: ', data.walks.status)
                    setLocation({
                      lat: data.walks.latitude,
                      lng: data.walks.longitude
