@@ -83,7 +83,7 @@ function Map({isFinding, showRadar}) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
           }
-        }, 25);
+        }, 500);
       }
 
       // if you are a owner, we will give you the walker's location
@@ -131,7 +131,7 @@ function Map({isFinding, showRadar}) {
   ////////////////////////////// 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    const incrementDistance = 0.00008;
+    const incrementDistance = 0.004;
     let x = 0;
     let y = 0;
 
@@ -179,14 +179,14 @@ function Map({isFinding, showRadar}) {
 
     console.log('hellooooo fakewalk started')
 
-    let x = 0.00004 * Math.cos(angle);
-    let y = 0.00004 * Math.sin(angle);
+    let x = 0.0004 * Math.cos(angle);
+    let y = 0.0004 * Math.sin(angle);
     
     // how to make the trigger of coming back to home
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
 
-    setAngle(angle + 6.282 / 500);
+    setAngle(angle + 6.282 / 50);
 
     if (angle > 6.282){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
