@@ -9,6 +9,7 @@ import WalkerArriveModal from '../components/WalkerArriveModal';
 import DropoffModal from '../components/DropoffModal';
 import TrackWalkerSidebar from '../components/TrackWalkerSidebar';
 import '../style/home.scss'
+import FinaliseWalkModal from '../components/FinaliseWalkModal';
 
 
 const Home  = () => {
@@ -62,6 +63,13 @@ const Home  = () => {
         <DropoffModal />
       </>
     }
+
+    if(auth.status === "dropoff") {
+      return <>
+        <TrackWalkerSidebar />
+        <FinaliseWalkModal />
+      </>
+    }
   }
 
   const walkerSidebar = () => {
@@ -69,7 +77,7 @@ const Home  = () => {
       return <WalkList/>
     }
 
-    if(auth.status === "accepted" || auth.status === "ongoing") {
+    if(auth.status === "accepted" || auth.status === "ongoing" || auth.status === "dropoff") {
       return <WalkerPetList />
     }
 
@@ -77,20 +85,6 @@ const Home  = () => {
       return <>
         <WalkerPetList />
         <WalkerArriveModal />
-      </>
-    }
-
-    if(auth.status === "pickup") {
-      return <>
-        <WalkerPetList />
-        <p>Checking if you got there...</p>
-      </>
-    }
-
-    if(auth.status === "dropoff") {
-      return <>
-        <WalkerPetList />
-        <p>Checking if you get the dog back.</p>
       </>
     }
   }

@@ -4,12 +4,6 @@ import '../style/walkArriveModal.scss';
 
 const WalkerArriveModal = () => {
   const auth = useContext(AuthContext);
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    setData(auth.walkData);
-    console.log(auth.walkData);
-  }, [auth.walkData]);
 
   const clickYes = () => {
     auth.changeStatus("ongoing")
