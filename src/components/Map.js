@@ -7,7 +7,6 @@ import {useInterval} from './UseInterval'
 import { Link } from 'react-router-dom';
 import { getLocation } from '../services/walk';
 
-
 let intervalID1;
 let intervalID2;
 
@@ -42,9 +41,9 @@ function Map({isFinding, showRadar}) {
   //OWNER USE EFFECT
   useEffect(() => {
     if(auth.user.user_type === "owner") {
+      console.log('auth status', auth.status);
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
-        console.log('auth status', auth.status);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // add polling in here
@@ -61,7 +60,12 @@ function Map({isFinding, showRadar}) {
           // setWalkerPosition(auth.location)
         }, 1000);
       }
+
+      if(auth.status === "pickup") {
+        console.log("owner's status is pickup")
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.status])
   
   //WALKER USE EFFECT
@@ -86,6 +90,7 @@ function Map({isFinding, showRadar}) {
     }
 
     // return () => clearInterval(intervalID);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, currentPosition]);
 
   useEffect(()=> {
@@ -140,13 +145,17 @@ function Map({isFinding, showRadar}) {
     const yCorrect = !(yOver || yUnder);
 
     if( xCorrect && yCorrect ){
+      // console.log('both x and y correct')
       //setState for the walk done. 
       setMoverLocation(stationaryLocation);
       auth.changeStatus("pickup");
+      console.log(auth.status)
+      // fakeWalk(moverLocation, setMoverLocation, stationaryLocation)
       return;
     }
     else {
-      // if current position within range of destination then don't perform fake move 
+      // if current position within range of destination then don't perform fake move
+
       if (xUnder) { 
         x = incrementDistance;
       } else if (xOver){
@@ -167,6 +176,9 @@ function Map({isFinding, showRadar}) {
   }
 
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
+
+    console.log('hellooooo fakewalk started')
+
     let x = 0.00004 * Math.cos(angle);
     let y = 0.00004 * Math.sin(angle);
     
