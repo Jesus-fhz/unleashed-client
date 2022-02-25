@@ -5,10 +5,12 @@ import WalkerPetList from '../components/WalkerPetList';
 import WalkList from '../components/WalkList';
 import Map from '../components/Map';
 import FindWalkerModal from '../components/FindWalkerModal';
+import FinishModal from '../components/FinishModal';
 import WalkerArriveModal from '../components/WalkerArriveModal';
 import DropoffModal from '../components/DropoffModal';
 import TrackWalkerSidebar from '../components/TrackWalkerSidebar';
 import '../style/home.scss'
+import FinaliseWalkModal from '../components/FinaliseWalkModal';
 
 
 const Home  = () => {
@@ -34,7 +36,7 @@ const Home  = () => {
   // }
 
   const ownerSidebar = () => {
-    if(auth.status === "pending" || auth.status === "finished") {
+    if(auth.status === "pending") {
       return <UserPetList 
         handleFind={handleFind}
         isFinding={isFinding}
@@ -47,18 +49,27 @@ const Home  = () => {
       return <TrackWalkerSidebar />
     }
 
+    // if(auth.status === "dropoff") {
+    //   return <>
+    //     <TrackWalkerSidebar />
+    //     <DropoffModal />
+    //   </>
+    // }
 
-
-    if(auth.status === "dropoff") {
+    if(auth.status === "finished") {
       return <>
-        <TrackWalkerSidebar />
-        <DropoffModal />
+        <UserPetList 
+          handleFind={handleFind}
+          isFinding={isFinding}
+        />
+        <FinishModal />
       </>
     }
+
   }
 
   const walkerSidebar = () => {
-    if(auth.status === "pending" || auth.status === "finished") {
+    if(auth.status === "pending") {
       return <WalkList/>
     }
 
@@ -67,25 +78,25 @@ const Home  = () => {
     }
 
     if(auth.status === "pickup") {
-      console.log("status from homessssss", auth.status);
-      return <>
-        {/* <TrackWalkerSidebar /> */}
-        <WalkerArriveModal />
-      </>
-    }
-    if(auth.status === "pickup") {
       return <>
         <WalkerPetList />
-        <p>Checking if you got there...</p>
+        <WalkerArriveModal />
       </>
     }
 
     if(auth.status === "dropoff") {
       return <>
-        <WalkerPetList />
-        <p>Checking if you get the dog back.</p>
+        <WalkList/>
+        <FinaliseWalkModal />
       </>
     }
+
+    // if(auth.status === "finished") {
+    //   return <>
+    //     <WalkList/>
+    //     <FinishModal />
+    //   </>
+    // }
   }
 
   return (

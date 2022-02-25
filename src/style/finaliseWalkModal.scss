@@ -1,0 +1,48 @@
+.finaliseWalkModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.5);
+
+  dialog {
+    all: unset;
+    display: block;
+    min-width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: white;
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      all: unset;
+      display: block;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 12px 20px;
+      background: #ee6c4d;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      font-size: 1.4rem;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
