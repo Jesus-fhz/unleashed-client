@@ -86,17 +86,17 @@ const Home  = () => {
 
     if(auth.status === "dropoff") {
       return <>
-        <WalkerPetList />
+        <WalkList/>
         <FinaliseWalkModal />
       </>
     }
 
-    if(auth.status === "finished") {
-      return <>
-        <WalkList/>
-        <FinishModal />
-      </>
-    }
+    // if(auth.status === "finished") {
+    //   return <>
+    //     <WalkList/>
+    //     <FinishModal />
+    //   </>
+    // }
   }
 
   return (
