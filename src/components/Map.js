@@ -126,7 +126,7 @@ function Map({isFinding, showRadar}) {
   ////////////////////////////// 
 
   const fakeMovement = (moverLocation, setMoverLocation, stationaryLocation) => {
-    const incrementDistance = 0.0008;
+    const incrementDistance = 0.00008;
     let x = 0;
     let y = 0;
 
