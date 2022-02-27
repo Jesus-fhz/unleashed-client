@@ -6,8 +6,8 @@ import { postUserInfo } from '../services/users';
 const SignupForm = ({swapForm}) => {
   const authContext = useContext(AuthContext);
 
-  const cloudName = "metaverse-fc"; // replace with your own cloud name
-  const uploadPreset = "unleashed"; // replace with your own upload preset
+  const cloudName = process.env.REACT_APP_CLOUD_NAME; // replace with your own cloud name
+  const uploadPreset = process.env.REACT_APP_CLOUD_PRESET; // replace with your own upload preset
 
   const [error, setError] = useState(false);
   const [isWalker, setIsWalker] = useState(false);
