@@ -166,8 +166,11 @@ function Map({isFinding, showRadar}) {
     setMoverLocation({lng: newLng, lat: newLat });
   }
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
-    let x = 0.00004 * Math.cos(angle);
-    let y = 0.00004 * Math.sin(angle);
+
+    console.log('hellooooo fakewalk started')
+
+    let x = 0.0004 * Math.cos(angle);
+    let y = 0.0004 * Math.sin(angle);
     
     // how to make the trigger of coming back to home
     const newLng = moverLocation.lng + x;
