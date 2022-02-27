@@ -49,7 +49,6 @@ export const AuthProvider = ({children}) => {
             lng: location.lng,
           });
         }
-       
       }
     }, [location]);
 
@@ -70,9 +69,7 @@ export const AuthProvider = ({children}) => {
               .then(data => {
                 if(data.walks.status === "accepted" || data.walks.status === "ongoing" || data.walks.status === "pickup" || data.walks.status === "dropoff"){
                    setWalkData(data);
-                   console.log('setStatus inside changeOngoingWalk:', data.walks.status)
                    setStatus(data.walks.status);
-                   console.log('is this where the status comes from: ', data.walks.status)
                    setLocation({
                      lat: data.walks.latitude,
                      lng: data.walks.longitude
