@@ -33,8 +33,8 @@ const EditOwner = ({handleSubmitter}) => {
   const VALID_EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   // for cloudinary
-  const cloudName = "metaverse-fc"; // replace with your own cloud name
-  const uploadPreset = "unleashed"; // replace with your own upload preset
+  const cloudName = process.env.REACT_APP_CLOUD_NAME; // replace with your own cloud name
+  const uploadPreset = process.env.REACT_APP_CLOUD_PRESET; // replace with your own upload preset
 
   // now I need to fetch user info when the component is rendered.
   // TODO: As we already have the information from the authcontext, the question is whether or not we need to fetch data on ComponentDidMount (managed by useEffect). Test this, especially at update.
