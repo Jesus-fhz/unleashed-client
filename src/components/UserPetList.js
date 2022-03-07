@@ -30,9 +30,7 @@ const UserPetList = ({
         .then((data) => setPets(data))
         .catch(() => setError(true))
         .finally(() => setLoading(false));
-    }, 1000);
-
-    return () => clearInterval(intervalId)
+    }, 2000);
 
   },[]);
 

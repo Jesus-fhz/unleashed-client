@@ -6,6 +6,9 @@ import { getLocation, sendLocation } from '../services/walk';
 import {getWalkInfo, changeStatusWalk} from '../services/walk.js'
 export const AuthContext = createContext({});
 
+let intervalID;
+
+
 export const AuthProvider = ({children}) => {
   // [:pending, :accepted, :pickup, :ongoing, :dropoff, :finished]
   const [status, setStatus] = useState('pending');
@@ -46,19 +49,10 @@ export const AuthProvider = ({children}) => {
             lng: location.lng,
           });
         }
-
-        // if you are a owner, we will get the walker's location from backend
-        if(user.user_type === "owner") {          
-          getLocation(ongoingWalkID)
-            .then(data => {
-              setLocation({
-                lat: data.latitude,
-                lng: data.longitude, 
-              });
-            });
-        }
       }
-    }, [status, user, location]);
+    }, [location]);
+
+ 
 
     useEffect(() => {
       console.log("checking status change:",status);
@@ -75,9 +69,7 @@ export const AuthProvider = ({children}) => {
               .then(data => {
                 if(data.walks.status === "accepted" || data.walks.status === "ongoing" || data.walks.status === "pickup" || data.walks.status === "dropoff"){
                    setWalkData(data);
-                   console.log('setStatus inside changeOngoingWalk:', data.walks.status)
                    setStatus(data.walks.status);
-                   console.log('is this where the status comes from: ', data.walks.status)
                    setLocation({
                      lat: data.walks.latitude,
                      lng: data.walks.longitude

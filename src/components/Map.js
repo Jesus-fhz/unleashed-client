@@ -43,7 +43,6 @@ function Map({isFinding, showRadar}) {
     if(auth.user.user_type === "owner") {
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
-        console.log('auth status', auth.status);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // add polling in here
@@ -61,7 +60,6 @@ function Map({isFinding, showRadar}) {
         }, 1000);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.status])
   
   //WALKER USE EFFECT
@@ -79,14 +77,13 @@ function Map({isFinding, showRadar}) {
             fakeWalk(currentPosition, setCurrentPosition, auth.destination);
             auth.updateLocation(currentPosition); //TODO: REMOVE JIA"S 
           }
-        }, 25);
+        }, 1000);
       }
 
       // if you are a owner, we will give you the walker's location
     }
 
     // return () => clearInterval(intervalID);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, currentPosition]);
 
   useEffect(()=> {
@@ -141,17 +138,13 @@ function Map({isFinding, showRadar}) {
     const yCorrect = !(yOver || yUnder);
 
     if( xCorrect && yCorrect ){
-      // console.log('both x and y correct')
       //setState for the walk done. 
       setMoverLocation(stationaryLocation);
       auth.changeStatus("pickup");
-      console.log(auth.status)
-      // fakeWalk(moverLocation, setMoverLocation, stationaryLocation)
       return;
     }
     else {
-      // if current position within range of destination then don't perform fake move
-
+      // if current position within range of destination then don't perform fake move 
       if (xUnder) { 
         x = incrementDistance;
       } else if (xOver){
@@ -170,19 +163,18 @@ function Map({isFinding, showRadar}) {
     
     setMoverLocation({lng: newLng, lat: newLat });
   }
-
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
 
     console.log('hellooooo fakewalk started')
 
-    let x = 0.00004 * Math.cos(angle);
-    let y = 0.00004 * Math.sin(angle);
+    let x = 0.0004 * Math.cos(angle);
+    let y = 0.0004 * Math.sin(angle);
     
     // how to make the trigger of coming back to home
     const newLng = moverLocation.lng + x;
     const newLat = moverLocation.lat + y;
 
-    setAngle(angle + 6.282 / 500);
+    setAngle(angle + 6.282 / 50);
 
     if (angle > 6.282){
       setMoverLocation(stationaryLocation); // TODO: GET THE SNAPPING AT THE END WORKING. 
@@ -209,7 +201,7 @@ function Map({isFinding, showRadar}) {
       {
         currentPosition?.lat !== 0 && currentPosition?.lng !== 0
         ?
-        <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
+        <LoadScript googleMapsApiKey={ process.env.REACT_APP_GOOGLE_API_KEY }> 
           <GoogleMap 
             mapContainerStyle={containerStyle} 
             center={currentPosition} 

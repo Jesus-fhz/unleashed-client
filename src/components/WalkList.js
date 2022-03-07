@@ -19,7 +19,9 @@ const WalkList  = () => {
 
     const requestWalks = () => {
         requestPendingWalks(auth.user.latitude, auth.user.longitude)
-        .then(data => setWalks(data.walks))
+        .then(data => {
+            setWalks(data.walks)
+        })
         .catch(error => console.log(error));
     }
 
@@ -54,9 +56,6 @@ const WalkList  = () => {
             .then((res) => { auth.updateDestination(res)
                 console.log('sadasdasdasdsa,', res)
             });
-
-        // WALKER SIDE: at the same time, we gonna set that geolocation in AuthContext.location
-        // USER SIDE: we need to keep getting walker's location from API
     }
 
     return (
@@ -84,16 +83,10 @@ const WalkList  = () => {
                                             <p className="breed">
                                                 Walk Duration: {el.duration} mins
                                             </p>
+                                            <p className="special">
+                                                {el.special_instruction}
+                                            </p>
                                         </div>
-                                    </div>
-                                    <div className="text-container">
-                                        <h3> {el.pet.name} </h3>
-                                        <p>
-                                            {el.address}
-                                        </p>
-                                        <p className="breed">
-                                            Walk Duration: {el.duration} mins
-                                        </p>
                                     </div>
                                 <div className="btn-container">
                                     <button 
