@@ -44,7 +44,6 @@ function Map({isFinding, showRadar}) {
     if(auth.user.user_type === "owner") {
       
       if(auth.status === "accepted" || auth.status === "ongoing" ){
-        console.log('auth status', auth.status);
         clearInterval(intervalID1);
         intervalID1 = setInterval(() => {
           // add polling in here
@@ -165,7 +164,6 @@ function Map({isFinding, showRadar}) {
     
     setMoverLocation({lng: newLng, lat: newLat });
   }
-
   const fakeWalk = (moverLocation, setMoverLocation, stationaryLocation) => {
 
     console.log('hellooooo fakewalk started')
@@ -204,7 +202,7 @@ function Map({isFinding, showRadar}) {
       {
         currentPosition?.lat !== 0 && currentPosition?.lng !== 0
         ?
-        <LoadScript googleMapsApiKey="AIzaSyAm7vYw4jkC7m9hbEKpMfFxjwLAOZgxwko">
+        <LoadScript googleMapsApiKey={ process.env.REACT_APP_GOOGLE_API_KEY }> 
           <GoogleMap 
             mapContainerStyle={containerStyle} 
             center={currentPosition} 
