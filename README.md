@@ -32,4 +32,4 @@
 
 ## Credits
 
-The three primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz), [impetusdev](https://github.com/impetusdev) and [jiason214](https://github.com/jiasong214)
+The three primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz), [impetusdev](https://github.com/impetusdev) and [jiasong214](https://github.com/jiasong214)
