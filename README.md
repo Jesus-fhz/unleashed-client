@@ -32,6 +32,4 @@
 
 ## Credits
 
-The three primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz) and [impetusdev](https://github.com/impetusdev).
-
-<img src="https://contrib.rocks/image?repo=thelorddoyle/mfc-front-end" style="width:150px"/>
+The three primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz), [impetusdev](https://github.com/impetusdev) and [jiason214](https://github.com/jiasong214)
