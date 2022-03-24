@@ -1,6 +1,6 @@
 # Rental-Assessor
 > Track prospective apartments & the travel times to your favourite locations
-> Live demo [_here_](https://rentals-assessor.herokuapp.com/rentals). 
+> Live demo [_here_](https://unleashed-client.netlify.app). 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -8,11 +8,9 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
-* [Usage](#usage)
-* [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
-* [Crets](#credits)
+* [Credits](#credits)
 <!-- * [License](#license) -->
 
 ## General Information
@@ -27,9 +25,10 @@
 ## Features
 - Ability to sign up and add your pets. 
 - Arrange for a walker to come to your location and pick up your dog. 
+- Live tracking of the walker from when they pick up your pet, go on a walk and are returning. 
 
 ## Screenshots
 
-## Credits
 
-The three primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz), [impetusdev](https://github.com/impetusdev) and [jiasong214](https://github.com/jiasong214)
+## Credits
+The four primary contributors are [thelorddoyle](https://github.com/thelorddoyle/), [Jesus-fhz](https://github.com/Jesus-fhz), [impetusdev](https://github.com/impetusdev) and [jiasong214](https://github.com/jiasong214)
