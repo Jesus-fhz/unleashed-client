@@ -1,4 +1,4 @@
-# Rental-Assessor
+# UnLeashed
 > Track prospective apartments & the travel times to your favourite locations
 > Live demo [_here_](https://unleashed-client.netlify.app). 
 
