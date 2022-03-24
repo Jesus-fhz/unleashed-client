@@ -1,5 +1,5 @@
-# UnLeashed
-> Track prospective apartments & the travel times to your favourite locations
+# Unleashed
+> Organise a walk for your pet, and track their movements.
 > Live demo [_here_](https://unleashed-client.netlify.app). 
 
 ## Table of Contents
@@ -21,6 +21,7 @@
 - Ruby On Rails
 - Google Maps API
 - Cloudinary to upload pet & profile images
+- PostGreSQL
 
 ## Features
 - Ability to sign up and add your pets. 
