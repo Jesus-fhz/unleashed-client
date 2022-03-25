@@ -2,6 +2,12 @@
 > Organise a walk for your pet, and track their movements.
 > Live demo [_here_](https://unleashed-client.netlify.app). 
 
+- Use the next users to test the app:
+| **Username** | **Password** |
+|:------------:|:------------:|
+|owner@ga.com  |   chicken    |
+|walker@ga.com |   chicken    |
+
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
