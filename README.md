@@ -31,7 +31,7 @@ their dogs, and track the movement of their walker and Pet.
 ![](images/login.png)
 ![](images/signup.png)
 ![](images/addpet.png)
-![](images/homepage.png)
+![](images/home.png)
 ![](images/organisewalk.png)
 ![](images/looking-walker.png)
 ![](images/walker-found.png)
