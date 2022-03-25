@@ -7,16 +7,15 @@
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
-* [Setup](#setup)
-* [Room for Improvement](#room-for-improvement)
-* [Acknowledgements](#acknowledgements)
 * [Credits](#credits)
 <!-- * [License](#license) -->
 
 ## General Information
-- Over the course of 7 days, our group sought to develop a platform on which dog owners could connect with dog walkers and arrange for a walk. The resultant fullstack app allows users to see the walker's position and the area their dog is being walked around live on their browser.
+- A dog walking Application that allows users to set up walks for 
+their dogs, and track the movement of their walker and Pet. 
 
 ## Technologies Used
+- Sass
 - React.js
 - Ruby On Rails
 - Google Maps API
@@ -25,10 +24,20 @@
 
 ## Features
 - Ability to sign up and add your pets. 
-- Arrange for a walker to come to your location and pick up your dog. 
+- Arrange for a walker to come to your location and pick up your pet. 
 - Live tracking of the walker from when they pick up your pet, go on a walk and are returning. 
 
 ## Screenshots
+![](images/login.png)
+![](images/signup.png)
+![](images/addpet.png)
+![](images/homepage.png)
+![](images/organisewalk.png)
+![](images/looking-walker.png)
+![](images/walker-found.png)
+![](images/tracking-walker.png)
+![](images/finish-walk.png)
+
 
 
 ## Credits
