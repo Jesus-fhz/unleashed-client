@@ -14,13 +14,12 @@
 - A dog walking Application that allows users to set up walks for 
 their dogs, and track the movement of their walker and Pet. 
 
+*Important note: This GitHub repo only represents the app's client side. You can view the [back-end repository here.](https://github.com/Jesus-fhz/unleashed-server)*
 ## Technologies Used
 - Sass
 - React.js
-- Ruby On Rails
 - Google Maps API
 - Cloudinary to upload pet & profile images
-- PostGreSQL
 
 ## Features
 - Ability to sign up and add your pets. 
